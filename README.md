@@ -108,3 +108,4 @@ See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
   - [x] Wrap node with another node
   - [ ] Pretty print html
   - [ ] Compare two html strings
+- [ ] Documentation

@@ -2,6 +2,10 @@
 
 char *html_vec_str_join(vec_str_t *vec, const char *delimiter)
 {
+  if(vec == NULL) {
+    return NULL;
+  }
+  
 #if 0
   char *data = NULL;
   data = (char*)vec_malloc(0);
