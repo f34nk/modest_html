@@ -1,3 +1,5 @@
+[![Build status](https://travis-ci.org/f34nk/modest_html.svg?branch=master)](https://travis-ci.org/f34nk/modest_html)
+
 # modest_html
 
 This library wraps functionality of lexborisovs **Modest**. It is written in in pure C99 and exposes a lot of useful features to parse and manipulate a html DOM. Internally it makes use of rxis **vec** and **dmt** libraries.
@@ -52,11 +54,11 @@ cmake 3.x
 ```
 
 ## Compile and test
-The script compiles `Modest` and configures the `modest_html` library.
+The script compiles `Modest` and configures the library.
 ```
-./configure.sh
+./configure
 ```
-Build `build/libmodest_html.a`.
+Build `libmodest_html.a` into `build/`.
 ```
 cd build
 make
