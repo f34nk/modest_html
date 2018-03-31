@@ -31,17 +31,21 @@ int tree_index = html_parse_tree(w, html, strlen(html));
 
 // serialize the tree into a buffer
 int buffer_index = html_serialize_tree(w, tree_index, "body");
-vec_str_t *buffer = html_get_buffer(w, buffer_index);
 
-// join buffer into a string
+// get buffer and join into a string
+vec_str_t *buffer = html_get_buffer(w, buffer_index);
 char* result = html_vec_str_join(buffer, "");
 printf("%s\n", result);
+
+// test result
 if(result != NULL && strcmp(result, "<body><p>Hello</p><p>World</p></body>") != 0){
   fprintf(stderr, "Failed\n");
   html_free(result);
   html_destroy(w);
   return 1;
 }
+
+// free result
 html_free(result);
 
 // destroy our workspace
