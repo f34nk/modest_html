@@ -101,6 +101,34 @@ int main(int argc, char const *argv[])
   }
   html_free(result);
 
+  // fourth tree
+  html = "<div>Hello</div><div><span><p><a>World</a></p></span></div>";
+  selector = "a";
+  html_result_t s4 = html_parse_and_select(w, html, selector);
+
+  myhtml_collection_t *collection = (myhtml_collection_t*)html_get_collection(w, s4. collection_index);
+  myhtml_tree_node_t *node = collection->list[0];
+  result = html_serialize_node(node);
+  printf("%d: %s\n", ++i, result);
+  if(result != NULL && strcmp(result, "<a>World</a>") != 0){
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    html_destroy(w);
+    return 1;
+  }
+  html_free(result);
+
+  result = html_serialize_selector(node);
+  printf("%d: %s\n", ++i, result);
+  if(result != NULL && strcmp(result, "a p span div body html") != 0){
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    html_destroy(w);
+    return 1;
+  }
+  html_free(result);
+
+
   html_destroy(w);
   printf("ok\n");
   return 0;

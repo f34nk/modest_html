@@ -9,7 +9,7 @@ char *concat_string(const char *str1, const char *str2)
   if(str1) n += strlen(str1);
   if(str2) n += strlen(str2);
 
-  if((str1 || str2) && (result = malloc(n + 1)) != NULL)
+  if((str1 || str2) && (result = html_malloc(n + 1)) != NULL)
   {
     *result = '\0';
 
@@ -54,7 +54,7 @@ char** split_string(char* string, const char delimiter)
      knows where the list of returned strings ends. */
   count++;
 
-  result = malloc(sizeof(char*) * count);
+  result = html_malloc(sizeof(char*) * count);
 
   if (result)
   {
@@ -159,7 +159,7 @@ vec_str_t get_attributes(myhtml_tree_node_t* node)
   return v;
 }
 
-bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, vec_str_t *result)
+bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, vec_str_vec_t *instructions)
 {
   vec_str_t v1 = get_attributes(node1);
   vec_str_t v2 = get_attributes(node2);
@@ -218,7 +218,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ve
   return flag;
 }
 
-void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int indent, vec_str_t *result)
+void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int indent, vec_str_vec_t *instructions)
 {
 #ifdef MODEST_HTML_DEBUG
     for(int i = 0; i < indent; i++){
@@ -291,7 +291,7 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
           // free(selector2);
         }
       }
-      else if (compare_attributes(node1, node2, result) == true) {
+      else if (compare_attributes(node1, node2, instructions) == true) {
         const char *tag_name1 = myhtml_tag_name_by_id(node1->tree, myhtml_node_tag_id(node1), NULL);
         const char *tag_name2 = myhtml_tag_name_by_id(node2->tree, myhtml_node_tag_id(node2), NULL);
 #ifdef MODEST_HTML_DEBUG
@@ -316,7 +316,7 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
   } // else
 }
 
-void compare_trees(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, vec_str_t *result)
+void compare_trees(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, vec_str_vec_t *instructions)
 {
   myhtml_tree_node_t* child_node1 = NULL;
   myhtml_tree_node_t* child_node2 = NULL;
@@ -332,15 +332,15 @@ void compare_trees(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int ind
     next_node2 = myhtml_node_next(node2);
   }
 
-  compare_nodes(node1, node2, indent, result);
+  compare_nodes(node1, node2, indent, instructions);
 
   if(child_node1 && child_node2) {
   // if(child_node1 || child_node2) {
-    compare_trees(child_node1, child_node2, indent + 1, result);
+    compare_trees(child_node1, child_node2, indent + 1, instructions);
   }
 
   if(next_node1 || next_node2){
-    compare_trees(next_node1, next_node2, indent, result);
+    compare_trees(next_node1, next_node2, indent, instructions);
   }
 }
 
@@ -369,13 +369,14 @@ int html_compare(html_workspace_t *workspace, int collection1_index, int collect
     myhtml_tree_node_t *node1 = collection1->list[0];
     myhtml_tree_node_t *node2 = collection2->list[0];
 
-    vec_str_t buffer;
-    vec_init(&buffer);
+    vec_str_vec_t instructions;
+    vec_init(&instructions);
 
-    compare_trees(node1, node2, 0, &buffer);
+    compare_trees(node1, node2, 0, &instructions);
 
-    vec_push(&workspace->buffers, buffer);
-    return workspace->buffers.length - 1;
+    return -1;
+    // vec_push(&workspace->buffers, buffer);
+    // return workspace->buffers.length - 1;
   }
 
   return -1;

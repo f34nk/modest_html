@@ -1,6 +1,64 @@
 #include "html_serialize.h"
 
-char *html_vec_str_join(vec_str_t *vec, const char *delimiter)
+bool serialize_selector(myhtml_tree_node_t* node, vec_str_t* result)
+{
+  const char *tag_name = NULL;
+  if(node){
+    tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
+    if(strcmp(tag_name, "-undef") == 0){
+      
+      return true;
+      // FILE *stream;
+      // char *buf;
+      // size_t len;
+      // stream = open_memstream(&buf, &len);
+
+      // int i; char* val;
+      // vec_foreach_rev(&v, val, i) {
+      //   fprintf(stream, "%s", val);
+      //   if(i > 0 && i < v.length){
+      //     fprintf(stream, " ");
+      //   }
+      // }
+
+      // fclose(stream);
+      // // TODO: This is a leak. Implement proper memory handling.
+      // return buf;
+    }
+    // vec_push(result, concat_string(tag_name, "\0"));
+    
+    char *copy = (char*)html_malloc(strlen(tag_name) + 1 * sizeof(char));
+    if(copy) {
+      strcpy(copy, tag_name);
+      vec_push(result, copy);
+    }
+
+    myhtml_tree_node_t* parent_node = myhtml_node_parent(node);
+    if(parent_node){
+      return serialize_selector(parent_node, result);
+    }
+  }
+  return false;
+}
+
+char* html_serialize_selector(myhtml_tree_node_t* node)
+{
+  vec_str_t vec;
+  vec_init(&vec);
+  serialize_selector(node, &vec);
+
+  char *data = html_vec_str_join(&vec, " ");
+
+  while(vec.length > 0) {
+    char *buffer = vec_pop(&vec);
+    html_free(buffer);
+  }
+  vec_deinit(&vec);
+
+  return data;
+}
+
+char* html_vec_str_join(vec_str_t *vec, const char *delimiter)
 {
   if(vec == NULL) {
     return NULL;
@@ -126,7 +184,7 @@ mystatus_t html_serialization_callback(const char *data, size_t data_length, voi
   return MyCORE_STATUS_ERROR;
 }
 
-char *html_serialize_node(myhtml_tree_node_t *node)
+char* html_serialize_node(myhtml_tree_node_t *node)
 {
   vec_str_t vec;
   vec_init(&vec);
