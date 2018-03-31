@@ -85,3 +85,26 @@ All dependencies are added as submodules in the `libs/` folder.
 ```
 git submodule update --init --recursive --remote
 ```
+
+## Roadmap
+
+See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
+
+- [ ] Features
+  - [x] Find nodes using a CSS selector
+  - [x] Serialize any string with valid or broken html
+  - [x] Get attribute with optional CSS selector
+  - [x] Set attribute with optional CSS selector
+  - [x] Get text with optional CSS selector
+  - [x] Set text with optional CSS selector
+  - [x] Remove a node from html
+  - [x] Append node to another node
+  - [x] Prepend node to another node
+  - [x] Insert node before another node
+  - [x] Insert node after another node
+  - [x] Replace node with another node
+  - [x] Slice html to a subset of nodes
+  - [x] Get position of node in relation to its parent
+  - [x] Wrap node with another node
+  - [ ] Pretty print html
+  - [ ] Compare two html strings
