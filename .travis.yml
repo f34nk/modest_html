@@ -1,1 +1,5 @@
 language: c
+dist: trusty
+sudo: false
+compiler: cc
+script: ./configure && make && make test
