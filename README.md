@@ -41,8 +41,9 @@ if(result != NULL && strcmp(result, "<body><p>Hello</p><p>World</p></body>") != 
   return 1;
 }
 html_free(result);
+
+// destroy our workspace
 html_destroy(w);
-printf("ok\n");
 ```
 
 ## Target dependencies
