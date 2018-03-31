@@ -33,6 +33,10 @@ Execute tests.
 ```
 make test
 ```
+Check for leaks.
+```
+valgrind --leak-check=yes test/example_test
+```
 
 ## Cloning
 ```
