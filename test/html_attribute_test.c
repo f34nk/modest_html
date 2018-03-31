@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
   vec_str_t *attributes = html_get_buffer(w, attributes_index);
   char *result = html_vec_str_join(attributes, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "hello") != 0){
+  if(strcmp(result, "hello") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -29,7 +29,7 @@ int main(int argc, char const *argv[])
   vec_str_t *buffer = html_get_buffer(w, buffer_index);
   result = html_vec_str_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<p class=\"changed\">Hello</p>") != 0){
+  if(strcmp(result, "<p class=\"changed\">Hello</p>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -47,7 +47,7 @@ int main(int argc, char const *argv[])
   attributes = html_get_buffer(w, attributes_index);
   result = html_vec_str_join(attributes, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "http://google.de") != 0){
+  if(strcmp(result, "http://google.de") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_str_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<a href=\"http://google.de\" class=\"changed\">dolor sit</a>") != 0){
+  if(strcmp(result, "<a href=\"http://google.de\" class=\"changed\">dolor sit</a>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);

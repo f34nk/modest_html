@@ -163,7 +163,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ve
 {
   vec_str_t v1 = get_attributes(node1);
   vec_str_t v2 = get_attributes(node2);
-  // char *selector = serialize_selector(node1);
+  char *selector = html_serialize_selector(node1);
   // remove_scope_from_selector(selector, scope);
 
   bool flag = true;
@@ -177,7 +177,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ve
       if(strcmp(val1, val2) != 0){
         char** kv = split_string(val2, '=');
 #ifdef MODEST_HTML_DEBUG
-        printf("set_attribute '%s' to '%s'\n", val2, "selector");
+        printf("set_attribute '%s' to '%s'\n", val2, selector);
 #endif
         // add_set_attribute_instruction(result, selector, kv[0], kv[1]);
         free(kv);
@@ -191,7 +191,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ve
         char *val1 = v1.data[i];
         char** kv = split_string(val1, '=');
 #ifdef MODEST_HTML_DEBUG
-        printf("set_attribute '%s = NULL' to '%s'\n", kv[0], "selector");
+        printf("set_attribute '%s = NULL' to '%s'\n", kv[0], selector);
 #endif
         // add_set_attribute_instruction(result, selector, kv[0], "");
         free(kv);
@@ -205,7 +205,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ve
         char *val2 = v2.data[i];
         char** kv = split_string(val2, '=');
 #ifdef MODEST_HTML_DEBUG
-        printf("set_attribute '%s' to '%s'\n", val2, "selector");
+        printf("set_attribute '%s' to '%s'\n", val2, selector);
 #endif
         // add_set_attribute_instruction(result, selector, kv[0], kv[1]);
         free(kv);
@@ -213,6 +213,9 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ve
       }
     }
   }
+  
+  html_free(selector);
+
   vec_deinit(&v1);
   vec_deinit(&v2);
   return flag;
@@ -229,18 +232,18 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
   if(!node1 && node2) {
     // is missing in html1
     // append to html1
-    // myhtml_tree_node_t* parent_node2 = myhtml_node_parent(node2);
+    myhtml_tree_node_t* parent_node2 = myhtml_node_parent(node2);
 
-    // char *selector2 = serialize_selector(parent_node2);
+    char *selector2 = html_serialize_selector(parent_node2);
     // remove_scope_from_selector(selector2, scope);
     char *html = html_serialize_node(node2);
 
 #ifdef MODEST_HTML_DEBUG
-    printf("append '%s' to '%s'\n", html, "selector2");
+    printf("append '%s' to '%s'\n", html, selector2);
 #endif
     // add_append_instruction(result, selector2, html);
 
-    // html_free(selector2);
+    html_free(selector2);
     html_free(html);
   }
   else if(node1 && !node2) {
@@ -250,16 +253,16 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
     // const char *parent_tag_name1 = myhtml_tag_name_by_id(node1->tree, myhtml_node_tag_id(parent_node1), NULL);
     // printf("remove '%s' from '%s' in html1\n", tag_name1, parent_tag_name1);
 
-    // char *selector1 = serialize_selector(node1);
+    char *selector1 = html_serialize_selector(node1);
     // remove_scope_from_selector(selector1, scope);
     char *html = html_serialize_node(node1);
 
 #ifdef MODEST_HTML_DEBUG
-    printf("remove '%s' at '%s'\n", html, "selector1");
+    printf("remove '%s' at '%s'\n", html, selector1);
 #endif
     // add_remove_instruction(result, selector1);
 
-    // html_free(selector1);
+    html_free(selector1);
     html_free(html);
   }
   else if(!node1 && !node2){
@@ -276,19 +279,19 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
           // char *selector1 = serialize_selector(parent_node1);
           // remove_scope_from_selector(selector1, scope);
 
-          // myhtml_tree_node_t* parent_node2 = myhtml_node_parent(node2);
-          // char *selector2 = serialize_selector(parent_node2);
+          myhtml_tree_node_t* parent_node2 = myhtml_node_parent(node2);
+          char *selector2 = html_serialize_selector(parent_node2);
           // remove_scope_from_selector(selector2, scope);
 
           mycore_string_t *string2 = myhtml_node_string(node2);
           char *data2 = mycore_string_data(string2);
 #ifdef MODEST_HTML_DEBUG
-          printf("set_text '%s' to '%s'\n", data2, "selector2");
+          printf("set_text '%s' to '%s'\n", data2, selector2);
 #endif
           // add_set_text_instruction(result, selector2, data2);
 
           // free(selector1);
-          // free(selector2);
+          html_free(selector2);
         }
       }
       else if (compare_attributes(node1, node2, instructions) == true) {
@@ -300,17 +303,17 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
       }
     }
     else {
-      // char *selector1 = serialize_selector(node1);
+      char *selector1 = html_serialize_selector(node1);
       // remove_scope_from_selector(selector1, scope);
       // char *selector2 = serialize_selector(node2);
       // remove_scope_from_selector(selector2, scope);
       const char *tag_name2 = myhtml_tag_name_by_id(node2->tree, myhtml_node_tag_id(node2), NULL);
 #ifdef MODEST_HTML_DEBUG
-      printf("set_tag '%s' for '%s'\n", tag_name2, "selector1");
+      printf("set_tag '%s' for '%s'\n", tag_name2, selector1);
 #endif
       // add_set_tag_instruction(result, selector1, tag_name2);
 
-      // free(selector1);
+      html_free(selector1);
       // free(selector2);
     }
   } // else

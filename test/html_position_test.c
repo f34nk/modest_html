@@ -16,7 +16,7 @@ int main(int argc, char const *argv[])
   vec_str_t *buffer = html_get_buffer(w, buffer_index);
   char *result = html_vec_str_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "1|2") != 0){
+  if(strcmp(result, "1|2") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);

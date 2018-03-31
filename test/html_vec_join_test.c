@@ -20,7 +20,7 @@ int main(int argc, char const *argv[])
   const char *delimiter = "|";
   char *result = html_vec_str_join(&v, delimiter);
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "H|e|l|l|o") != 0){
+  if(strcmp(result, "H|e|l|l|o") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     vec_deinit(&v);
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
   delimiter = "";
   result = html_vec_str_join(&v, delimiter);
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "Hello") != 0){
+  if(strcmp(result, "Hello") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     vec_deinit(&v);

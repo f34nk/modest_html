@@ -45,8 +45,10 @@ char* html_serialize_selector(myhtml_tree_node_t* node)
 {
   vec_str_t vec;
   vec_init(&vec);
+
   serialize_selector(node, &vec);
 
+  vec_reverse(&vec);
   char *data = html_vec_str_join(&vec, " ");
 
   while(vec.length > 0) {
