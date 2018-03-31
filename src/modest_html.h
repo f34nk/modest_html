@@ -17,5 +17,6 @@
 #include "html_append.h"
 #include "html_position.h"
 #include "html_compare.h"
+#include "html_pretty_print.h"
 
 #endif
