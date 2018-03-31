@@ -1,0 +1,9 @@
+[submodule "libs/Modest"]
+	path = libs/Modest
+	url = https://github.com/lexborisov/Modest.git
+[submodule "libs/vec"]
+	path = libs/vec
+	url = https://github.com/rxi/vec.git
+[submodule "libs/dmt"]
+	path = libs/dmt
+	url = https://github.com/rxi/dmt.git
