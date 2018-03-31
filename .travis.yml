@@ -2,4 +2,4 @@ language: c
 dist: trusty
 sudo: false
 compiler: cc
-script: ./configure && make && make test
+script: ./configure && cd build && make && make test
