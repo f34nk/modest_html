@@ -20,12 +20,12 @@ message("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 
 set(CMAKE_C_LINK_EXECUTABLE "${CMAKE_C_LINK_EXECUTABLE} -lmodest_static -lpthread")
 
-file(GLOB_RECURSE MODEST_HTML "modest_html/*.c")
+file(GLOB_RECURSE SOURCE "src/*.c")
 
 add_library(
   ${PROJECT_NAME}
   STATIC
-  ${MODEST_HTML}
+  ${SOURCE}
   libs/vec/src/vec.c
   libs/dmt/src/dmt.c
 )

@@ -11,14 +11,14 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wno-write-strings")
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${CMAKE_CURRENT_SOURCE_DIR}/../libs/Modest/include")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -L${CMAKE_CURRENT_SOURCE_DIR}/../libs/Modest/lib")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${CMAKE_CURRENT_SOURCE_DIR}/../modest_html")
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${CMAKE_CURRENT_SOURCE_DIR}/../src")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -L${CMAKE_CURRENT_SOURCE_DIR}/../build")
 
 # add_definitions(-DMODEST_HTML_DEBUG -DMODEST_HTML_USE_DMT)
 
 message("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 
-file(GLOB_RECURSE MODEST_HTML "../modest_html/*.c")
+file(GLOB_RECURSE SOURCE "../src/*.c")
 
 file(GLOB_RECURSE TESTS "html_*_test.c")
 foreach(TEST ${TESTS})
@@ -32,7 +32,7 @@ foreach(TEST ${TESTS})
   target_sources(
     ${TEST_NAME} 
     PUBLIC
-    ${MODEST_HTML}
+    ${SOURCE}
     ../libs/vec/src/vec.c
     ../libs/dmt/src/dmt.c
   )
