@@ -15,7 +15,7 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
   - Dynamic Memory Tracker (DMT) Library
 
 ## Example
-For more examples please checkout the [tests](https://github.com/f34nk/modest_html/tree/master/test).
+For more examples please checkout [tests](https://github.com/f34nk/modest_html/tree/master/test).
 ```C
 /*
 modest_html is build around a workspace struct.
