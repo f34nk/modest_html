@@ -104,7 +104,7 @@ See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
   - [x] Insert node after another node
   - [x] Replace node with another node
   - [x] Slice html to a subset of nodes
-  - [ ] Get position of node in relation to its parent
+  - [x] Get position of node in relation to its parent
   - [x] Wrap node with another node
   - [ ] Pretty print html
   - [ ] Compare two html strings
