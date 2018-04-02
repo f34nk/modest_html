@@ -1,0 +1,52 @@
+#include "modest_html.h"
+
+int main(int argc, char const *argv[])
+{
+  html_workspace_t *w = html_init();
+  int i = 0;
+
+  // first tree
+  
+  const char *html = "<p class=\"hello\">Hello</p>";
+  const char *selector = "p";
+  html_result_t s1 = html_parse_and_select(w, html, selector);
+
+  myhtml_tree_node_t *node = html_get_node(w, s1.collection_index, 0);
+
+  if(html_node_is_text(node) == true) {
+    fprintf(stderr, "Failed\n");
+    html_destroy(w);
+    return 1;
+  }
+
+  if(html_node_has_attributes(node) == false) {
+    fprintf(stderr, "Failed\n");
+    html_destroy(w);
+    return 1;
+  }
+
+  html_vec_int_t *indices = html_node_get_attributes(w, node);
+  if(indices->length != 1) {
+    fprintf(stderr, "Failed\n");
+    html_destroy(w);
+    html_vec_deinit(indices);
+    return 1;
+  }
+
+  html_vec_str_t *attributes = html_get_buffer(w, indices->data[0]);
+  char *result = html_vec_join(attributes, "=");
+  printf("%d: %s\n", ++i, result);
+  if(strcmp(result, "class=hello") != 0){
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    html_destroy(w);
+    html_vec_deinit(indices);
+    return 1;
+  }
+  html_free(result);
+  
+  html_destroy(w);
+  // html_vec_deinit(indices);
+
+  return 0;
+}

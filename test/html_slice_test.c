@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 
   int collection_index = html_slice(w, s1.collection_index, 1, -1);
   int buffer_index = html_serialize_collection(w, collection_index);
-  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
   char *result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<p>Hello</p>|<div>World</div>") != 0){

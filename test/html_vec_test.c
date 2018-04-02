@@ -8,7 +8,7 @@ To check for memory leaks execute test with valgrind.
 int main(int argc, char const *argv[])
 {
   int i = 0;
-  html_vec_t v;
+  html_vec_str_t v;
 
   html_vec_init(&v);
   html_vec_push(&v, "H");

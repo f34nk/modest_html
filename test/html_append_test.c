@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
   html_result_t new_s1 = html_parse_and_select(w, new_html, new_selector);
 
   int buffer_index;
-  html_vec_t *buffer;
+  html_vec_str_t *buffer;
   char *result;
   const char *scope_name = "body";
 

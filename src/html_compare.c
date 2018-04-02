@@ -1,78 +1,15 @@
 #include "html_compare.h"
 #include "html_serialize.h"
 
-// concat str1 and str2
-char *concat_string(const char *str1, const char *str2)
+void add_set_attribute_instruction(html_vec_str_2d_t* instructions, const char* selector, const char* key, const char* value)
 {
-  char *result = NULL;
-  size_t n = 0;
-
-  if(str1) n += strlen(str1);
-  if(str2) n += strlen(str2);
-
-  if((str1 || str2) && (result = html_malloc(n + 1)) != NULL)
-  {
-    *result = '\0';
-
-    if(str1) strcpy(result, str1);
-    if(str2) strcat(result, str2);
-  }
-
-  return result;
-}
-
-/**
- * https://stackoverflow.com/a/9210560
- * @param  string   [description]
- * @param  delimiter [description]
- * @return         [description]
- */
-char** split_string(char* string, const char delimiter)
-{
-  char** result    = 0;
-  size_t count     = 0;
-  char* tmp        = string;
-  char* last_comma = 0;
-  char delim[3];
-  delim[0] = delimiter;
-  delim[1] = 0;
-
-  /* Count how many elements will be extracted. */
-  while (*tmp)
-  {
-    if (delimiter == *tmp)
-    {
-      count++;
-      last_comma = tmp;
-    }
-    tmp++;
-  }
-
-  /* Add space for trailing token. */
-  count += last_comma < (string + strlen(string) - 1);
-
-  /* Add space for terminating null string so caller
-     knows where the list of returned strings ends. */
-  count++;
-
-  result = html_malloc(sizeof(char*) * count);
-
-  if (result)
-  {
-    size_t idx  = 0;
-    char* token = strtok(string, delim);
-
-    while (token)
-    {
-      // assert(idx < count);
-      *(result + idx++) = strdup(token);
-      token = strtok(0, delim);
-    }
-    // assert(idx == count - 1);
-    *(result + idx) = 0;
-  }
-
-  return result;
+  // html_vec_str_t vec;
+  // html_vec_init(&vec);
+  // html_vec_push(&vec, "set_attribute");
+  // html_vec_push(&vec, selector);
+  // html_vec_push(&vec, key);
+  // html_vec_push(&vec, value);
+  // html_vec_push(instructions, vec);
 }
 
 bool is_text_node(myhtml_tree_node_t* node)
@@ -129,9 +66,9 @@ bool compare_text(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2)
   return false;
 }
 
-html_vec_t get_attributes(myhtml_tree_node_t* node)
+html_vec_str_t get_attributes(myhtml_tree_node_t* node)
 {
-  html_vec_t v;
+  html_vec_str_t v;
   html_vec_init(&v);
 
   if(node) {
@@ -160,14 +97,14 @@ html_vec_t get_attributes(myhtml_tree_node_t* node)
   return v;
 }
 
-bool compare_attributes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, html_vec_2d_t *instructions)
+bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, html_vec_str_2d_t* instructions)
 {
   if(node1 == NULL || node2 == NULL) {
     return false;
   }
 
-  html_vec_t v1 = get_attributes(node1);
-  html_vec_t v2 = get_attributes(node2);
+  html_vec_str_t v1 = get_attributes(node1);
+  html_vec_str_t v2 = get_attributes(node2);
   char *selector = html_serialize_selector(node1);
   // remove_scope_from_selector(selector, scope);
 
@@ -184,7 +121,7 @@ bool compare_attributes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, ht
 #ifdef MODEST_HTML_DEBUG
         printf("set_attribute '%s' to '%s'\n", val2, selector);
 #endif
-        // add_set_attribute_instruction(result, selector, kv[0], kv[1]);
+        add_set_attribute_instruction(instructions, selector, kv[0], kv[1]);
         html_free(kv);
         flag = false;
       }
@@ -226,7 +163,7 @@ bool compare_attributes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, ht
   return flag;
 }
 
-void compare_nodes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_2d_t *instructions)
+void compare_nodes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_str_2d_t *instructions)
 {
 #ifdef MODEST_HTML_DEBUG
     for(int i = 0; i < indent; i++){
@@ -289,7 +226,7 @@ void compare_nodes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int ind
           // remove_scope_from_selector(selector2, scope);
 
           mycore_string_t *string2 = myhtml_node_string(node2);
-          // char *data2 = mycore_string_data(string2);
+          char *data2 = mycore_string_data(string2);
 #ifdef MODEST_HTML_DEBUG
           printf("set_text '%s' to '%s'\n", data2, selector2);
 #endif
@@ -324,7 +261,7 @@ void compare_nodes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int ind
   } // else
 }
 
-void compare_trees(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_2d_t *instructions)
+void compare_trees(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_str_2d_t *instructions)
 {
   myhtml_tree_node_t* child_node1 = NULL;
   myhtml_tree_node_t* child_node2 = NULL;
@@ -377,11 +314,12 @@ int html_compare(html_workspace_t *workspace, int collection1_index, int collect
     myhtml_tree_node_t *node1 = collection1->list[0];
     myhtml_tree_node_t *node2 = collection2->list[0];
 
-    html_vec_2d_t instructions;
+    html_vec_str_2d_t instructions;
     html_vec_init(&instructions);
 
     compare_trees(node1, node2, 0, &instructions);
 
+    
     return -1;
     // html_vec_push(&workspace->buffers, buffer);
     // return workspace->buffers.length - 1;

@@ -93,7 +93,7 @@ void html_destroy(html_workspace_t *workspace)
   html_vec_deinit(&workspace->selectors);
 
   for (int i = 0; i < workspace->buffers.length; ++i) {
-    html_vec_t vec = workspace->buffers.data[i];
+    html_vec_str_t vec = workspace->buffers.data[i];
     while(vec.length > 0) {
       char *buffer = html_vec_pop(&vec);
       html_free(buffer);
@@ -213,6 +213,15 @@ void* html_get_collection(html_workspace_t *workspace, int collection_index)
   return (myhtml_collection_t*)workspace->collections.data[collection_index];
 }
 
+void* html_get_node(html_workspace_t *workspace, int collection_index, int index)
+{
+  myhtml_collection_t *collection = html_get_collection(workspace, collection_index);
+  if(collection == NULL) {
+    return NULL;
+  }
+  return (myhtml_tree_node_t*)collection->list[index];
+}
+
 void* html_get_buffer(html_workspace_t *workspace, int buffer_index)
 {
   if(workspace == NULL) {
@@ -229,5 +238,5 @@ void* html_get_buffer(html_workspace_t *workspace, int buffer_index)
     return NULL;
   }
   
-  return (html_vec_t*)&workspace->buffers.data[buffer_index];
+  return (html_vec_str_t*)&workspace->buffers.data[buffer_index];
 }

@@ -49,7 +49,7 @@ struct html_workspace
   entry_vec_t entries;
   selectors_list_vec_t selectors;
   collection_vec_t collections;
-  html_vec_2d_t buffers;
+  html_vec_str_2d_t buffers;
 }
 typedef html_workspace_t;
 /**
@@ -85,10 +85,17 @@ void* html_get_tree(html_workspace_t *workspace, int tree_index);
  */
 void* html_get_collection(html_workspace_t *workspace, int collection_index);
 /**
+ * Get pointer to myhtml node from collection for index.
+ * @param workspace        [current workspace]
+ * @param collection_index [target collection index]
+ * @return                 [myhtml_tree_node_t* or NULL]
+ */
+void* html_get_node(html_workspace_t *workspace, int collection_index, int index);
+/**
  * Get pointer to string vector for index.
  * @param  workspace    [current workspace]
  * @param  buffer_index [target buffer index]
- * @return              [html_vec_t* or NULL]
+ * @return              [html_vec_str_t* or NULL]
  */
 void* html_get_buffer(html_workspace_t *workspace, int buffer_index);
 

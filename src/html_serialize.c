@@ -1,6 +1,6 @@
 #include "html_serialize.h"
 
-bool serialize_selector(myhtml_tree_node_t *node, html_vec_t *result)
+bool serialize_selector(myhtml_tree_node_t *node, html_vec_str_t *result)
 {
   if(node == NULL) {
     return false;
@@ -31,7 +31,7 @@ char* html_serialize_selector(myhtml_tree_node_t *node)
     return NULL;
   }
 
-  html_vec_t vec;
+  html_vec_str_t vec;
   html_vec_init(&vec);
 
   serialize_selector(node, &vec);
@@ -46,64 +46,6 @@ char* html_serialize_selector(myhtml_tree_node_t *node)
   html_vec_deinit(&vec);
 
   return (char*)data;
-}
-
-char* html_vec_join(html_vec_t *vec, const char *delimiter)
-{
-  if(vec == NULL) {
-    return NULL;
-  }
-  
-#if 0
-  char *data = NULL;
-  data = (char*)vec_malloc(0);
-  if(data == NULL) {
-    return NULL;
-  }
-#endif
-
-#if 0
-  char *data = NULL;
-  data = (char*)vec_malloc(1 * sizeof(char));
-  if(data == NULL) {
-    return NULL;
-  }
-  *data = '\0';
-#endif
-
-#if 1
-  char *data = (char*)html_calloc(1, 1);
-#endif
-
-  int i;
-  char* value;
-  html_vec_foreach(vec, value, i) {
-    int prev = (int)strlen(data);
-    int length = (int)strlen(value) + 1;
-    char *new_data = (char*)html_realloc(data, prev + length * sizeof(char));
-    if(new_data == NULL) {
-      html_free(data);
-      return NULL;
-    }
-    // strncat((char*)&new_data[prev], value, length);
-    strcpy((char*)&new_data[prev], value);
-    data = new_data;
-
-    if(i < vec->length - 1 && strlen(delimiter) > 0) {
-      prev = strlen(data);
-      length = strlen(delimiter) + 1;
-      new_data = (char*)html_realloc(data, prev + length * sizeof(char));
-      if(new_data == NULL) {
-        html_free(data);
-        return NULL;
-      }
-      // strncat((char*)&new_data[prev], delimiter, length);
-      strcpy((char*)&new_data[prev], delimiter);
-      data = new_data;
-    }
-  }
-  // User must free this data.
-  return data;
 }
 
 mystatus_t html_dump_serialization_callback(const char *data, size_t data_length, void *file)
@@ -163,7 +105,7 @@ char *html_serialize_node(myhtml_tree_node_t *node)
 
 mystatus_t html_serialization_callback(const char *data, size_t data_length, void *result)
 {
-  html_vec_t *vec = (html_vec_t*)result;
+  html_vec_str_t *vec = (html_vec_str_t*)result;
 
   char *copy = (char*)html_malloc(data_length + 1 * sizeof(char));
   if(copy) {
@@ -176,7 +118,7 @@ mystatus_t html_serialization_callback(const char *data, size_t data_length, voi
 
 char* html_serialize_node(myhtml_tree_node_t *node)
 {
-  html_vec_t vec;
+  html_vec_str_t vec;
   html_vec_init(&vec);
   myhtml_serialization_tree_callback(node, html_serialization_callback, (void*)&vec);
 
@@ -206,7 +148,7 @@ int html_serialize_collection(html_workspace_t *workspace, int collection_index)
     return -1;
   }
 
-  html_vec_t buffer;
+  html_vec_str_t buffer;
   html_vec_init(&buffer);
 
   for(size_t i = 0; i < collection->length; i++) {
@@ -230,7 +172,7 @@ int html_serialize_collection(html_workspace_t *workspace, int collection_index)
 
 int html_serialize_tree(html_workspace_t *workspace, int tree_index, const char *scope_name)
 {
-  html_vec_t buffer;
+  html_vec_str_t buffer;
   html_vec_init(&buffer);
 
   myhtml_tree_t *tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);

@@ -18,6 +18,7 @@
 
 #include "html_vec.h"
 #include "html_memory.h"
+#include "html_string.h"
 #include "html_workspace.h"
 
 #endif

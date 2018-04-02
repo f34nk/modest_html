@@ -65,7 +65,7 @@ int html_get_attribute(html_workspace_t *workspace, int collection_index, const 
     return -1;
   }
 
-  html_vec_t buffer;
+  html_vec_str_t buffer;
   html_vec_init(&buffer);
 
   if(collection && collection->list && collection->length) {
