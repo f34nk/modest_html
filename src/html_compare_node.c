@@ -179,21 +179,28 @@ bool compare_text(html_node_t *node1, html_node_t *node2)
   return (strcmp(node1->text, node2->text) == 0) ? true : false;
 }
 
+void compare_attributes(html_workspace_t *workspace, html_node_t *node1, html_node_t *node2, html_vec_int_t *buffer_indices)
+{
+
+}
+
 void compare_node_params(html_workspace_t *workspace, html_node_t *node1, html_node_t *node2, html_vec_int_t *buffer_indices)
 {
-  if(compare_tag_names(node1, node2) == true) {
-    if(html_node_is_text(node1) && html_node_is_text(node2)) {
-      if(compare_text(node1, node2) == false) {
-        add_set_text_instruction(workspace, node2->parent_selector, node2->text, buffer_indices);
-      }
-    }
-    else {
-      printf("selector = %s\n", node1->selector);
-    }
-  }
-  else {
+  if(compare_tag_names(node1, node2) == false) {
     add_set_tag_instruction(workspace, node1->selector, node2->tag_name, buffer_indices);
   }
+
+  if(html_node_is_text(node1) && html_node_is_text(node2)) {
+    // this is a text node
+    if(compare_text(node1, node2) == false) {
+      // different text
+      add_set_text_instruction(workspace, node2->parent_selector, node2->text, buffer_indices);
+    }
+  }
+  else if(html_node_has_attributes(node1) && html_node_has_attributes(node2)){
+    compare_attributes(workspace, node1, node2, buffer_indices);
+  }
+  
 }
 
 void html_compare_nodes(html_workspace_t *workspace, myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_int_t *buffer_indices)

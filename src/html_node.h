@@ -37,5 +37,6 @@ void html_node_destroy(html_node_t *params);
 bool html_node_get(myhtml_tree_node_t* node, html_node_t *params);
 void html_node_dump(FILE *file, html_node_t *params);
 bool html_node_is_text(html_node_t *params);
+bool html_node_has_attributes(html_node_t *params);
 
 #endif

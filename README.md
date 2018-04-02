@@ -2,7 +2,7 @@
 
 # modest_html
 
-This library wraps functionality of lexborisovs **Modest**. It is written in in pure C99 and exposes a lot of useful features to parse and manipulate a html DOM. Internally it makes use of rxis **vec**, **map** and **dmt** libraries.
+This library wraps functionality of lexborisovs **Modest**. It is written in in pure C99 and exposes a lot of useful features to parse and manipulate a html DOM. Internally it makes use of rxis excellent **vec**, **map** and **dmt** libraries.
 
 >Modest is a fast HTML renderer implemented as a pure C99 library with no outside dependencies.
 
@@ -55,7 +55,7 @@ html_free(result);
 html_destroy(w);
 ```
 
-## Target dependencies
+## Dependencies
 ```
 cmake 3.x
 ```

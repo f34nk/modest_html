@@ -115,6 +115,14 @@ bool html_node_is_text(html_node_t *params)
   return (strcmp(params->tag_name, "-text") == 0) ? true : false;
 }
 
+bool html_node_has_attributes(html_node_t *params)
+{
+  if(params == NULL) {
+    return false;
+  }
+  return (params->keys.length > 0) ? true : false;
+}
+
 void html_node_dump(FILE *file, html_node_t *params)
 {
   fprintf((FILE*)file, "html_node_dump()\n");

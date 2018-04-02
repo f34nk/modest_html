@@ -39,35 +39,35 @@ int main(int argc, char const *argv[])
   }
   html_vec_clear(&buffer_indices);
 
-  // // second tree
+  // second tree
 
-  // html = "<div><p>Hello</p><p id=\"change me\">World</p></div>";
-  // selector = "p";
-  // html_result_t s3 = html_parse_and_select(w, html, selector);
+  html = "<div><p>Hello</p><p id=\"change me\">World</p></div>";
+  selector = "p";
+  html_result_t s3 = html_parse_and_select(w, html, selector);
 
-  // html = "<div><p>Hello</p><p id=\"hello\" class=\"world\">World</p></div>";
-  // selector = "p";
-  // html_result_t s4 = html_parse_and_select(w, html, selector);
+  html = "<div><p>Hello</p><p id=\"hello\" class=\"world\">World</p></div>";
+  selector = "p";
+  html_result_t s4 = html_parse_and_select(w, html, selector);
 
-  // html_compare(w, s3.collection_index, s4.collection_index, &buffer_indices);
+  html_compare(w, s3.collection_index, s4.collection_index, &buffer_indices);
   
-  // html_vec_foreach(&buffer_indices, buffer_index, j) {
-  //   html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
-  //   char *result = html_vec_join(buffer, "|");
-  //   char *comparisons[2] = {
-  //     "set_attribute|html body div p|class|world",
-  //     "asdasd"
-  //   };
-  //   printf("%d: %s\n", j, result);
-  //   if(strcmp(result, comparisons[j]) != 0){
-  //     fprintf(stderr, "Failed\n");
-  //     html_free(result);
-  //     html_destroy(w);
-  //     return 1;
-  //   }
-  //   html_free(result);
-  // }
-  // html_vec_deinit(&buffer_indices);
+  html_vec_foreach(&buffer_indices, buffer_index, j) {
+    html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
+    char *result = html_vec_join(buffer, "|");
+    char *comparisons[2] = {
+      "set_attribute|html body div p|class|world",
+      "set_attribute|html body div p|id|hello"
+    };
+    printf("%d: %s\n", j, result);
+    if(strcmp(result, comparisons[j]) != 0){
+      fprintf(stderr, "Failed\n");
+      html_free(result);
+      html_destroy(w);
+      return 1;
+    }
+    html_free(result);
+  }
+  html_vec_deinit(&buffer_indices);
 
   html_destroy(w);
   printf("ok\n");

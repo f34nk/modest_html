@@ -26,6 +26,11 @@
 
 // char* html_string_copy(const char* string);
 
+/**
+ * Copy a string.
+ * @param string [source string]
+ * @param copy   [destination string]
+ */
 #define html_string_copy(string, copy) if(string != NULL) { copy = html_malloc(strlen(string) + 1 * sizeof(char*)); if(copy != NULL) {*copy = '\0'; strcpy(copy, string); }} else { copy = NULL; }
 
 #endif
