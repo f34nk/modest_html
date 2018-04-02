@@ -15,8 +15,8 @@ int main(int argc, char const *argv[])
   html_result_t s2 = html_parse_and_select(w, html, selector);
 
   int buffer_index = html_compare(w, s1.collection_index, s2.collection_index);
-  vec_str_t *buffer = html_get_buffer(w, buffer_index);
-  char *result = html_vec_str_join(buffer, "|");
+  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  char *result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "asdasdasd") != 0){
     fprintf(stderr, "Failed\n");

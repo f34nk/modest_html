@@ -14,8 +14,8 @@ int main(int argc, char const *argv[])
 
   const char *scope_name = "html";
   int buffer_index = html_serialize_tree(w, s1.tree_index, scope_name);
-  vec_str_t *buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_str_join(buffer, "|");
+  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  char* result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<html><head></head><body><div><p class=\"hello\">Hello</p>World</div></body></html>") != 0){
     fprintf(stderr, "Failed\n");
@@ -27,7 +27,7 @@ int main(int argc, char const *argv[])
 
   buffer_index = html_serialize_collection(w, s1.collection_index);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<p class=\"hello\">Hello</p>") != 0){
     fprintf(stderr, "Failed\n");
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
   scope_name = "body";
   buffer_index = html_serialize_tree(w, s2.tree_index, scope_name);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<body><p>Lorem</p><p>ipsum<a href=\"http://google.de\">dolor sit</a></p></body>") != 0){
     fprintf(stderr, "Failed\n");
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
 
   buffer_index = html_serialize_collection(w, s2.collection_index);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<p>Lorem</p>|<p>ipsum<a href=\"http://google.de\">dolor sit</a></p>|<a href=\"http://google.de\">dolor sit</a>") != 0){
     fprintf(stderr, "Failed\n");
@@ -78,7 +78,7 @@ int main(int argc, char const *argv[])
 
   // buffer_index = html_serialize_collection(w, s3.collection_index);
   // buffer = html_get_buffer(w, buffer_index);
-  // result = html_vec_str_join(buffer, "|");
+  // result = html_vec_join(buffer, "|");
   // printf("%d: %s\n", ++i, result);
   // if(strcmp(result, "") != 0){
   //   fprintf(stderr, "Failed\n");
@@ -91,7 +91,7 @@ int main(int argc, char const *argv[])
   scope_name = "body";
   buffer_index = html_serialize_tree(w, s3.tree_index, scope_name);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<body>Hello World</body>") != 0){
     fprintf(stderr, "Failed\n");

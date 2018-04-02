@@ -13,8 +13,8 @@ int main(int argc, char const *argv[])
   html_result_t s1 = html_parse_and_select(w, html, selector);
 
   int attributes_index = html_get_attribute(w, s1.collection_index, "class");
-  vec_str_t *attributes = html_get_buffer(w, attributes_index);
-  char *result = html_vec_str_join(attributes, "|");
+  html_vec_t *attributes = html_get_buffer(w, attributes_index);
+  char *result = html_vec_join(attributes, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "hello") != 0){
     fprintf(stderr, "Failed\n");
@@ -26,8 +26,8 @@ int main(int argc, char const *argv[])
 
   html_set_attribute(w, s1.collection_index, "class", "changed");
   int buffer_index = html_serialize_collection(w, s1.collection_index);
-  vec_str_t *buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<p class=\"changed\">Hello</p>") != 0){
     fprintf(stderr, "Failed\n");
@@ -45,7 +45,7 @@ int main(int argc, char const *argv[])
 
   attributes_index = html_get_attribute(w, s2.collection_index, "href");
   attributes = html_get_buffer(w, attributes_index);
-  result = html_vec_str_join(attributes, "|");
+  result = html_vec_join(attributes, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "http://google.de") != 0){
     fprintf(stderr, "Failed\n");
@@ -58,7 +58,7 @@ int main(int argc, char const *argv[])
   html_set_attribute(w, s2.collection_index, "class", "changed");
   buffer_index = html_serialize_collection(w, s2.collection_index);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<a href=\"http://google.de\" class=\"changed\">dolor sit</a>") != 0){
     fprintf(stderr, "Failed\n");

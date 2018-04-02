@@ -19,8 +19,8 @@ int main(int argc, char const *argv[])
   html_wrap(w, s1.collection_index, new_s1.collection_index);
   const char *scope_name = "body";
   int buffer_index = html_serialize_tree(w, s1.tree_index, scope_name);
-  vec_str_t *buffer = html_get_buffer(w, buffer_index);
-  char *result = html_vec_str_join(buffer, "|");
+  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  char *result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "<body><div><span>Hello<p class=\"hello\">Hello</p></span>World</div></body>") != 0){
     fprintf(stderr, "Failed\n");
@@ -46,7 +46,7 @@ int main(int argc, char const *argv[])
   // scope_name = "body";
   // buffer_index = html_serialize_tree(w, s2.tree_index, scope_name);
   // buffer = html_get_buffer(w, buffer_index);
-  // result = html_vec_str_join(buffer, "|");
+  // result = html_vec_join(buffer, "|");
   // printf("%d: %s\n", ++i, result);
   // if(strcmp(result, "sdasd") != 0){
   //   fprintf(stderr, "Failed\n");

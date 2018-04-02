@@ -20,7 +20,7 @@ int html_parse_tree(html_workspace_t *workspace, const char *data, size_t data_s
     fprintf(stderr, "html_parse_tree() - Failed to parse data\n");
     return -1;
   }
-  vec_push(&workspace->trees, tree);
+  html_vec_push(&workspace->trees, tree);
 
   return workspace->trees.length - 1;
 }

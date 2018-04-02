@@ -22,10 +22,6 @@
 #include "html_includes.h"
 
 /**
- * Vector of string vectors.
- */
-typedef vec_t(vec_str_t) vec_str_vec_t;
-/**
  * Vector of myhtml tree pointers.
  */
 typedef vec_t(myhtml_tree_t*) tree_vec_t;
@@ -53,7 +49,7 @@ struct html_workspace
   entry_vec_t entries;
   selectors_list_vec_t selectors;
   collection_vec_t collections;
-  vec_str_vec_t buffers;
+  html_vec_2d_t buffers;
 }
 typedef html_workspace_t;
 /**
@@ -92,7 +88,7 @@ void* html_get_collection(html_workspace_t *workspace, int collection_index);
  * Get pointer to string vector for index.
  * @param  workspace    [current workspace]
  * @param  buffer_index [target buffer index]
- * @return              [vec_str_t* or NULL]
+ * @return              [html_vec_t* or NULL]
  */
 void* html_get_buffer(html_workspace_t *workspace, int buffer_index);
 

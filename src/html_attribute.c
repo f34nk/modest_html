@@ -65,8 +65,8 @@ int html_get_attribute(html_workspace_t *workspace, int collection_index, const 
     return -1;
   }
 
-  vec_str_t buffer;
-  vec_init(&buffer);
+  html_vec_t buffer;
+  html_vec_init(&buffer);
 
   if(collection && collection->list && collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
@@ -77,12 +77,12 @@ int html_get_attribute(html_workspace_t *workspace, int collection_index, const 
       }
       size_t length = strlen(value);
       if(length > 0) {
-        vec_push(&buffer, value);
+        html_vec_push(&buffer, value);
       }
     }
   }
 
-  vec_push(&workspace->buffers, buffer);
+  html_vec_push(&workspace->buffers, buffer);
 
   return workspace->buffers.length - 1;
 }
