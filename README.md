@@ -33,8 +33,8 @@ int tree_index = html_parse_tree(w, html, strlen(html));
 int buffer_index = html_serialize_tree(w, tree_index, "body");
 
 // get buffer and join into a string
-vec_str_t *buffer = html_get_buffer(w, buffer_index);
-char* result = html_vec_str_join(buffer, "");
+html_vec_t *buffer = html_get_buffer(w, buffer_index);
+char* result = html_vec_join(buffer, "");
 printf("%s\n", result);
 
 // test result

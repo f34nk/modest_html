@@ -85,7 +85,7 @@ int html_slice(html_workspace_t *workspace, int collection_index, int start, int
   if(collection && collection->list && collection->length) {
     myhtml_collection_t *new_collection = slice_collection(collection, start, end);
     if(new_collection && new_collection->list && new_collection->length) {
-      vec_push(&workspace->collections, new_collection);
+      html_vec_push(&workspace->collections, new_collection);
       return workspace->collections.length - 1;
     }
   }

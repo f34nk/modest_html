@@ -1,5 +1,5 @@
-#ifndef HTML_SERIALIZE_H
-#define HTML_SERIALIZE_H
+#ifndef HTML_VEC_H
+#define HTML_VEC_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -19,23 +19,22 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-#include "html_includes.h"
+#include "vec.h"
 
 /**
- * Serialize a collection.
- * @param  workspace        [current workspace]
- * @param  collection_index [target collection index]
- * @param  delimiter        [delimiter string]
- * @return                  [buffer index]
+ * Vector of strings.
+ * 
  */
-int html_serialize_collection(html_workspace_t *workspace, int collection_index);
+typedef vec_t(char*) html_vec_t;
+/**
+ * Vector of string vectors.
+ */
+typedef vec_t(html_vec_t) html_vec_2d_t;
 
-int html_serialize_tree(html_workspace_t *workspace, int tree_index, const char *scope_name);
-
-char *html_vec_join(html_vec_t *vec, const char *delimiter);
-
-char *html_serialize_node(myhtml_tree_node_t *node);
-
-void html_dump_node(FILE *file, myhtml_tree_node_t *node);
+#define html_vec_foreach(v, var, iter) vec_foreach(v, var, iter)
+#define html_vec_push(v, val) vec_push(v, val)
+#define html_vec_pop(v) vec_pop(v)
+#define html_vec_init(v) vec_init(v)
+#define html_vec_deinit(v) vec_deinit(v)
 
 #endif

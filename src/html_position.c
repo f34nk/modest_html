@@ -47,8 +47,8 @@ int html_position(html_workspace_t *workspace, int collection_index)
   
   if(collection && collection->list && collection->length) {
 
-    vec_str_t buffer;
-    vec_init(&buffer);
+    html_vec_t buffer;
+    html_vec_init(&buffer);
 
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t *node = collection->list[i];
@@ -57,12 +57,12 @@ int html_position(html_workspace_t *workspace, int collection_index)
         if(pos != -1){
           char *data = (char*)html_malloc(1 + sizeof(pos));
           sprintf(data, "%d", pos);
-          vec_push(&buffer, data);
+          html_vec_push(&buffer, data);
         }
       }
     }
 
-    vec_push(&workspace->buffers, buffer);
+    html_vec_push(&workspace->buffers, buffer);
 
     return workspace->buffers.length - 1;
   }

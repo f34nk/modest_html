@@ -19,48 +19,8 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <string.h>
-// #include <stdbool.h>
-
-// #include <myhtml/myhtml.h>
-// #include <modest/finder/finder.h>
-// #include <myhtml/serialization.h>
-// #include <mycss/mycss.h>
-// #include <mycss/selectors/init.h>
-// #include <mycss/selectors/serialization.h>
-
-// #include "vec.h"
-// #include "vec_utils.h"
-
-// #define MODEST_HTML_DEBUG
-// #define MODEST_HTML_USE_DMT
-
-// #ifdef MODEST_HTML_USE_DMT
-
-// #include "dmt.h"
-
-// #define html_malloc(size) dmt_malloc(size)
-// #define html_realloc(data, size) dmt_realloc(data, size)
-// #define html_calloc(num, size) dmt_calloc(num, size)
-// #define html_free(data) dmt_free(data)
-
-// #else
-
-// #define html_malloc(size) malloc(size)
-// #define html_realloc(data, size) realloc(data, size)
-// #define html_calloc(num, size) calloc(num, size)
-// #define html_free(data) free(data)
-
-// #endif
-
 #include "html_includes.h"
 
-/**
- * Vector of string vectors.
- */
-typedef vec_t(vec_str_t) vec_str_vec_t;
 /**
  * Vector of myhtml tree pointers.
  */
@@ -89,7 +49,7 @@ struct html_workspace
   entry_vec_t entries;
   selectors_list_vec_t selectors;
   collection_vec_t collections;
-  vec_str_vec_t buffers;
+  html_vec_2d_t buffers;
 }
 typedef html_workspace_t;
 /**
@@ -128,7 +88,7 @@ void* html_get_collection(html_workspace_t *workspace, int collection_index);
  * Get pointer to string vector for index.
  * @param  workspace    [current workspace]
  * @param  buffer_index [target buffer index]
- * @return              [vec_str_t* or NULL]
+ * @return              [html_vec_t* or NULL]
  */
 void* html_get_buffer(html_workspace_t *workspace, int buffer_index);
 
