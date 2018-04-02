@@ -1,5 +1,5 @@
-#ifndef HTML_STRING_H
-#define HTML_STRING_H
+#ifndef HTML_NODE_H
+#define HTML_NODE_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -21,11 +21,21 @@
 
 #include "html_includes.h"
 
-// char *concat_string(const char *str1, const char *str2);
-// char** split_string(char* string, const char delimiter);
+struct html_node
+{
+  char *tag_name;
+  char *selector;
+  html_vec_str_t keys;
+  html_map_str_t key_value;
+  char *text;
+  char *parent_selector;
+}
+typedef html_node_t;
 
-// char* html_string_copy(const char* string);
-
-#define html_string_copy(string, copy) if(string != NULL) { copy = html_malloc(strlen(string) + 1 * sizeof(char*)); if(copy != NULL) {*copy = '\0'; strcpy(copy, string); }} else { copy = NULL; }
+void html_node_init(html_node_t *params);
+void html_node_destroy(html_node_t *params);
+bool html_node_get(myhtml_tree_node_t* node, html_node_t *params);
+void html_node_dump(FILE *file, html_node_t *params);
+bool html_node_is_text(html_node_t *params);
 
 #endif

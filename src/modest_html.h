@@ -3,8 +3,9 @@
 
 #include "html_memory.h"
 #include "html_vec.h"
+#include "html_map.h"
 #include "html_string.h"
-#include "html_node_utils.h"
+#include "html_node.h"
 #include "html_workspace.h"
 #include "html_parse.h"
 #include "html_select.h"

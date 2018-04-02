@@ -1,74 +1,22 @@
-#include "html_node_utils.h"
-
-bool html_node_is_text(myhtml_tree_node_t* node)
-{
-  if(node){
-    const char *tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
-    if(strcmp(tag_name, "-text") == 0){
-      return true;
-    }
-  }
-  return false;
-}
-
-bool html_node_has_attributes(myhtml_tree_node_t* node)
-{
-  if(node){
-    myhtml_tree_attr_t *attr = myhtml_node_attribute_first(node);
-    return (attr) ? true : false;
-  }
-  return false;
-}
-
-bool html_node_get_attributes(html_workspace_t *workspace, myhtml_tree_node_t* node, html_vec_int_t* buffer_indices)
-{
-  if(node == NULL) {
-  	return false;
-  }
-
-  myhtml_tree_attr_t *attr = myhtml_node_attribute_first(node);
-  if(attr){
-    while (attr) {
-      const char *key = myhtml_attribute_key(attr, NULL);
-      if(key) {
-        const char *value = myhtml_attribute_value(attr, NULL);
-        if(value){
-          html_vec_str_t vec;
-          html_vec_init(&vec);
-
-          char *key_copy;
-          html_string_copy(key, key_copy);
-          html_vec_push(&vec, key_copy);
-
-          char *value_copy;
-          html_string_copy(value, value_copy);
-          html_vec_push(&vec, value_copy);
-          
-          html_vec_push(&workspace->buffers, vec);
-
-          int last = workspace->buffers.length - 1;
-          html_vec_push(buffer_indices, last);
-        }
-      }
-      attr = myhtml_attribute_next(attr);
-    } // while attr
-  } // if attr
-
-  return true;
-}
+#include "html_node.h"
+#include "html_serialize.h"
 
 void html_node_init(html_node_t *params)
 {
   params->tag_name = NULL;
+  params->selector = NULL;
   html_vec_init(&params->keys);
   html_map_init(&params->key_value);
   params->text = NULL;
+  params->parent_selector = NULL;
 }
 
 void html_node_destroy(html_node_t *params)
 {
   // free tag_name
   html_free(params->tag_name);
+  // free selector
+  html_free(params->selector);
 
   // free list of keys
   while(params->keys.length > 0) {
@@ -89,12 +37,10 @@ void html_node_destroy(html_node_t *params)
 
   // free text
   html_free(params->text);
+  html_free(params->parent_selector);
 }
 
-int html_sort_str_callback(const void *a, const void *b) {
-  //const char *a = a_, *b = b_;
-  // return *a < *b ? -1 : *a > *b;
-  
+int html_node_sort_callback(const void *a, const void *b) {
   return strcmp((char*)a, (char*)b);
 }
 
@@ -107,17 +53,30 @@ bool html_node_get(myhtml_tree_node_t* node, html_node_t *params)
   const char *tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
   if(strcmp(tag_name, "-text") == 0){
     // this is a text node
+    // params->tag_name = NULL;
+    char *tag_name_copy;
+    html_string_copy(tag_name, tag_name_copy);
+    params->tag_name = tag_name_copy;
+
     mycore_string_t *string = myhtml_node_string(node);
     const char *data = mycore_string_data(string);
     char *data_copy;
     html_string_copy(data, data_copy)
     params->text = data_copy;
+
+    myhtml_tree_node_t *parent_node = myhtml_node_parent(node);
+    params->parent_selector  = html_serialize_selector(parent_node);
+
+    return true;
   }
   else {
-    // this is not a text node
+    // this is NOT a text node
+    params->text = NULL;
     char *tag_name_copy;
     html_string_copy(tag_name, tag_name_copy);
     params->tag_name = tag_name_copy;
+
+    params->selector = html_serialize_selector(node);
 
     myhtml_tree_attr_t *attr = myhtml_node_attribute_first(node);
     
@@ -141,17 +100,27 @@ bool html_node_get(myhtml_tree_node_t* node, html_node_t *params)
     } // while attr
 
     // sort keys
-    html_vec_sort(&params->keys, html_sort_str_callback);
+    html_vec_sort(&params->keys, html_node_sort_callback);
+    return true;
   }
 
   return false;
 }
 
+bool html_node_is_text(html_node_t *params)
+{
+  if(params == NULL) {
+    return false;
+  }
+  return (strcmp(params->tag_name, "-text") == 0) ? true : false;
+}
+
 void html_node_dump(FILE *file, html_node_t *params)
 {
-  fprintf((FILE*)file, "html_node_dump()\n", params->tag_name);
+  fprintf((FILE*)file, "html_node_dump()\n");
   if(params->tag_name) {
     fprintf((FILE*)file, "\ttag_name = %s\n", params->tag_name);
+    fprintf((FILE*)file, "\tselector = %s\n", params->selector);
   }
 
   if(params->keys.length > 0) {
@@ -178,17 +147,7 @@ void html_node_dump(FILE *file, html_node_t *params)
     }
   }
 
-  // // free key value map
-  // const char *key;
-  // map_iter_t iter = html_map_iter(&params->key_value);
-  // while ((key = html_map_next(&params->key_value, &iter))) {
-  //   char *value = *html_map_get(&params->key_value, key);
-  //   // html_free(key);
-  //   html_free(value);
-  // }
-  // html_map_deinit(&params->key_value);
-
   if(params->text) {
-    fprintf((FILE*)file, "text = %s\n", params->text);
+    fprintf((FILE*)file, "\ttext = %s\n", params->text);
   }
 }
