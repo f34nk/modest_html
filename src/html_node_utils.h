@@ -28,6 +28,6 @@ bool html_node_has_attributes(myhtml_tree_node_t* node);
  * @param 
  * @return           [html_vec_int_t* or NULL]
  */
-void* html_node_get_attributes(html_workspace_t *workspace, myhtml_tree_node_t* node);
+bool html_node_get_attributes(html_workspace_t *workspace, myhtml_tree_node_t* node, html_vec_int_t* buffer_indices);
 
 #endif

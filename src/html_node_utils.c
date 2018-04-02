@@ -20,14 +20,11 @@ bool html_node_has_attributes(myhtml_tree_node_t* node)
   return false;
 }
 
-void* html_node_get_attributes(html_workspace_t *workspace, myhtml_tree_node_t* node)
+bool html_node_get_attributes(html_workspace_t *workspace, myhtml_tree_node_t* node, html_vec_int_t* buffer_indices)
 {
   if(node == NULL) {
-  	return NULL;
+  	return false;
   }
-  
-  html_vec_int_t indices;
-  html_vec_init(&indices);
 
   myhtml_tree_attr_t *attr = myhtml_node_attribute_first(node);
   if(attr){
@@ -45,17 +42,12 @@ void* html_node_get_attributes(html_workspace_t *workspace, myhtml_tree_node_t* 
           html_vec_push(&workspace->buffers, vec);
 
           int last = workspace->buffers.length - 1;
-          html_vec_push(&indices, last);
+          html_vec_push(buffer_indices, last);
         }
       }
       attr = myhtml_attribute_next(attr);
     } // while attr
   } // if attr
 
-  if(indices.length == 0) {
-    html_vec_deinit(&indices);
-    return NULL;
-  }
-
-  return (html_vec_int_t*)&indices;
+  return true;
 }
