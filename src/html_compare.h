@@ -21,6 +21,6 @@
 
 #include "html_includes.h"
 
-int html_compare(html_workspace_t *workspace, int collection1_index, int collection2_index);
+bool html_compare(html_workspace_t *workspace, int collection1_index, int collection2_index, html_vec_int_t *buffer_indices);
 
 #endif

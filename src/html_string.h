@@ -24,6 +24,8 @@
 char *concat_string(const char *str1, const char *str2);
 char** split_string(char* string, const char delimiter);
 
-char* html_string_copy(const char* string);
+// char* html_string_copy(const char* string);
+
+#define html_string_copy(string, copy) if(string != NULL) { copy = html_malloc(strlen(string) + 1 * sizeof(char*)); if(copy != NULL) {*copy = '\0'; strcpy(copy, string); }}
 
 #endif

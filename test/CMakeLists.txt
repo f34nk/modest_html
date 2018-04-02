@@ -32,6 +32,7 @@ foreach(TEST ${TESTS})
     PUBLIC
     ${SOURCE}
     ../libs/vec/src/vec.c
+    ../libs/map/src/map.c
     ../libs/dmt/src/dmt.c
   )
 

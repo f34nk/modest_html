@@ -2,7 +2,7 @@
 
 # modest_html
 
-This library wraps functionality of lexborisovs **Modest**. It is written in in pure C99 and exposes a lot of useful features to parse and manipulate a html DOM. Internally it makes use of rxis **vec** and **dmt** libraries.
+This library wraps functionality of lexborisovs **Modest**. It is written in in pure C99 and exposes a lot of useful features to parse and manipulate a html DOM. Internally it makes use of rxis **vec**, **map** and **dmt** libraries.
 
 >Modest is a fast HTML renderer implemented as a pure C99 library with no outside dependencies.
 
@@ -13,6 +13,9 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
 - [vec](https://github.com/rxi/vec)
   - A type-safe dynamic array implementation for C
 
+- [map](https://github.com/rxi/map)
+  - A type-safe generic hashmap implementation for C.
+  
 - [dmt](https://github.com/rxi/dmt)
   - Dynamic Memory Tracker (DMT) Library
 

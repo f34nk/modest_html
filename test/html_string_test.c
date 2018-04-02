@@ -4,7 +4,8 @@ int main(int argc, char const *argv[])
 {
   int i = 0;
   const char *data = "Hello World";
-  char *result = html_string_copy(data);
+  char *result;
+  html_string_copy(data, result);
   printf("%d: %s\n", ++i, result);
   if(strcmp(result, "Hello World") != 0){
     fprintf(stderr, "Failed\n");

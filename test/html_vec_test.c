@@ -2,7 +2,7 @@
 /*
 To check for memory leaks execute test with valgrind.
 
-  valgrind --leak-check=yes test/html_vec_join_test
+  valgrind --leak-check=yes test/html_vec_test
 
 */
 int main(int argc, char const *argv[])

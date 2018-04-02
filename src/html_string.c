@@ -75,18 +75,18 @@ char** split_string(char* string, const char delimiter)
   return result;
 }
 
-char* html_string_copy(const char* string)
-{
-  if(string == NULL) {
-    return NULL;
-  }
+// char* html_string_copy(const char* string)
+// {
+//   if(string == NULL) {
+//     return NULL;
+//   }
 
-  char *data = html_malloc(strlen(string) + 1 * sizeof(char*));
-  if(data == NULL) {
-    return NULL;
-  }
-  *data = '\0';
-  strcpy(data, string);
+//   char *data = html_malloc(strlen(string) + 1 * sizeof(char*));
+//   if(data == NULL) {
+//     return NULL;
+//   }
+//   *data = '\0';
+//   strcpy(data, string);
 
-  return data;
-}
+//   return data;
+// }

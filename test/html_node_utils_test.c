@@ -59,9 +59,15 @@ int main(int argc, char const *argv[])
   }
   html_free(result);
 
+  html_node_t params;
+  html_node_init(&params);
+  html_node_get(node, &params);
+  html_node_dump(stdout, &params);
+  html_node_destroy(&params);
+
+
   html_vec_deinit(&buffer_indices);
-
   html_destroy(w);
-
+  printf("ok\n");
   return 0;
 }

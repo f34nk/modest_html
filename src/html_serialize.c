@@ -11,7 +11,7 @@ bool serialize_selector(myhtml_tree_node_t *node, html_vec_str_t *result)
     return true;
   }
   
-  char *copy = (char*)html_malloc(strlen(tag_name) + 1 * sizeof(char));
+  char *copy = (char*)html_malloc(strlen(tag_name) + 1 * sizeof(char*));
   if(copy) {
     strcpy(copy, tag_name);
     html_vec_push(result, copy);
