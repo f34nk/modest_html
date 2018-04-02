@@ -7,7 +7,7 @@ int main(int argc, char const *argv[])
 
   // first tree
   
-  const char *html = "<p class=\"hello\">Hello</p>";
+  const char *html = "<p class=\"hello\" id=\"world\">Hello</p>";
   const char *selector = "p";
   html_result_t s1 = html_parse_and_select(w, html, selector);
 
@@ -28,7 +28,7 @@ int main(int argc, char const *argv[])
   html_vec_int_t buffer_indices;
   html_vec_init(&buffer_indices);
   html_node_get_attributes(w, node, &buffer_indices);
-  if(buffer_indices.length != 1) {
+  if(buffer_indices.length != 2) {
     fprintf(stderr, "Failed\n");
     html_vec_deinit(&buffer_indices);
     html_destroy(w);
@@ -46,6 +46,19 @@ int main(int argc, char const *argv[])
     return 1;
   }
   html_free(result);
+
+  attributes = html_get_buffer(w, buffer_indices.data[1]);
+  result = html_vec_join(attributes, "=");
+  printf("%d: %s\n", ++i, result);
+  if(strcmp(result, "id=world") != 0){
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    html_vec_deinit(&buffer_indices);
+    html_destroy(w);
+    return 1;
+  }
+  html_free(result);
+
   html_vec_deinit(&buffer_indices);
 
   html_destroy(w);
