@@ -36,7 +36,12 @@ foreach(TEST ${TESTS})
   )
 
   # enable debugging and memory tracing for tests
-  set_target_properties(${TEST_NAME} PROPERTIES COMPILE_DEFINITIONS "MODEST_HTML_USE_DMT=1")
+  target_compile_definitions(
+    ${TEST_NAME} 
+    PRIVATE 
+    MODEST_HTML_DEBUG=1 
+    MODEST_HTML_USE_DMT=1
+  )
 
 endforeach()
 

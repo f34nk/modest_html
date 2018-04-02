@@ -1,48 +1,36 @@
 #include "html_serialize.h"
 
-bool serialize_selector(myhtml_tree_node_t* node, html_vec_t* result)
+bool serialize_selector(myhtml_tree_node_t *node, html_vec_t *result)
 {
-  const char *tag_name = NULL;
-  if(node){
-    tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
-    if(strcmp(tag_name, "-undef") == 0){
-      
-      return true;
-      // FILE *stream;
-      // char *buf;
-      // size_t len;
-      // stream = open_memstream(&buf, &len);
-
-      // int i; char* val;
-      // vec_foreach_rev(&v, val, i) {
-      //   fprintf(stream, "%s", val);
-      //   if(i > 0 && i < v.length){
-      //     fprintf(stream, " ");
-      //   }
-      // }
-
-      // fclose(stream);
-      // // TODO: This is a leak. Implement proper memory handling.
-      // return buf;
-    }
-    // vec_push(result, concat_string(tag_name, "\0"));
-    
-    char *copy = (char*)html_malloc(strlen(tag_name) + 1 * sizeof(char));
-    if(copy) {
-      strcpy(copy, tag_name);
-      html_vec_push(result, copy);
-    }
-
-    myhtml_tree_node_t* parent_node = myhtml_node_parent(node);
-    if(parent_node){
-      return serialize_selector(parent_node, result);
-    }
+  if(node == NULL) {
+    return false;
   }
+
+  const char *tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
+  if(strcmp(tag_name, "-undef") == 0){
+    return true;
+  }
+  
+  char *copy = (char*)html_malloc(strlen(tag_name) + 1 * sizeof(char));
+  if(copy) {
+    strcpy(copy, tag_name);
+    html_vec_push(result, copy);
+  }
+
+  myhtml_tree_node_t* parent_node = myhtml_node_parent(node);
+  if(parent_node){
+    return serialize_selector(parent_node, result);
+  }
+
   return false;
 }
 
-char* html_serialize_selector(myhtml_tree_node_t* node)
+char* html_serialize_selector(myhtml_tree_node_t *node)
 {
+  if(node == NULL) {
+    return NULL;
+  }
+
   html_vec_t vec;
   html_vec_init(&vec);
 
@@ -57,7 +45,7 @@ char* html_serialize_selector(myhtml_tree_node_t* node)
   }
   html_vec_deinit(&vec);
 
-  return data;
+  return (char*)data;
 }
 
 char* html_vec_join(html_vec_t *vec, const char *delimiter)

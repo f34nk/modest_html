@@ -1,4 +1,5 @@
 #include "html_compare.h"
+#include "html_serialize.h"
 
 // concat str1 and str2
 char *concat_string(const char *str1, const char *str2)
@@ -32,7 +33,7 @@ char** split_string(char* string, const char delimiter)
   size_t count     = 0;
   char* tmp        = string;
   char* last_comma = 0;
-  char delim[2];
+  char delim[3];
   delim[0] = delimiter;
   delim[1] = 0;
 
@@ -138,10 +139,10 @@ html_vec_t get_attributes(myhtml_tree_node_t* node)
     if(attr){
 
       while (attr) {
-        char *name = myhtml_attribute_key(attr, NULL);
+        const char *name = myhtml_attribute_key(attr, NULL);
         if(name) {
           // printf("%s = ", name);
-          char *value = myhtml_attribute_value(attr, NULL);
+          const char *value = myhtml_attribute_value(attr, NULL);
           if(value){
             // printf("%s", value);
             char *buf = concat_string(name, "=");
@@ -159,8 +160,12 @@ html_vec_t get_attributes(myhtml_tree_node_t* node)
   return v;
 }
 
-bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, html_vec_2d_t *instructions)
+bool compare_attributes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, html_vec_2d_t *instructions)
 {
+  if(node1 == NULL || node2 == NULL) {
+    return false;
+  }
+
   html_vec_t v1 = get_attributes(node1);
   html_vec_t v2 = get_attributes(node2);
   char *selector = html_serialize_selector(node1);
@@ -180,7 +185,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ht
         printf("set_attribute '%s' to '%s'\n", val2, selector);
 #endif
         // add_set_attribute_instruction(result, selector, kv[0], kv[1]);
-        free(kv);
+        html_free(kv);
         flag = false;
       }
     }
@@ -194,7 +199,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ht
         printf("set_attribute '%s = NULL' to '%s'\n", kv[0], selector);
 #endif
         // add_set_attribute_instruction(result, selector, kv[0], "");
-        free(kv);
+        html_free(kv);
         flag = false;
       }
     }
@@ -208,7 +213,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ht
         printf("set_attribute '%s' to '%s'\n", val2, selector);
 #endif
         // add_set_attribute_instruction(result, selector, kv[0], kv[1]);
-        free(kv);
+        html_free(kv);
         flag = false;
       }
     }
@@ -221,7 +226,7 @@ bool compare_attributes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, ht
   return flag;
 }
 
-void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int indent, html_vec_2d_t *instructions)
+void compare_nodes(myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_2d_t *instructions)
 {
 #ifdef MODEST_HTML_DEBUG
     for(int i = 0; i < indent; i++){
@@ -284,7 +289,7 @@ void compare_nodes(myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int ind
           // remove_scope_from_selector(selector2, scope);
 
           mycore_string_t *string2 = myhtml_node_string(node2);
-          char *data2 = mycore_string_data(string2);
+          // char *data2 = mycore_string_data(string2);
 #ifdef MODEST_HTML_DEBUG
           printf("set_text '%s' to '%s'\n", data2, selector2);
 #endif
