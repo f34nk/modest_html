@@ -17,7 +17,7 @@ int main(int argc, char const *argv[])
   html_result_t new_s1 = html_parse_and_select(w, new_html, new_selector);
 
   int buffer_index;
-  html_vec_t *buffer;
+  html_vec_str_t *buffer;
   char *result;
   const char *scope_name = "body";
 
@@ -26,7 +26,7 @@ int main(int argc, char const *argv[])
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<p>Hello World<span>Append Me</span></p>") != 0){
+  if(strcmp(result, "<p>Hello World<span>Append Me</span></p>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -55,7 +55,7 @@ int main(int argc, char const *argv[])
   // buffer = html_get_buffer(w, buffer_index);
   // result = html_vec_join(buffer, "|");
   // printf("%d: %s\n", ++i, result);
-  // if(result != NULL && strcmp(result, "asdasd") != 0){
+  // if(strcmp(result, "asdasd") != 0){
   //   fprintf(stderr, "Failed\n");
   //   html_free(result);
   //   html_destroy(w);
@@ -79,7 +79,7 @@ int main(int argc, char const *argv[])
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<body><p>Hello World<span>Append</span><span>Me</span></p></body>") != 0){
+  if(strcmp(result, "<body><p>Hello World<span>Append</span><span>Me</span></p></body>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -91,7 +91,7 @@ int main(int argc, char const *argv[])
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0){
+  if(strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);

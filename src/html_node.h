@@ -1,5 +1,5 @@
-#ifndef HTML_VEC_H
-#define HTML_VEC_H
+#ifndef HTML_NODE_H
+#define HTML_NODE_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -19,30 +19,27 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-#include "vec.h"
+#include "html_includes.h"
 
-/**
- * Vector of strings.
- */
-typedef vec_t(char*) html_vec_str_t;
-/**
- * Vector of integers.
- */
-typedef vec_t(int) html_vec_int_t;
-/**
- * Vector of string vectors.
- */
-typedef vec_t(html_vec_str_t) html_vec_str_2d_t;
+struct html_node
+{
+  char *tag_name;
+  char *selector;
+  html_vec_str_t keys;
+  html_map_str_t key_value;
+  char *text;
+  char *parent_selector;
+}
+typedef html_node_t;
 
-#define html_vec_foreach(v, var, iter) vec_foreach(v, var, iter)
-#define html_vec_push(v, val) vec_push(v, val)
-#define html_vec_reverse(v) vec_reverse(v)
-#define html_vec_sort(v, fn) vec_sort(v, fn)
-#define html_vec_pop(v) vec_pop(v)
-#define html_vec_init(v) vec_init(v)
-#define html_vec_clear(v) vec_clear(v)
-#define html_vec_deinit(v) vec_deinit(v)
-
-char* html_vec_join(html_vec_str_t *vec, const char *delimiter);
+void html_node_init(html_node_t *params);
+void html_node_destroy(html_node_t *params);
+bool html_node_get(myhtml_tree_node_t *node, html_node_t *params);
+void html_node_dump(FILE *file, html_node_t *params);
+bool html_node_is_text(html_node_t *params);
+bool html_node_has_attributes(html_node_t *params);
+int html_node_attributes_count(html_node_t *params);
+char* html_node_key_for_index(html_node_t *params, int index);
+char* html_node_value_for_key(html_node_t *params, const char *key);
 
 #endif

@@ -8,7 +8,7 @@
 #define html_malloc(size) dmt_malloc(size)
 #define html_realloc(data, size) dmt_realloc(data, size)
 #define html_calloc(num, size) dmt_calloc(num, size)
-#define html_free(data) dmt_free(data)
+#define html_free(data) if(data) { dmt_free(data); }
 
 #else
 

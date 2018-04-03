@@ -1,5 +1,5 @@
-#ifndef HTML_VEC_H
-#define HTML_VEC_H
+#ifndef HTML_MAP_H
+#define HTML_MAP_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -19,30 +19,18 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-#include "vec.h"
+#include "map.h"
 
 /**
- * Vector of strings.
+ * Map of string key and key value.
  */
-typedef vec_t(char*) html_vec_str_t;
-/**
- * Vector of integers.
- */
-typedef vec_t(int) html_vec_int_t;
-/**
- * Vector of string vectors.
- */
-typedef vec_t(html_vec_str_t) html_vec_str_2d_t;
+typedef map_t(char*) html_map_str_t;
 
-#define html_vec_foreach(v, var, iter) vec_foreach(v, var, iter)
-#define html_vec_push(v, val) vec_push(v, val)
-#define html_vec_reverse(v) vec_reverse(v)
-#define html_vec_sort(v, fn) vec_sort(v, fn)
-#define html_vec_pop(v) vec_pop(v)
-#define html_vec_init(v) vec_init(v)
-#define html_vec_clear(v) vec_clear(v)
-#define html_vec_deinit(v) vec_deinit(v)
-
-char* html_vec_join(html_vec_str_t *vec, const char *delimiter);
+#define html_map_set(m, key, value) map_set(m, key, value)
+#define html_map_get(m, key) map_get(m, key)
+#define html_map_next(m, iter) map_next(m, iter)
+#define html_map_init(m) map_init(m)
+#define html_map_iter(m) map_iter(m)
+#define html_map_deinit(m) map_deinit(m)
 
 #endif

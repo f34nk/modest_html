@@ -47,7 +47,7 @@ int html_position(html_workspace_t *workspace, int collection_index)
   
   if(collection && collection->list && collection->length) {
 
-    html_vec_t buffer;
+    html_vec_str_t buffer;
     html_vec_init(&buffer);
 
     for(size_t i = 0; i < collection->length; i++) {

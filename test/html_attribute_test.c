@@ -13,10 +13,10 @@ int main(int argc, char const *argv[])
   html_result_t s1 = html_parse_and_select(w, html, selector);
 
   int attributes_index = html_get_attribute(w, s1.collection_index, "class");
-  html_vec_t *attributes = html_get_buffer(w, attributes_index);
+  html_vec_str_t *attributes = html_get_buffer(w, attributes_index);
   char *result = html_vec_join(attributes, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "hello") != 0){
+  if(strcmp(result, "hello") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -26,10 +26,10 @@ int main(int argc, char const *argv[])
 
   html_set_attribute(w, s1.collection_index, "class", "changed");
   int buffer_index = html_serialize_collection(w, s1.collection_index);
-  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<p class=\"changed\">Hello</p>") != 0){
+  if(strcmp(result, "<p class=\"changed\">Hello</p>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -47,7 +47,7 @@ int main(int argc, char const *argv[])
   attributes = html_get_buffer(w, attributes_index);
   result = html_vec_join(attributes, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "http://google.de") != 0){
+  if(strcmp(result, "http://google.de") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -60,7 +60,7 @@ int main(int argc, char const *argv[])
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<a href=\"http://google.de\" class=\"changed\">dolor sit</a>") != 0){
+  if(strcmp(result, "<a href=\"http://google.de\" class=\"changed\">dolor sit</a>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);

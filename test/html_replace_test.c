@@ -19,10 +19,10 @@ int main(int argc, char const *argv[])
   html_replace(w, s1.collection_index, new_s1.collection_index);
   const char *scope_name = "body";
   int buffer_index = html_serialize_tree(w, s1.tree_index, scope_name);
-  html_vec_t *buffer = html_get_buffer(w, buffer_index);
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
   char *result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<body><div><span>Hello</span>World</div></body>") != 0){
+  if(strcmp(result, "<body><div><span>Hello</span>World</div></body>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -48,7 +48,7 @@ int main(int argc, char const *argv[])
   // buffer = html_get_buffer(w, buffer_index);
   // result = html_vec_join(buffer, "|");
   // printf("%d: %s\n", ++i, result);
-  // if(result != NULL && strcmp(result, "sdasd") != 0){
+  // if(strcmp(result, "sdasd") != 0){
   //   fprintf(stderr, "Failed\n");
   //   html_free(result);
   //   html_destroy(w);
