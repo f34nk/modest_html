@@ -110,5 +110,6 @@ See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
   - [x] Get position of node in relation to its parent
   - [x] Wrap node with another node
   - [ ] Pretty print html
-  - [ ] Compare two html strings
+  - [x] Compare two html strings
 - [ ] Documentation
+
