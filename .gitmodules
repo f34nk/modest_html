@@ -4,6 +4,9 @@
 [submodule "libs/vec"]
 	path = libs/vec
 	url = https://github.com/rxi/vec.git
+[submodule "libs/map"]
+  path = libs/map
+  url = https://github.com/rxi/map.git
 [submodule "libs/dmt"]
 	path = libs/dmt
 	url = https://github.com/rxi/dmt.git
