@@ -123,6 +123,30 @@ bool html_node_has_attributes(html_node_t *params)
   return (params->keys.length > 0) ? true : false;
 }
 
+int html_node_attributes_count(html_node_t *params)
+{
+  if(params == NULL) {
+    return 0;
+  }
+  return params->keys.length;
+}
+
+char* html_node_key_for_index(html_node_t *params, int index)
+{
+  if(params == NULL) {
+    return NULL;
+  }
+  return params->keys.data[index];
+}
+
+char* html_node_value_for_key(html_node_t *params, const char *key)
+{
+  if(params == NULL) {
+    return NULL;
+  }
+  return (char*)*html_map_get(&params->key_value, key);
+}
+
 void html_node_dump(FILE *file, html_node_t *params)
 {
   fprintf((FILE*)file, "html_node_dump()\n");
