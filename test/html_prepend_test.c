@@ -19,10 +19,10 @@ int main(int argc, char const *argv[])
   html_prepend_collection(w, s1.collection_index, new_s1.collection_index);
   const char *scope_name = "body";
   int buffer_index = html_serialize_tree(w, s1.tree_index, scope_name);
-  vec_str_t *buffer = html_get_buffer(w, buffer_index);
-  char *result = html_vec_str_join(buffer, "|");
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
+  char *result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<body><div><p><span>Prepend</span><span>Me</span>Hello</p>World</div></body>") != 0){
+  if(strcmp(result, "<body><div><p><span>Prepend</span><span>Me</span>Hello</p>World</div></body>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -44,9 +44,9 @@ int main(int argc, char const *argv[])
   scope_name = "body";
   buffer_index = html_serialize_tree(w, s2.tree_index, scope_name);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<body><p>Lorem</p><p>ipsum<a href=\"http://google.de\"><span>Append</span><span>Me</span></a></p></body>") != 0){
+  if(strcmp(result, "<body><p>Lorem</p><p>ipsum<a href=\"http://google.de\"><span>Append</span><span>Me</span></a></p></body>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -56,9 +56,9 @@ int main(int argc, char const *argv[])
 
   buffer_index = html_serialize_collection(w, s2.collection_index);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_str_join(buffer, "|");
+  result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(result != NULL && strcmp(result, "<a href=\"http://google.de\"><span>Append</span><span>Me</span></a>") != 0){
+  if(strcmp(result, "<a href=\"http://google.de\"><span>Append</span><span>Me</span></a>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);

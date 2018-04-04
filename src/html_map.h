@@ -1,5 +1,5 @@
-#ifndef HTML_COMPARE_H
-#define HTML_COMPARE_H
+#ifndef HTML_MAP_H
+#define HTML_MAP_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -19,8 +19,18 @@
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA
 */
 
-#include "html_includes.h"
+#include "map.h"
 
-bool html_compare(html_workspace_t *workspace, int collection1_index, int collection2_index, html_vec_int_t *buffer_indices);
+/**
+ * Map of string key and key value.
+ */
+typedef map_t(char*) html_map_str_t;
+
+#define html_map_set(m, key, value) map_set(m, key, value)
+#define html_map_get(m, key) map_get(m, key)
+#define html_map_next(m, iter) map_next(m, iter)
+#define html_map_init(m) map_init(m)
+#define html_map_iter(m) map_iter(m)
+#define html_map_deinit(m) map_deinit(m)
 
 #endif

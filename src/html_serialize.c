@@ -1,57 +1,51 @@
 #include "html_serialize.h"
 
-char *html_vec_str_join(vec_str_t *vec, const char *delimiter)
+bool serialize_selector(myhtml_tree_node_t *node, html_vec_str_t *result)
 {
-#if 0
-  char *data = NULL;
-  data = (char*)vec_malloc(0);
-  if(data == NULL) {
+  if(node == NULL) {
+    return false;
+  }
+
+  const char *tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
+  if(strcmp(tag_name, "-undef") == 0){
+    return true;
+  }
+  
+  char *copy = (char*)html_malloc(strlen(tag_name) + 1 * sizeof(char*));
+  if(copy) {
+    strcpy(copy, tag_name);
+    html_vec_push(result, copy);
+  }
+
+  myhtml_tree_node_t* parent_node = myhtml_node_parent(node);
+  if(parent_node){
+    return serialize_selector(parent_node, result);
+  }
+
+  return false;
+}
+
+char* html_serialize_selector(myhtml_tree_node_t *node)
+{
+  if(node == NULL) {
     return NULL;
   }
-#endif
 
-#if 0
-  char *data = NULL;
-  data = (char*)vec_malloc(1 * sizeof(char));
-  if(data == NULL) {
-    return NULL;
+  html_vec_str_t vec;
+  html_vec_init(&vec);
+
+  serialize_selector(node, &vec);
+
+  html_vec_reverse(&vec);
+  char *data = html_vec_join(&vec, " ");
+
+  while(vec.length > 0) {
+    char *buffer = html_vec_pop(&vec);
+    html_free(buffer);
   }
-  *data = '\0';
-#endif
+  html_vec_deinit(&vec);
 
-#if 1
-  char *data = (char*)html_calloc(1, 1);
-#endif
-
-  int i;
-  char* value;
-  vec_foreach(vec, value, i) {
-    int prev = (int)strlen(data);
-    int length = (int)strlen(value) + 1;
-    char *new_data = (char*)html_realloc(data, prev + length * sizeof(char));
-    if(new_data == NULL) {
-      html_free(data);
-      return NULL;
-    }
-    // strncat((char*)&new_data[prev], value, length);
-    strcpy((char*)&new_data[prev], value);
-    data = new_data;
-
-    if(i < vec->length - 1 && strlen(delimiter) > 0) {
-      prev = strlen(data);
-      length = strlen(delimiter) + 1;
-      new_data = (char*)html_realloc(data, prev + length * sizeof(char));
-      if(new_data == NULL) {
-        html_free(data);
-        return NULL;
-      }
-      // strncat((char*)&new_data[prev], delimiter, length);
-      strcpy((char*)&new_data[prev], delimiter);
-      data = new_data;
-    }
-  }
-  // User must free this data.
-  return data;
+  return (char*)data;
 }
 
 mystatus_t html_dump_serialization_callback(const char *data, size_t data_length, void *file)
@@ -111,30 +105,30 @@ char *html_serialize_node(myhtml_tree_node_t *node)
 
 mystatus_t html_serialization_callback(const char *data, size_t data_length, void *result)
 {
-  vec_str_t *vec = (vec_str_t*)result;
+  html_vec_str_t *vec = (html_vec_str_t*)result;
 
   char *copy = (char*)html_malloc(data_length + 1 * sizeof(char));
   if(copy) {
     strcpy(copy, data);
-    vec_push(vec, copy);
+    html_vec_push(vec, copy);
     return MyCORE_STATUS_OK;
   }
   return MyCORE_STATUS_ERROR;
 }
 
-char *html_serialize_node(myhtml_tree_node_t *node)
+char* html_serialize_node(myhtml_tree_node_t *node)
 {
-  vec_str_t vec;
-  vec_init(&vec);
+  html_vec_str_t vec;
+  html_vec_init(&vec);
   myhtml_serialization_tree_callback(node, html_serialization_callback, (void*)&vec);
 
-  char *data = html_vec_str_join(&vec, "");
+  char *data = html_vec_join(&vec, "");
 
   while(vec.length > 0) {
-    char *buffer = vec_pop(&vec);
+    char *buffer = html_vec_pop(&vec);
     html_free(buffer);
   }
-  vec_deinit(&vec);
+  html_vec_deinit(&vec);
 
   return data;
 }
@@ -154,8 +148,8 @@ int html_serialize_collection(html_workspace_t *workspace, int collection_index)
     return -1;
   }
 
-  vec_str_t buffer;
-  vec_init(&buffer);
+  html_vec_str_t buffer;
+  html_vec_init(&buffer);
 
   for(size_t i = 0; i < collection->length; i++) {
 
@@ -164,22 +158,22 @@ int html_serialize_collection(html_workspace_t *workspace, int collection_index)
 
     size_t length = strlen(data);
     if(length > 0) {
-      vec_push(&buffer, data);
+      html_vec_push(&buffer, data);
     }
     else {
       html_free(data);
     }
   }
 
-  vec_push(&workspace->buffers, buffer);
+  html_vec_push(&workspace->buffers, buffer);
 
   return workspace->buffers.length - 1;
 }
 
 int html_serialize_tree(html_workspace_t *workspace, int tree_index, const char *scope_name)
 {
-  vec_str_t buffer;
-  vec_init(&buffer);
+  html_vec_str_t buffer;
+  html_vec_init(&buffer);
 
   myhtml_tree_t *tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
   if(tree == NULL) {
@@ -196,13 +190,13 @@ int html_serialize_tree(html_workspace_t *workspace, int tree_index, const char 
   char *data = html_serialize_node(scope_node);
   size_t length = strlen(data);
   if(length > 0) {
-    vec_push(&buffer, data);
+    html_vec_push(&buffer, data);
   }
   // else {
   //   html_free(data);
   // }
   
-  vec_push(&workspace->buffers, buffer);
+  html_vec_push(&workspace->buffers, buffer);
 
   return workspace->buffers.length - 1;
 }

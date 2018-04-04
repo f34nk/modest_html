@@ -49,7 +49,7 @@ bool append_nodes(myhtml_tree_node_t *node, myhtml_collection_t *new_collection)
   return true;
 }
 
-bool append_buffer(myhtml_tree_node_t *node, vec_str_t *new_buffer)
+bool append_buffer(myhtml_tree_node_t *node, html_vec_str_t *new_buffer)
 {
   if(node == NULL) {
     return false;
@@ -123,7 +123,7 @@ bool html_append_buffer(html_workspace_t *workspace, int collection_index, int n
     return false;
   }
 
-  vec_str_t *new_buffer = html_get_buffer(workspace, new_buffer_index);
+  html_vec_str_t *new_buffer = html_get_buffer(workspace, new_buffer_index);
   if(new_buffer == NULL) {
     fprintf(stderr, "html_append_buffer() - Empty new buffer\n");
     return false;

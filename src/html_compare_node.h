@@ -1,5 +1,5 @@
-#ifndef HTML_COMPARE_H
-#define HTML_COMPARE_H
+#ifndef HTML_COMPARE_NODE_H
+#define HTML_COMPARE_NODE_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -21,6 +21,7 @@
 
 #include "html_includes.h"
 
-bool html_compare(html_workspace_t *workspace, int collection1_index, int collection2_index, html_vec_int_t *buffer_indices);
+// void html_compare_nodes(html_workspace_t *workspace, html_node_t *node1, html_node_t *node2, html_vec_int_t *buffer_indices);
+void html_compare_nodes(html_workspace_t *workspace, myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_int_t *buffer_indices);
 
 #endif

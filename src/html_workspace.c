@@ -42,11 +42,11 @@ html_workspace_t* html_init()
   workspace->finder = finder;
 
   // init arrays
-  vec_init(&workspace->trees);
-  vec_init(&workspace->entries);
-  vec_init(&workspace->selectors);
-  vec_init(&workspace->collections);
-  vec_init(&workspace->buffers);
+  html_vec_init(&workspace->trees);
+  html_vec_init(&workspace->entries);
+  html_vec_init(&workspace->selectors);
+  html_vec_init(&workspace->collections);
+  html_vec_init(&workspace->buffers);
 
   #ifdef MODEST_HTML_USE_DMT
   printf("html_init() - Current memory usage: %u bytes\n", (unsigned int)dmt_usage());
@@ -79,7 +79,7 @@ void html_destroy(html_workspace_t *workspace)
     myhtml_collection_t* collection = workspace->collections.data[i];
     myhtml_collection_destroy(collection);
   }
-  vec_deinit(&workspace->collections);
+  html_vec_deinit(&workspace->collections);
 
   for (int i = 0; i < workspace->entries.length; ++i) {
     mycss_entry_t* entry = workspace->entries.data[i];
@@ -89,18 +89,18 @@ void html_destroy(html_workspace_t *workspace)
     mycss_entry_destroy(entry, true);
 
   }
-  vec_deinit(&workspace->entries);
-  vec_deinit(&workspace->selectors);
+  html_vec_deinit(&workspace->entries);
+  html_vec_deinit(&workspace->selectors);
 
   for (int i = 0; i < workspace->buffers.length; ++i) {
-    vec_str_t vec = workspace->buffers.data[i];
+    html_vec_str_t vec = workspace->buffers.data[i];
     while(vec.length > 0) {
-      char *buffer = vec_pop(&vec);
+      char *buffer = html_vec_pop(&vec);
       html_free(buffer);
     }
-    vec_deinit(&vec);
+    html_vec_deinit(&vec);
   }
-  vec_deinit(&workspace->buffers);
+  html_vec_deinit(&workspace->buffers);
 
   // destroy Modest Finder
   modest_finder_destroy(workspace->finder, true);
@@ -111,7 +111,7 @@ void html_destroy(html_workspace_t *workspace)
   for (int i = 0; i < workspace->trees.length; ++i) {
     myhtml_tree_t* tree = workspace->trees.data[i];
     myhtml_tree_destroy(tree);
-    vec_deinit(&workspace->trees);
+    html_vec_deinit(&workspace->trees);
   }
 
   // destroy MyHTML
@@ -213,6 +213,15 @@ void* html_get_collection(html_workspace_t *workspace, int collection_index)
   return (myhtml_collection_t*)workspace->collections.data[collection_index];
 }
 
+void* html_get_node(html_workspace_t *workspace, int collection_index, int index)
+{
+  myhtml_collection_t *collection = html_get_collection(workspace, collection_index);
+  if(collection == NULL) {
+    return NULL;
+  }
+  return (myhtml_tree_node_t*)collection->list[index];
+}
+
 void* html_get_buffer(html_workspace_t *workspace, int buffer_index)
 {
   if(workspace == NULL) {
@@ -229,5 +238,5 @@ void* html_get_buffer(html_workspace_t *workspace, int buffer_index)
     return NULL;
   }
   
-  return (vec_str_t*)&workspace->buffers.data[buffer_index];
+  return (html_vec_str_t*)&workspace->buffers.data[buffer_index];
 }

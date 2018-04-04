@@ -35,8 +35,8 @@ int html_prepare_selector(html_workspace_t *workspace, const char *selector, siz
     return -1;
   }
 
-  vec_push(&workspace->entries, entry);
-  vec_push(&workspace->selectors, list);
+  html_vec_push(&workspace->entries, entry);
+  html_vec_push(&workspace->selectors, list);
 
   return workspace->selectors.length - 1;
 }
@@ -59,7 +59,7 @@ int html_select(html_workspace_t *workspace, int tree_index, const char *scope_n
   mycss_selectors_list_t *list = workspace->selectors.data[selector_index];
   modest_finder_by_selectors_list(finder, scope_node, list, &collection);
   if(collection && collection->list && collection->length) {
-    vec_push(&workspace->collections, collection);
+    html_vec_push(&workspace->collections, collection);
     return workspace->collections.length - 1;
   }
   

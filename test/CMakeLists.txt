@@ -14,8 +14,6 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -L${CMAKE_CURRENT_SOURCE_DIR}/../libs/Modest
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -I${CMAKE_CURRENT_SOURCE_DIR}/../src")
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -L${CMAKE_CURRENT_SOURCE_DIR}/../build")
 
-# add_definitions(-DMODEST_HTML_DEBUG -DMODEST_HTML_USE_DMT)
-
 message("CMAKE_CURRENT_SOURCE_DIR = ${CMAKE_CURRENT_SOURCE_DIR}")
 
 file(GLOB_RECURSE SOURCE "../src/*.c")
@@ -34,9 +32,17 @@ foreach(TEST ${TESTS})
     PUBLIC
     ${SOURCE}
     ../libs/vec/src/vec.c
+    ../libs/map/src/map.c
     ../libs/dmt/src/dmt.c
   )
-  set_target_properties(${TEST_NAME} PROPERTIES COMPILE_DEFINITIONS "MODEST_HTML_USE_DMT=1")
+
+  # enable debugging and memory tracing for tests
+  target_compile_definitions(
+    ${TEST_NAME} 
+    PRIVATE 
+    MODEST_HTML_DEBUG=1 
+    MODEST_HTML_USE_DMT=1
+  )
 
 endforeach()
 
