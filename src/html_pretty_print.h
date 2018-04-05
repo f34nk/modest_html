@@ -1,5 +1,5 @@
-#ifndef HTML_STRING_H
-#define HTML_STRING_H
+#ifndef HTML_PRETTY_PRINT_H
+#define HTML_PRETTY_PRINT_H
 
 /*
  Copyright (C) 2018 Frank Eickhoff
@@ -21,18 +21,6 @@
 
 #include "html_includes.h"
 
-// char *concat_string(const char *str1, const char *str2);
-// char** split_string(char* string, const char delimiter);
-
-// char* html_string_copy(const char* string);
-
-/**
- * Copy a string.
- * @param string [source string]
- * @param copy   [destination string]
- */
-#define html_string_copy(string, copy) if(string != NULL) { copy = html_malloc(strlen(string) + 1 * sizeof(char*)); if(copy != NULL) {*copy = '\0'; strcpy(copy, string); }} else { copy = NULL; }
-
-int html_string_asprintf(char *strp[], const char *fmt, ...);
+char* html_pretty_print(html_workspace_t *workspace, int collection_index, bool colorize);
 
 #endif

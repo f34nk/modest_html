@@ -99,8 +99,10 @@ bool html_node_get(myhtml_tree_node_t* node, html_node_t *params)
       attr = myhtml_attribute_next(attr);
     } // while attr
 
+    // TODO: fix sorting
+    
     // sort keys
-    html_vec_sort(&params->keys, html_node_sort_callback);
+    // html_vec_sort(&params->keys, html_node_sort_callback);
     return true;
   }
 
