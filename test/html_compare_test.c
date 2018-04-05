@@ -19,7 +19,7 @@ int main(int argc, char const *argv[])
   html_vec_int_t buffer_indices;
   html_vec_init(&buffer_indices);
   html_compare(w, s1.collection_index, s2.collection_index, &buffer_indices);
-  
+
   int j; int buffer_index;
   html_vec_foreach(&buffer_indices, buffer_index, j) {
     html_vec_str_t *buffer = html_get_buffer(w, buffer_index);

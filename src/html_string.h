@@ -33,4 +33,6 @@
  */
 #define html_string_copy(string, copy) if(string != NULL) { copy = html_malloc(strlen(string) + 1 * sizeof(char*)); if(copy != NULL) {*copy = '\0'; strcpy(copy, string); }} else { copy = NULL; }
 
+int html_string_asprintf(char *strp[], const char *fmt, ...);
+
 #endif
