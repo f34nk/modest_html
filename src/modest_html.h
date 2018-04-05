@@ -1,6 +1,8 @@
 #ifndef MODEST_HTML_H
 #define MODEST_HTML_H
 
+#define MODEST_HTML_VERSION "1.0.0"
+
 #include "html_memory.h"
 #include "html_vec.h"
 #include "html_map.h"

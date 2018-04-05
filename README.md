@@ -22,6 +22,8 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
 ## Example
 For more examples please checkout [tests](https://github.com/f34nk/modest_html/tree/master/test).
 ```C
+#include "modest_html.h"
+
 /*
 modest_html is build around a workspace struct.
 The workspace holds all allocated memory and frees it in html_destroy().
@@ -109,7 +111,7 @@ See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
   - [x] Slice html to a subset of nodes
   - [x] Get position of node in relation to its parent
   - [x] Wrap node with another node
-  - [ ] Pretty print html
+  - [x] Pretty print html
   - [x] Compare two html strings
 - [ ] Documentation
 
