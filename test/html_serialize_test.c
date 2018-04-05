@@ -88,12 +88,12 @@ int main(int argc, char const *argv[])
   // }
   // html_free(result);
 
-  scope_name = "body";
+  scope_name = "body_children";
   buffer_index = html_serialize_tree(w, s3.tree_index, scope_name);
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(strcmp(result, "<body>Hello World</body>") != 0){
+  if(strcmp(result, "Hello World") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
