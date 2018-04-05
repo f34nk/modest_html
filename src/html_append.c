@@ -82,6 +82,13 @@ bool html_append_collection(html_workspace_t *workspace, int collection_index, i
 
     if(collection->length > 1) {
       fprintf(stderr, "html_append_collection() - Not supported.\n");
+      
+      // TODO: implement append to multiple selected nodes
+      
+      // for(size_t i = 0; i < collection->length; i++) {
+      //   myhtml_tree_node_t *node = collection->list[i];
+      //   append_nodes(node, new_collection);
+      // }
       return false;
     }
     else {
