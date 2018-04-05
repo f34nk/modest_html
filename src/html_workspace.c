@@ -154,10 +154,6 @@ void* html_get_scope_node(html_workspace_t *workspace, int tree_index, const cha
   else if(strcmp(scope_name, "body") == 0){
     result = tree->node_body;
   }
-  else if(strcmp(scope_name, "body_first_child") == 0){
-    // Returns first child of body.
-    result = myhtml_node_child(tree->node_body);
-  }
   else if(strcmp(scope_name, "body_children") == 0){
     // Returns first child of body.
     // To parse other children you have to call myhtml_node_next() on this node.
@@ -168,8 +164,7 @@ void* html_get_scope_node(html_workspace_t *workspace, int tree_index, const cha
     result = tree->node_form;
   }
   else {
-    // default
-    result = tree->node_html;
+    fprintf(stderr, "html_scope_node() - Scope '%s' does not exist.\n", scope_name);
   }
 
   return (myhtml_tree_node_t*)result;
