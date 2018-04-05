@@ -48,20 +48,20 @@ char* html_serialize_selector(myhtml_tree_node_t *node)
   return (char*)data;
 }
 
-mystatus_t html_dump_serialization_callback(const char *data, size_t data_length, void *file)
+mystatus_t html_serialize_dump_callback(const char *data, size_t data_length, void *file)
 {
   fprintf((FILE*)file, "%.*s", (int)data_length, data);
   return MyCORE_STATUS_OK;
 }
 
-void html_dump_node(FILE *file, myhtml_tree_node_t *node)
+void html_serialize_dump(FILE *file, myhtml_tree_node_t *node)
 {
   if(node == NULL) {
-    fprintf(stderr, "html_dump_node() - Empty node\n");
+    fprintf(stderr, "html_serialize_dump() - Empty node\n");
     return;
   }
 
-  myhtml_serialization_tree_callback(node, html_dump_serialization_callback, (void*)file);
+  myhtml_serialization_tree_callback(node, html_serialize_dump_callback, (void*)file);
   fprintf((FILE*)file, "\n");
 }
 

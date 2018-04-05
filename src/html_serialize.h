@@ -35,6 +35,6 @@ int html_serialize_tree(html_workspace_t *workspace, int tree_index, const char 
 char* html_serialize_node(myhtml_tree_node_t *node);
 char* html_serialize_selector(myhtml_tree_node_t *node);
 
-void html_dump_node(FILE *file, myhtml_tree_node_t *node);
+void html_serialize_dump(FILE *file, myhtml_tree_node_t *node);
 
 #endif

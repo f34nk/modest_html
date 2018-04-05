@@ -35,13 +35,13 @@ bool append_nodes(myhtml_tree_node_t *node, myhtml_collection_t *new_collection)
       myhtml_tree_node_t *new_node = new_collection->list[i];
 // #ifdef MODEST_HTML_DEBUG
 //       printf("append_nodes() - append child %d\n", i);
-//       html_dump_node(stdout, node);
-//       html_dump_node(stdout, new_node);
+//       html_serialize_dump(stdout, node);
+//       html_serialize_dump(stdout, new_node);
 // #endif
       myhtml_node_append_child(node, new_node);
 // #ifdef MODEST_HTML_DEBUG
 //       printf("append_nodes() - append child %d\n", i);
-//       html_dump_node(stdout, node);
+//       html_serialize_dump(stdout, node);
 // #endif
     }
   // }
