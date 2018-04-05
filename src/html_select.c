@@ -101,3 +101,51 @@ int html_select(html_workspace_t *workspace, int tree_index, const char *scope_n
   
   return -1;
 }
+
+int html_select_scope(html_workspace_t *workspace, int tree_index, const char *scope_name)
+{
+  if(workspace == NULL) {
+    fprintf(stderr, "html_select_scope() - Empty workspace.\n");
+    return -1;
+  }
+
+  myhtml_tree_node_t *scope_node = html_get_scope_node(workspace, tree_index, scope_name);
+  if(scope_node == NULL) {
+    fprintf(stderr, "html_select_scope() - No node for scope '%s'.\n", scope_name);
+    return -1;
+  }
+
+#ifdef MODEST_HTML_DEBUG
+  printf("html_select_scope()\n");
+  printf("\tscope_name = %s\n", scope_name);
+  if(myhtml_node_next(scope_node)) {
+    printf("\tcollect each node in the scope...\n");
+  }
+#endif
+
+  myhtml_collection_t *collection = NULL;
+  myhtml_tree_node_t *node = scope_node;
+  while(node) {
+    if(collection == NULL) {
+      mystatus_t status;
+      collection = myhtml_collection_create(1, &status);
+    }
+    if(myhtml_collection_check_size(collection, 1, 1024) == MyHTML_STATUS_OK) {
+      collection->list[collection->length] = node;
+      collection->length++;
+#ifdef MODEST_HTML_DEBUG
+      const char *tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
+      printf("\t%d: %s\n", (int)collection->length, tag_name);
+#endif
+    }
+    // try text
+    node = myhtml_node_next(node);
+  }
+
+  if(collection && collection->list && collection->length) {
+    html_vec_push(&workspace->collections, collection);
+    return workspace->collections.length - 1;
+  }
+  
+  return -1;
+}

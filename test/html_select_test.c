@@ -77,20 +77,62 @@ int main(int argc, char const *argv[])
 
   // test
 
-  html = "<p>Hello</p><p>World</p>Test";
-  selector = "p";
+  html = "Hello World";
+  selector = "*";
 
   tree_index = html_parse_tree(w, html, strlen(html));
+  if(tree_index == -1) {
+    fprintf(stderr, "Failed: tree_index = %d\n", tree_index);
+    html_destroy(w);
+    return 1;
+  }
   selector_index = html_prepare_selector(w, selector, strlen(selector));
+  if(selector_index == -1) {
+    fprintf(stderr, "Failed: selector_index = %d\n", selector_index);
+    html_destroy(w);
+    return 1;
+  }
 
+  scope_name = "body";
+  collection_index  = html_select(w, tree_index, scope_name, selector_index);
+  printf("%d: collection_index = %d\n", ++i, collection_index);
+  if(collection_index == -1) {
+    fprintf(stderr, "Failed\n");
+    html_destroy(w);
+    return 1;
+  }
+
+  /*
+  html_select()
+  The asterix selector fails for this scope.
+   */
   scope_name = "body_children";
   collection_index  = html_select(w, tree_index, scope_name, selector_index);
+  printf("%d: collection_index = %d\n", ++i, collection_index);
+  if(collection_index != -1) {
+    fprintf(stderr, "Failed\n");
+    html_destroy(w);
+    return 1;
+  }
+
+  /*
+  html_select_scope()
+  Selecting the scope returns a new collection of all nodes in the scope.
+   */
+  scope_name = "body_children";
+  collection_index  = html_select_scope(w, tree_index, scope_name);
+  printf("%d: collection_index = %d\n", ++i, collection_index);
+  if(collection_index == -1) {
+    fprintf(stderr, "Failed\n");
+    html_destroy(w);
+    return 1;
+  }
 
   buffer_index = html_serialize_collection(w, collection_index);
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(strcmp(result, "<p>Hello</p>|<p>World</p>") != 0){
+  if(strcmp(result, "Hello World") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
