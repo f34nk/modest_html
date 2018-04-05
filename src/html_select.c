@@ -135,7 +135,7 @@ int html_select_scope(html_workspace_t *workspace, int tree_index, const char *s
       collection->length++;
 #ifdef MODEST_HTML_DEBUG
       const char *tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
-      printf("\t%d: %s\n", (int)collection->length, tag_name);
+      printf("\ttag '%s': list size = %d\n", tag_name, (int)collection->length);
 #endif
     }
     // try text

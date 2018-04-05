@@ -92,10 +92,8 @@ bool html_append_collection(html_workspace_t *workspace, int collection_index, i
       return false;
     }
     else {
-      for(size_t i = 0; i < collection->length; i++) {
-        myhtml_tree_node_t *node = collection->list[i];
-        append_nodes(node, new_collection);
-      }
+      myhtml_tree_node_t *node = collection->list[0];
+      append_nodes(node, new_collection);
     }
     
 

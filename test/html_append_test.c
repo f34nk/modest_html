@@ -6,27 +6,33 @@ int main(int argc, char const *argv[])
   html_workspace_t *w = html_init();
   int i = 0;
 
-  // first tree
-  
-  const char *html = "<html><head></head><body><p>Hello World</p></body></html>";
+  // test
+
+  const char *html = "<p>Hello World</p>";
   const char *selector = "p";
-  html_result_t s1 = html_parse_and_select(w, html, selector);
 
-  const char *new_html = "<span>Append Me</span>";
-  const char *new_selector = "body *";
-  html_result_t new_s1 = html_parse_and_select(w, new_html, new_selector);
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
 
-  int buffer_index;
-  html_vec_str_t *buffer;
-  char *result;
-  const char *scope_name;
+  const char *scope_name = "body_children";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
 
-  html_append_collection(w, s1.collection_index, new_s1.collection_index);
-  buffer_index = html_serialize_collection(w, s1.collection_index);
-  buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
+
+  const char *new_html = "<span>Append</span><span>Me</span>";
+  int new_tree_index = html_parse_tree(w, new_html, strlen(new_html));
+
+  scope_name = "body_children";
+  int new_collection_index  = html_select_scope(w, new_tree_index, scope_name);
+
+  html_append_collection(w, collection_index, new_collection_index);
+
+  // serialize collection
+  
+  int buffer_index = html_serialize_collection(w, collection_index);
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
+  char *result = html_vec_join(buffer, "|");
   printf("%d: %s\n", ++i, result);
-  if(strcmp(result, "<p>Hello World<span>Append Me</span></p>") != 0){
+  if(strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
@@ -34,28 +40,68 @@ int main(int argc, char const *argv[])
   }
   html_free(result);
 
-  // second tree
-  
-  // TODO: support appending to multiple nodes 
-  
-  html = "<p>Hello</p><p>World</p>";
-  selector = "p"; // this will select two nodes
-  // html_result_t s2 = html_parse_and_select(w, html, selector);
+  // test
 
-  // new_html = "<span>Append Me</span>";
-  // new_selector = "span";
-  // html_result_t new_s2 = html_parse_and_select(w, new_html, new_selector);
+  html = "<p>Hello World</p>";
+  selector = "p";
 
-  // // Not supported until now.
-  // html_append_collection(w, s2.collection_index, new_s2.collection_index);
+  tree_index = html_parse_tree(w, html, strlen(html));
+  selector_index = html_prepare_selector(w, selector, strlen(selector));
+
+  scope_name = "body_children";
+  collection_index  = html_select(w, tree_index, scope_name, selector_index);
+
+
+  new_html = "Append Me";
+  new_tree_index = html_parse_tree(w, new_html, strlen(new_html));
+
+  scope_name = "body_children";
+  new_collection_index  = html_select_scope(w, new_tree_index, scope_name);
+
+  html_append_collection(w, collection_index, new_collection_index);
+
+  // serialize collection
+  
+  buffer_index = html_serialize_collection(w, collection_index);
+  buffer = html_get_buffer(w, buffer_index);
+  result = html_vec_join(buffer, "|");
+  printf("%d: %s\n", ++i, result);
+  if(strcmp(result, "<p>Hello WorldAppend Me</p>") != 0){
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    html_destroy(w);
+    return 1;
+  }
+  html_free(result);
+
+  // test
+  // TODO: check test case; append nodes to multiple selected target nodes
+  
+  // html = "<p>Hello</p><p>World</p>";
+  // selector = "p";
+
+  // tree_index = html_parse_tree(w, html, strlen(html));
+  // selector_index = html_prepare_selector(w, selector, strlen(selector));
 
   // scope_name = "body_children";
-  // // buffer_index = html_serialize_tree(w, new_s2.tree_index, scope_name);
-  // buffer_index = html_serialize_collection(w, s2.collection_index);
+  // collection_index  = html_select(w, tree_index, scope_name, selector_index);
+
+
+  // new_html = "Append Me";
+  // new_tree_index = html_parse_tree(w, new_html, strlen(new_html));
+
+  // scope_name = "body_children";
+  // new_collection_index  = html_select_scope(w, new_tree_index, scope_name);
+
+  // html_append_collection(w, collection_index, new_collection_index);
+
+  // // serialize collection
+  
+  // buffer_index = html_serialize_collection(w, collection_index);
   // buffer = html_get_buffer(w, buffer_index);
   // result = html_vec_join(buffer, "|");
   // printf("%d: %s\n", ++i, result);
-  // if(strcmp(result, "asdasd") != 0){
+  // if(strcmp(result, "<p>Hello WorldAppend Me</p>") != 0){
   //   fprintf(stderr, "Failed\n");
   //   html_free(result);
   //   html_destroy(w);
@@ -63,43 +109,8 @@ int main(int argc, char const *argv[])
   // }
   // html_free(result);
 
-  // third tree
+  // test
   
-  html = "<p>Hello World</p>";
-  selector = "p";
-  html_result_t s3 = html_parse_and_select(w, html, selector);
-
-  new_html = "<span>Append</span><span>Me</span>";
-  new_selector = "body *";
-  html_result_t new_s3 = html_parse_and_select(w, new_html, new_selector);
-
-  html_append_collection(w, s3.collection_index, new_s3.collection_index);
-  scope_name = "body_children";
-  buffer_index = html_serialize_tree(w, s3.tree_index, scope_name);
-  buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
-  if(strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0){
-    fprintf(stderr, "Failed\n");
-    html_free(result);
-    html_destroy(w);
-    return 1;
-  }
-  html_free(result);
-
-  buffer_index = html_serialize_collection(w, s3.collection_index);
-  buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
-  if(strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0){
-    fprintf(stderr, "Failed\n");
-    html_free(result);
-    html_destroy(w);
-    return 1;
-  }
-  html_free(result);
-
-
   // TODO: check select string only; implement append_buffer()
 
   html_destroy(w);
