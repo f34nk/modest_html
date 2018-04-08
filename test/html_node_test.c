@@ -7,9 +7,13 @@ int main(int argc, char const *argv[])
 
   const char *html = "<p class=\"hello\" id=\"world\">Hello</p>";
   const char *selector = "p";
-  html_result_t s1 = html_parse_and_select(w, html, selector);
+  
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
+  const char *scope_name = "body_children";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
 
-  myhtml_tree_node_t *node = html_get_node(w, s1.collection_index, 0);
+  myhtml_tree_node_t *node = html_get_node(w, collection_index, 0);
 
   html_node_t params;
   html_node_init(&params);

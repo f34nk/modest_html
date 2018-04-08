@@ -10,16 +10,20 @@ int main(int argc, char const *argv[])
 
   const char *html = "<div class=\"block\"><p>Hello</p><p>World</p><img src=\"test.png\"/></div>";
   const char *selector = "p";
-  html_result_t s1 = html_parse_and_select(w, html, selector);
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
+  const char *scope_name = "body_children";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
 
   bool colorize = false;
-  char *result = html_pretty_print(w, s1.collection_index, colorize);
+  char *result = html_pretty_print(w, collection_index, colorize);
 
   printf("%d: %s", ++i, result);
-  if(strcmp(result, "<p>\n  Hello\n</p>\n<p>\n  World\n</p>\n") != 0){
+  if(strcmp(result, "<p>\n\tHello\n</p>\n<p>\n\tWorld\n</p>\n") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);

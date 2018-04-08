@@ -1,62 +1,65 @@
 
 #include "modest_html.h"
 
-int main(int argc, char const *argv[])
+int wrap_in_node_with_text_test(html_workspace_t *w)
 {
-  html_workspace_t *w = html_init();
-  int i = 0;
+  MODEST_HTML_LOG
 
-  // first tree
-  
   const char *html = "<html><head></head><body><div><p class=\"hello\">Hello</p>World</div></body></html>";
   const char *selector = "p";
-  html_result_t s1 = html_parse_and_select(w, html, selector);
+  
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
+  const char *scope_name = "html";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
 
   const char *new_html = "<span>Hello</span>";
   const char *new_selector = "body *";
-  html_result_t new_s1 = html_parse_and_select(w, new_html, new_selector);
+  int new_tree_index = html_parse_tree(w, new_html, strlen(new_html));
+  int new_selector_index = html_prepare_selector(w, new_selector, strlen(new_selector));
+  const char *new_scope_name = "html";
+  int new_collection_index  = html_select(w, new_tree_index, new_scope_name, new_selector_index);
 
-  html_wrap(w, s1.collection_index, new_s1.collection_index);
-  const char *scope_name = "body";
-  int buffer_index = html_serialize_tree(w, s1.tree_index, scope_name);
+  html_wrap(w, collection_index, new_collection_index);
+
+  int buffer_index = html_serialize_tree(w, tree_index, "body");
   html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
   char *result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
+  printf("-> %s\n", result);
   if(strcmp(result, "<body><div><span>Hello<p class=\"hello\">Hello</p></span>World</div></body>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);
 
-  // second tree
-  
-  html = "<p>Lorem</p><p>ipsum<a href=\"http://google.de\">dolor sit</a></p>";
-  selector = "a";
-  html_result_t s2 = html_parse_and_select(w, html, selector);
+  return 0;
+}
 
-  new_html = "Hello World";
-  new_selector = "body *";
-  html_result_t new_s2 = html_parse_and_select(w, new_html, new_selector);
+int wrap_with_text_only_test(html_workspace_t *w)
+{
+  MODEST_HTML_LOG
 
-  // TODO: check select string only
-  
-  // html_wrap(w, s2.collection_index, new_s2.collection_index);
-  // scope_name = "body";
-  // buffer_index = html_serialize_tree(w, s2.tree_index, scope_name);
-  // buffer = html_get_buffer(w, buffer_index);
-  // result = html_vec_join(buffer, "|");
-  // printf("%d: %s\n", ++i, result);
-  // if(strcmp(result, "sdasd") != 0){
-  //   fprintf(stderr, "Failed\n");
-  //   html_free(result);
-  //   html_destroy(w);
-  //   return 1;
-  // }
-  // html_free(result);
+  // TODO: implement
+  return 0;
+}
 
-  html_destroy(w);
+#define max_tests 2
+int (*test[max_tests])() = {wrap_in_node_with_text_test, wrap_with_text_only_test};
+
+int main(int argc, char const *argv[])
+{
+  html_workspace_t *w = html_init();
+
+  int i = 0;
+  int result = 0;
+  while(i < max_tests && result == 0){
+    result = test[i](w);
+    i += 1;
+  }
+
+  html_destroy(w);  
   printf("ok\n");
   return 0;
 }

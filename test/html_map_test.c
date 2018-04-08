@@ -13,14 +13,16 @@ int main(int argc, char const *argv[])
 
   char *copy;
   html_string_copy("a 123", copy);
+  
   html_map_set(&m, "a", copy);
   
   char *result = (char*)*html_map_get(&m, "a");
-  printf("%d: %s\n", ++i, result);
+  printf("-> %s\n", result);
   if(strcmp(result, "a 123") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_map_deinit(&m);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);

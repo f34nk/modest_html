@@ -39,6 +39,7 @@ typedef vec_t(html_vec_str_t) html_vec_str_2d_t;
 #define html_vec_reverse(v) vec_reverse(v)
 #define html_vec_sort(v, fn) vec_sort(v, fn)
 #define html_vec_pop(v) vec_pop(v)
+#define html_vec_get(v, i) (v.length > i) ? v.data[i] : -1
 #define html_vec_init(v) vec_init(v)
 #define html_vec_clear(v) vec_clear(v)
 #define html_vec_deinit(v) vec_deinit(v)

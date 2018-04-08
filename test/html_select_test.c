@@ -1,12 +1,9 @@
 
 #include "modest_html.h"
 
-int main(int argc, char const *argv[])
+int select_single_node_test(html_workspace_t *w)
 {
-  html_workspace_t *w = html_init();
-  int i = 0;
-
-  // test
+  MODEST_HTML_LOG
 
   const char *html = "<html><head></head><body><div><p class=\"hello\">Hello</p>World</div></body></html>";
   const char *selector = "p";
@@ -20,34 +17,38 @@ int main(int argc, char const *argv[])
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
   char* result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
+  printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"hello\">Hello</p>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);
+  return 0;
+}
 
-  // test
+int different_selector_same_result_test(html_workspace_t *w)
+{
+  MODEST_HTML_LOG
 
-  html = "Lorem<p>ipsum</p><span>dolor</span>";
-  selector = "body > *";
+  const char *html = "Lorem<p>ipsum</p><span>dolor</span>";
+  const char *selector = "body > *";
 
-  tree_index = html_parse_tree(w, html, strlen(html));
-  selector_index = html_prepare_selector(w, selector, strlen(selector));
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
 
-  scope_name = "body";
-  collection_index  = html_select(w, tree_index, scope_name, selector_index);
+  const char *scope_name = "body";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
 
-  buffer_index = html_serialize_collection(w, collection_index);
-  buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
+  int buffer_index = html_serialize_collection(w, collection_index);
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
+  char *result = html_vec_join(buffer, "|");
+  printf("-> %s\n", result);
   if(strcmp(result, "<p>ipsum</p>|<span>dolor</span>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);
@@ -66,39 +67,44 @@ int main(int argc, char const *argv[])
   buffer_index = html_serialize_collection(w, collection_index);
   buffer = html_get_buffer(w, buffer_index);
   result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
+  printf("-> %s\n", result);
   if(strcmp(result, "<p>ipsum</p>|<span>dolor</span>") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);
 
-  // test
+  return 0;
+}
 
-  html = "Hello World";
-  selector = "*";
+int asterix_selector_edge_cases_test(html_workspace_t *w)
+{
+  MODEST_HTML_LOG
 
-  tree_index = html_parse_tree(w, html, strlen(html));
+  const char *html = "Hello World";
+  const char *selector = "*";
+
+  int tree_index = html_parse_tree(w, html, strlen(html));
   if(tree_index == -1) {
     fprintf(stderr, "Failed: tree_index = %d\n", tree_index);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
-  selector_index = html_prepare_selector(w, selector, strlen(selector));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
   if(selector_index == -1) {
     fprintf(stderr, "Failed: selector_index = %d\n", selector_index);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
 
-  scope_name = "body";
-  collection_index  = html_select(w, tree_index, scope_name, selector_index);
-  printf("%d: collection_index = %d\n", ++i, collection_index);
+  const char *scope_name = "body";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
+  printf("-> collection_index = %d\n", collection_index);
   if(collection_index == -1) {
     fprintf(stderr, "Failed\n");
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
 
@@ -108,10 +114,10 @@ int main(int argc, char const *argv[])
    */
   scope_name = "body_children";
   collection_index  = html_select(w, tree_index, scope_name, selector_index);
-  printf("%d: collection_index = %d\n", ++i, collection_index);
+  printf("-> collection_index = %d\n", collection_index);
   if(collection_index != -1) {
     fprintf(stderr, "Failed\n");
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
 
@@ -121,26 +127,43 @@ int main(int argc, char const *argv[])
    */
   scope_name = "body_children";
   collection_index  = html_select_scope(w, tree_index, scope_name);
-  printf("%d: collection_index = %d\n", ++i, collection_index);
+  printf("-> collection_index = %d\n", collection_index);
   if(collection_index == -1) {
     fprintf(stderr, "Failed\n");
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
 
-  buffer_index = html_serialize_collection(w, collection_index);
-  buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
-  printf("%d: %s\n", ++i, result);
+  int buffer_index = html_serialize_collection(w, collection_index);
+  html_vec_str_t *buffer = html_get_buffer(w, buffer_index);
+  char *result = html_vec_join(buffer, "|");
+  printf("-> %s\n", result);
   if(strcmp(result, "Hello World") != 0){
     fprintf(stderr, "Failed\n");
     html_free(result);
-    html_destroy(w);
+    MODEST_HTML_ERROR
     return 1;
   }
   html_free(result);
 
-  html_destroy(w);
+  return 0;
+}
+
+#define max_tests 3
+int (*test[max_tests])() = {select_single_node_test, different_selector_same_result_test, asterix_selector_edge_cases_test};
+
+int main(int argc, char const *argv[])
+{
+  html_workspace_t *w = html_init();
+
+  int i = 0;
+  int result = 0;
+  while(i < max_tests && result == 0){
+    result = test[i](w);
+    i += 1;
+  }
+
+  html_destroy(w);  
   printf("ok\n");
   return 0;
 }

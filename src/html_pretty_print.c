@@ -93,7 +93,7 @@ void print_node(myhtml_tree_node_t *node, size_t indent, bool colorize, html_vec
 
     for(size_t i = 0; i < indent; i++) {
       // printf("  ");
-      print_string("  ", NO_COLOR, buffer);
+      print_string("\t", NO_COLOR, buffer);
     }
 
     myhtml_tree_t* tree = node->tree;
