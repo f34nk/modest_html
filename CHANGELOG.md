@@ -2,7 +2,9 @@
 
 ## 1.0.0
 
-<!-- April 5, 2018 -->
-**in progess**
+April 8, 2018
 
-- Implemented features with test: append, get and set attribute, compare, insert_after, insert_before, position, prepend, pretty_print, remove, replace, serialize, slice, get and set text, wrap
+- Added MODEST_HTML_VERSION definition
+- Implemented features: append, get and set attribute, compare, insert_after, insert_before, position, prepend, pretty_print, remove, replace, serialize, slice, get and set text, wrap
+- Implemented tests
+- Memory tracking is enabled for tests

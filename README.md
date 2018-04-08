@@ -19,6 +19,10 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
 - [dmt](https://github.com/rxi/dmt)
   - Dynamic Memory Tracker (DMT) Library
 
+## Current Version
+
+`1.0.0`
+
 ## Example
 For more examples please checkout [tests](https://github.com/f34nk/modest_html/tree/master/test).
 ```C
