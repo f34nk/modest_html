@@ -21,6 +21,6 @@
 
 #include "html_includes.h"
 
-bool html_insert_before(html_workspace_t *workspace, int collection_index, int new_collection_index);
+bool html_insert_before(html_workspace_t* workspace, int collection_index, int new_collection_index);
 
 #endif

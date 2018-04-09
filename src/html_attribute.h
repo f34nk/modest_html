@@ -21,7 +21,7 @@
 
 #include "html_includes.h"
 
-int html_get_attribute(html_workspace_t *workspace, int collection_index, const char *key);
-bool html_set_attribute(html_workspace_t *workspace, int collection_index, const char *key, const char* value);
+int html_get_attribute(html_workspace_t* workspace, int collection_index, const char* key);
+bool html_set_attribute(html_workspace_t* workspace, int collection_index, const char* key, const char* value);
 
 #endif

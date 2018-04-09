@@ -29,6 +29,6 @@
  * @param  end              [end index]
  * @return                  [index of new collection]
  */
-int html_slice(html_workspace_t *workspace, int collection_index, int start, int end);
+int html_slice(html_workspace_t* workspace, int collection_index, int start, int end);
 
 #endif

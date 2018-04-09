@@ -28,7 +28,7 @@
  * @param  selector_size [size of CSS pattern string]
  * @return               [selector index]
  */
-int html_prepare_selector(html_workspace_t *workspace, const char *selector, size_t selector_size);
+int html_prepare_selector(html_workspace_t* workspace, const char* selector, size_t selector_size);
 /**
  * Execute a selector pattern on each node in scope.
  * @param  workspace      [current workspace]
@@ -37,7 +37,7 @@ int html_prepare_selector(html_workspace_t *workspace, const char *selector, siz
  * @param  selector_index [target selector index]
  * @return                [collection index]
  */
-int html_select(html_workspace_t *workspace, int tree_index, const char *scope_name, int selector_index);
+int html_select(html_workspace_t* workspace, int tree_index, const char* scope_name, int selector_index);
 /**
  * Create a collection of each node in scope.
  * @param  workspace      [current workspace]
@@ -45,6 +45,6 @@ int html_select(html_workspace_t *workspace, int tree_index, const char *scope_n
  * @param  scope_name     [target scope name]
  * @return                [collection index]
  */
-int html_select_scope(html_workspace_t *workspace, int tree_index, const char *scope_name);
+int html_select_scope(html_workspace_t* workspace, int tree_index, const char* scope_name);
 
 #endif

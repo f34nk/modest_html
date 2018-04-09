@@ -5,7 +5,7 @@ To check for memory leaks execute test with valgrind.
   valgrind --leak-check=yes test/html_vec_test
 
 */
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
   int i = 0;
   html_vec_str_t v;
@@ -17,10 +17,10 @@ int main(int argc, char const *argv[])
   html_vec_push(&v, "l");
   html_vec_push(&v, "o");
 
-  const char *delimiter = "|";
-  char *result = html_vec_join(&v, delimiter);
+  const char* delimiter = "|";
+  char* result = html_vec_join(&v, delimiter);
   printf("-> %s\n", result);
-  if(strcmp(result, "H|e|l|l|o") != 0){
+  if(strcmp(result, "H|e|l|l|o") != 0) {
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_vec_deinit(&v);
@@ -31,7 +31,7 @@ int main(int argc, char const *argv[])
   delimiter = "";
   result = html_vec_join(&v, delimiter);
   printf("-> %s\n", result);
-  if(strcmp(result, "Hello") != 0){
+  if(strcmp(result, "Hello") != 0) {
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_vec_deinit(&v);

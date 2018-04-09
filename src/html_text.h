@@ -21,7 +21,7 @@
 
 #include "html_includes.h"
 
-int html_get_text(html_workspace_t *workspace, int collection_index);
-bool html_set_text(html_workspace_t *workspace, int collection_index, const char* text);
+int html_get_text(html_workspace_t* workspace, int collection_index);
+bool html_set_text(html_workspace_t* workspace, int collection_index, const char* text);
 
 #endif

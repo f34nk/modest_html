@@ -21,25 +21,24 @@
 
 #include "html_includes.h"
 
-struct html_node
-{
-  char *tag_name;
-  char *selector;
+struct html_node {
+  char* tag_name;
+  char* selector;
   html_vec_str_t keys;
   html_map_str_t key_value;
-  char *text;
-  char *parent_selector;
+  char* text;
+  char* parent_selector;
 }
 typedef html_node_t;
 
-void html_node_init(html_node_t *params);
-void html_node_destroy(html_node_t *params);
-bool html_node_get(myhtml_tree_node_t *node, html_node_t *params);
-void html_node_dump(FILE *file, html_node_t *params);
-bool html_node_is_text(html_node_t *params);
-bool html_node_has_attributes(html_node_t *params);
-int html_node_attributes_count(html_node_t *params);
-char* html_node_key_for_index(html_node_t *params, int index);
-char* html_node_value_for_key(html_node_t *params, const char *key);
+void html_node_init(html_node_t* params);
+void html_node_destroy(html_node_t* params);
+bool html_node_get(myhtml_tree_node_t* node, html_node_t* params);
+void html_node_dump(FILE* file, html_node_t* params);
+bool html_node_is_text(html_node_t* params);
+bool html_node_has_attributes(html_node_t* params);
+int html_node_attributes_count(html_node_t* params);
+char* html_node_key_for_index(html_node_t* params, int index);
+char* html_node_value_for_key(html_node_t* params, const char* key);
 
 #endif

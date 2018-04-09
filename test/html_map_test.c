@@ -5,20 +5,20 @@ To check for memory leaks execute test with valgrind.
   valgrind --leak-check=yes test/html_vec_test
 
 */
-int main(int argc, char const *argv[])
+int main(int argc, char const* argv[])
 {
   int i = 0;
   html_map_str_t m;
   html_map_init(&m);
 
-  char *copy;
+  char* copy;
   html_string_copy("a 123", copy);
-  
+
   html_map_set(&m, "a", copy);
-  
-  char *result = (char*)*html_map_get(&m, "a");
+
+  char* result = (char*)*html_map_get(&m, "a");
   printf("-> %s\n", result);
-  if(strcmp(result, "a 123") != 0){
+  if(strcmp(result, "a 123") != 0) {
     fprintf(stderr, "Failed\n");
     html_free(result);
     html_map_deinit(&m);

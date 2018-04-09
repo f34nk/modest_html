@@ -44,6 +44,6 @@ typedef vec_t(html_vec_str_t) html_vec_str_2d_t;
 #define html_vec_clear(v) vec_clear(v)
 #define html_vec_deinit(v) vec_deinit(v)
 
-char* html_vec_join(html_vec_str_t *vec, const char *delimiter);
+char* html_vec_join(html_vec_str_t* vec, const char* delimiter);
 
 #endif

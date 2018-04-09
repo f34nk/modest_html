@@ -8,7 +8,7 @@ html_workspace_t* html_init()
   printf("html_init() - Size of workspace is %d\n", (int)workspace_size);
 #endif
 
-  html_workspace_t *workspace = NULL;
+  html_workspace_t* workspace = NULL;
   workspace = (html_workspace_t*)html_malloc(workspace_size);
   if(workspace == NULL) {
     fprintf(stderr, "html_init() - Failed to allocate workspace\n");
@@ -16,7 +16,7 @@ html_workspace_t* html_init()
   }
 
   // init myhtml
-  myhtml_t *myhtml = myhtml_create();
+  myhtml_t* myhtml = myhtml_create();
   mystatus_t status = myhtml_init(myhtml, MyHTML_OPTIONS_DEFAULT, 1, 0);
   if(status != MyCORE_STATUS_OK) {
     fprintf(stderr, "html_init() - Failed to init myhtml\n");
@@ -25,7 +25,7 @@ html_workspace_t* html_init()
   }
 
   // init mycss
-  mycss_t *mycss = mycss_create();
+  mycss_t* mycss = mycss_create();
   status = mycss_init(mycss);
   if(status != MyCORE_STATUS_OK) {
     fprintf(stderr, "html_init() - Failed to init mycss\n");
@@ -34,7 +34,7 @@ html_workspace_t* html_init()
   }
 
   // init finder
-  modest_finder_t *finder = modest_finder_create_simple();
+  modest_finder_t* finder = modest_finder_create_simple();
 
   // update pointers
   workspace->myhtml = myhtml;
@@ -48,14 +48,14 @@ html_workspace_t* html_init()
   html_vec_init(&workspace->collections);
   html_vec_init(&workspace->buffers);
 
-  #ifdef MODEST_HTML_USE_DMT
+#ifdef MODEST_HTML_USE_DMT
   printf("html_init() - Current memory usage: %u bytes\n", (unsigned int)dmt_usage());
-  #endif
+#endif
 
   return workspace;
 }
 
-void html_destroy(html_workspace_t *workspace)
+void html_destroy(html_workspace_t* workspace)
 {
   if(workspace == NULL) {
     fprintf(stderr, "html_destroy() - Empty workspace.\n");
@@ -95,7 +95,7 @@ void html_destroy(html_workspace_t *workspace)
   for (int i = 0; i < workspace->buffers.length; ++i) {
     html_vec_str_t vec = workspace->buffers.data[i];
     while(vec.length > 0) {
-      char *buffer = html_vec_pop(&vec);
+      char* buffer = html_vec_pop(&vec);
       html_free(buffer);
     }
     html_vec_deinit(&vec);
@@ -129,7 +129,7 @@ void html_destroy(html_workspace_t *workspace)
 #endif
 }
 
-void* html_get_scope_node(html_workspace_t *workspace, int tree_index, const char *scope_name)
+void* html_get_scope_node(html_workspace_t* workspace, int tree_index, const char* scope_name)
 {
   if(workspace == NULL) {
     fprintf(stderr, "html_scope_node() - Empty workspace.\n");
@@ -137,29 +137,29 @@ void* html_get_scope_node(html_workspace_t *workspace, int tree_index, const cha
   }
 
   // myhtml_tree_t *tree = workspace->trees.data[tree_index];
-  myhtml_tree_t *tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
+  myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
   if(tree == NULL) {
     fprintf(stderr, "html_get_scope_node() - Empty tree\n");
     return NULL;
   }
 
-  myhtml_tree_node_t *result = NULL;
+  myhtml_tree_node_t* result = NULL;
 
-  if(strcmp(scope_name, "html") == 0){
+  if(strcmp(scope_name, "html") == 0) {
     result = tree->node_html;
   }
-  else if(strcmp(scope_name, "head") == 0){
+  else if(strcmp(scope_name, "head") == 0) {
     result = tree->node_head;
   }
-  else if(strcmp(scope_name, "body") == 0){
+  else if(strcmp(scope_name, "body") == 0) {
     result = tree->node_body;
   }
-  else if(strcmp(scope_name, "body_children") == 0){
+  else if(strcmp(scope_name, "body_children") == 0) {
     // Returns first child of body.
     // To parse other children you have to call myhtml_node_next() on this node.
     result = myhtml_node_child(tree->node_body);
   }
-  else if(strcmp(scope_name, "form") == 0){
+  else if(strcmp(scope_name, "form") == 0) {
     // TODO: What is the Use Case for this option?
     result = tree->node_form;
   }
@@ -170,7 +170,7 @@ void* html_get_scope_node(html_workspace_t *workspace, int tree_index, const cha
   return (myhtml_tree_node_t*)result;
 }
 
-void* html_get_tree(html_workspace_t *workspace, int tree_index)
+void* html_get_tree(html_workspace_t* workspace, int tree_index)
 {
   if(workspace == NULL) {
     fprintf(stderr, "html_get_tree() - Empty workspace.\n");
@@ -189,7 +189,7 @@ void* html_get_tree(html_workspace_t *workspace, int tree_index)
   return (myhtml_tree_t*)workspace->trees.data[tree_index];
 }
 
-void* html_get_collection(html_workspace_t *workspace, int collection_index)
+void* html_get_collection(html_workspace_t* workspace, int collection_index)
 {
   if(workspace == NULL) {
     fprintf(stderr, "html_get_collection() - Empty workspace.\n");
@@ -208,16 +208,16 @@ void* html_get_collection(html_workspace_t *workspace, int collection_index)
   return (myhtml_collection_t*)workspace->collections.data[collection_index];
 }
 
-void* html_get_node(html_workspace_t *workspace, int collection_index, int index)
+void* html_get_node(html_workspace_t* workspace, int collection_index, int index)
 {
-  myhtml_collection_t *collection = html_get_collection(workspace, collection_index);
+  myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
     return NULL;
   }
   return (myhtml_tree_node_t*)collection->list[index];
 }
 
-void* html_get_buffer(html_workspace_t *workspace, int buffer_index)
+void* html_get_buffer(html_workspace_t* workspace, int buffer_index)
 {
   if(workspace == NULL) {
     fprintf(stderr, "html_get_buffer() - Empty workspace.\n");
@@ -232,6 +232,6 @@ void* html_get_buffer(html_workspace_t *workspace, int buffer_index)
     fprintf(stderr, "html_get_buffer() - Index %d out of bounds %d.\n", buffer_index, workspace->buffers.length);
     return NULL;
   }
-  
+
   return (html_vec_str_t*)&workspace->buffers.data[buffer_index];
 }

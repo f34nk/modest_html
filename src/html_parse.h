@@ -28,6 +28,6 @@
  * @param  data_size [size of html string]
  * @return           [tree index]
  */
-int html_parse_tree(html_workspace_t *workspace, const char *data, size_t data_size);
+int html_parse_tree(html_workspace_t* workspace, const char* data, size_t data_size);
 
 #endif

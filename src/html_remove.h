@@ -21,6 +21,6 @@
 
 #include "html_includes.h"
 
-bool html_remove(html_workspace_t *workspace, int collection_index);
+bool html_remove(html_workspace_t* workspace, int collection_index);
 
 #endif

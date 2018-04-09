@@ -21,6 +21,6 @@
 
 #include "html_includes.h"
 
-int html_position(html_workspace_t *workspace,  int collection_index);
+int html_position(html_workspace_t* workspace,  int collection_index);
 
 #endif
