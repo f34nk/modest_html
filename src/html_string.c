@@ -6,7 +6,7 @@
 #include <stdarg.h> /* needed for va_list */
 
 
-int html_string_vscprintf(const char * format, va_list pargs)
+int html_string_vscprintf(const char* format, va_list pargs)
 {
   int retval;
   va_list argcopy;
@@ -16,13 +16,13 @@ int html_string_vscprintf(const char * format, va_list pargs)
   return retval;
 }
 
-int html_string_vasprintf(char **strp, const char *fmt, va_list ap)
+int html_string_vasprintf(char** strp, const char* fmt, va_list ap)
 {
   int len = html_string_vscprintf(fmt, ap);
   if (len == -1) {
     return -1;
   }
-  char *str = html_malloc((size_t) len + 1);
+  char* str = html_malloc((size_t) len + 1);
   if (!str) {
     return -1;
   }
@@ -35,7 +35,7 @@ int html_string_vasprintf(char **strp, const char *fmt, va_list ap)
   return r;
 }
 
-int html_string_asprintf(char *strp[], const char *fmt, ...)
+int html_string_asprintf(char* strp[], const char* fmt, ...)
 {
   va_list ap;
   va_start(ap, fmt);

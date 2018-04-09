@@ -1,14 +1,14 @@
 #include "html_vec.h"
 #include "html_memory.h"
 
-char* html_vec_join(html_vec_str_t *vec, const char *delimiter)
+char* html_vec_join(html_vec_str_t* vec, const char* delimiter)
 {
   if(vec == NULL) {
     return NULL;
   }
-  
+
 #if 0
-  char *data = NULL;
+  char* data = NULL;
   data = (char*)vec_malloc(0);
   if(data == NULL) {
     return NULL;
@@ -16,7 +16,7 @@ char* html_vec_join(html_vec_str_t *vec, const char *delimiter)
 #endif
 
 #if 0
-  char *data = NULL;
+  char* data = NULL;
   data = (char*)vec_malloc(1 * sizeof(char));
   if(data == NULL) {
     return NULL;
@@ -25,7 +25,7 @@ char* html_vec_join(html_vec_str_t *vec, const char *delimiter)
 #endif
 
 #if 1
-  char *data = (char*)html_calloc(1, 1);
+  char* data = (char*)html_calloc(1, 1);
 #endif
 
   int i;
@@ -34,7 +34,7 @@ char* html_vec_join(html_vec_str_t *vec, const char *delimiter)
     int prev = (int)strlen(data);
     int length = (int)strlen(value) + 1;
 
-    char *new_data = (char*)html_realloc(data, prev + length * sizeof(char));
+    char* new_data = (char*)html_realloc(data, prev + length * sizeof(char));
     if(new_data == NULL) {
       html_free(data);
       return NULL;

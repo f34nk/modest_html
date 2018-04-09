@@ -22,6 +22,6 @@
 #include "html_includes.h"
 
 // void html_compare_nodes(html_workspace_t *workspace, html_node_t *node1, html_node_t *node2, html_vec_int_t *buffer_indices);
-void html_compare_nodes(html_workspace_t *workspace, myhtml_tree_node_t *node1, myhtml_tree_node_t *node2, int indent, html_vec_int_t *buffer_indices);
+void html_compare_nodes(html_workspace_t* workspace, myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int indent, html_vec_int_t* buffer_indices);
 
 #endif

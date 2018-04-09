@@ -21,7 +21,7 @@
 
 #include "html_includes.h"
 
-bool html_append_collection(html_workspace_t *workspace, int collection_index, int new_collection_index);
-bool html_append_buffer(html_workspace_t *workspace, int collection_index, int new_buffer_index);
+bool html_append_collection(html_workspace_t* workspace, int collection_index, int new_collection_index);
+bool html_append_buffer(html_workspace_t* workspace, int collection_index, int new_buffer_index);
 
 #endif

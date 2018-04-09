@@ -40,11 +40,10 @@ typedef vec_t(myhtml_collection_t*) collection_vec_t;
 /**
  * The space we work in.
  */
-struct html_workspace
-{
-  myhtml_t *myhtml;
-  mycss_t *mycss;
-  modest_finder_t *finder;
+struct html_workspace {
+  myhtml_t* myhtml;
+  mycss_t* mycss;
+  modest_finder_t* finder;
   tree_vec_t trees;
   entry_vec_t entries;
   selectors_list_vec_t selectors;
@@ -61,7 +60,7 @@ html_workspace_t* html_init();
  * Destroy a workspace
  * @param workspace [current workspace]
  */
-void html_destroy(html_workspace_t *workspace);
+void html_destroy(html_workspace_t* workspace);
 /**
  * Get tree node for scope name.
  * Scope names can be: html, head, body, body_first_child and form
@@ -69,34 +68,34 @@ void html_destroy(html_workspace_t *workspace);
  * @param tree_index [target tree index]
  * @param scope_name [myhtml_tree_node_t* or NULL]
  */
-void* html_get_scope_node(html_workspace_t *workspace, int tree_index, const char *scope_name);
+void* html_get_scope_node(html_workspace_t* workspace, int tree_index, const char* scope_name);
 /**
  * Get pointer to myhtml tree for index.
  * @param workspace        [current workspace]
  * @param collection_index [target tree index]
  * @return                 [myhtml_tree_t* or NULL]
  */
-void* html_get_tree(html_workspace_t *workspace, int tree_index);
+void* html_get_tree(html_workspace_t* workspace, int tree_index);
 /**
  * Get pointer to myhtml collection for index.
  * @param workspace        [current workspace]
  * @param collection_index [target collection index]
  * @return                 [myhtml_collection_t* or NULL]
  */
-void* html_get_collection(html_workspace_t *workspace, int collection_index);
+void* html_get_collection(html_workspace_t* workspace, int collection_index);
 /**
  * Get pointer to myhtml node from collection for index.
  * @param workspace        [current workspace]
  * @param collection_index [target collection index]
  * @return                 [myhtml_tree_node_t* or NULL]
  */
-void* html_get_node(html_workspace_t *workspace, int collection_index, int index);
+void* html_get_node(html_workspace_t* workspace, int collection_index, int index);
 /**
  * Get pointer to string vector for index.
  * @param  workspace    [current workspace]
  * @param  buffer_index [target buffer index]
  * @return              [html_vec_str_t* or NULL]
  */
-void* html_get_buffer(html_workspace_t *workspace, int buffer_index);
+void* html_get_buffer(html_workspace_t* workspace, int buffer_index);
 
 #endif

@@ -28,13 +28,13 @@
  * @param  delimiter        [delimiter string]
  * @return                  [buffer index]
  */
-int html_serialize_collection(html_workspace_t *workspace, int collection_index);
+int html_serialize_collection(html_workspace_t* workspace, int collection_index);
 
-int html_serialize_tree(html_workspace_t *workspace, int tree_index, const char *scope_name);
+int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char* scope_name);
 
-char* html_serialize_node(myhtml_tree_node_t *node);
-char* html_serialize_selector(myhtml_tree_node_t *node);
+char* html_serialize_node(myhtml_tree_node_t* node);
+char* html_serialize_selector(myhtml_tree_node_t* node);
 
-void html_serialize_dump(FILE *file, myhtml_tree_node_t *node);
+void html_serialize_dump(FILE* file, myhtml_tree_node_t* node);
 
 #endif
