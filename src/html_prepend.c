@@ -1,6 +1,6 @@
 #include "html_replace.h"
 
-bool prepend_nodes(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
+bool html_prepend_collection_to_node(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
 {
   if(node == NULL) {
     return false;
@@ -25,7 +25,7 @@ bool prepend_nodes(myhtml_tree_node_t* node, myhtml_collection_t* new_collection
   return true;
 }
 
-bool prepend_buffer(myhtml_tree_node_t* node, html_vec_str_t* new_buffer)
+bool html_prepend_buffer_to_node(myhtml_tree_node_t* node, html_vec_str_t* new_buffer)
 {
   if(node == NULL) {
     return false;
@@ -57,7 +57,7 @@ bool html_prepend_collection(html_workspace_t* workspace, int collection_index, 
       new_collection && new_collection->list && new_collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      prepend_nodes(node, new_collection);
+      html_prepend_collection_to_node(node, new_collection);
     }
   }
 
@@ -87,7 +87,7 @@ bool html_prepend_buffer(html_workspace_t* workspace, int collection_index, int 
       new_buffer->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      prepend_buffer(node, new_buffer);
+      html_prepend_buffer_to_node(node, new_buffer);
     }
   }
 

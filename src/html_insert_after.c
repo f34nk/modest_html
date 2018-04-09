@@ -1,6 +1,6 @@
 #include "html_insert_after.h"
 
-bool insert_after_node(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
+bool html_insert_collection_after_node(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
 {
   if(node == NULL) {
     return false;
@@ -37,7 +37,7 @@ bool html_insert_after(html_workspace_t* workspace, int collection_index, int ne
       new_collection && new_collection->list && new_collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      insert_after_node(node, new_collection);
+      html_insert_collection_after_node(node, new_collection);
     }
   }
 

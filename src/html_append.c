@@ -1,6 +1,6 @@
 #include "html_append.h"
 
-bool append_nodes(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
+bool html_append_collection_to_node(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
 {
   if(node == NULL) {
     return false;
@@ -15,14 +15,14 @@ bool append_nodes(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
 
   //       if(i == 0) {
   // #ifdef MODEST_HTML_DEBUG
-  //         printf("append_nodes() - insert after\n");
+  //         printf("html_append_collection_to_node() - insert after\n");
   // #endif
   //         myhtml_node_insert_after(last_child, new_node);
   //         last_child = new_node;
   //       }
   //       else {
   // #ifdef MODEST_HTML_DEBUG
-  //         printf("append_nodes() - append child\n");
+  //         printf("html_append_collection_to_node() - append child\n");
   // #endif
   //         // myhtml_node_append_child(node, new_node);
   //         myhtml_node_insert_after(last_child, new_node);
@@ -34,13 +34,13 @@ bool append_nodes(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
   for(size_t i = 0; i < new_collection->length; i++) {
     myhtml_tree_node_t* new_node = new_collection->list[i];
     // #ifdef MODEST_HTML_DEBUG
-    //       printf("append_nodes() - append child %d\n", i);
+    //       printf("html_append_collection_to_node() - append child %d\n", i);
     //       html_serialize_dump(stdout, node);
     //       html_serialize_dump(stdout, new_node);
     // #endif
     myhtml_node_append_child(node, new_node);
     // #ifdef MODEST_HTML_DEBUG
-    //       printf("append_nodes() - append child %d\n", i);
+    //       printf("html_append_collection_to_node() - append child %d\n", i);
     //       html_serialize_dump(stdout, node);
     // #endif
   }
@@ -49,7 +49,7 @@ bool append_nodes(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
   return true;
 }
 
-bool append_buffer(myhtml_tree_node_t* node, html_vec_str_t* new_buffer)
+bool html_append_buffer_to_node(myhtml_tree_node_t* node, html_vec_str_t* new_buffer)
 {
   if(node == NULL) {
     return false;
@@ -87,19 +87,19 @@ bool html_append_collection(html_workspace_t* workspace, int collection_index, i
 
       // for(size_t i = 0; i < collection->length; i++) {
       //   myhtml_tree_node_t *node = collection->list[i];
-      //   append_nodes(node, new_collection);
+      //   html_append_collection_to_node(node, new_collection);
       // }
       return false;
     }
     else {
       myhtml_tree_node_t* node = collection->list[0];
-      append_nodes(node, new_collection);
+      html_append_collection_to_node(node, new_collection);
     }
 
 
     //     if(collection->length == 1 && new_collection->length == 1) {
     //       myhtml_tree_node_t *node = collection->list[0];
-    //       append_nodes(node, new_collection);
+    //       html_append_collection_to_node(node, new_collection);
     //     }
     //     else {
     // #ifdef MODEST_HTML_DEBUG
@@ -107,7 +107,7 @@ bool html_append_collection(html_workspace_t* workspace, int collection_index, i
     // #endif
     //       for(size_t i = 0; i < collection->length; i++) {
     //         myhtml_tree_node_t *node = collection->list[i];
-    //         append_nodes(node, new_collection);
+    //         html_append_collection_to_node(node, new_collection);
     //       }
     //     }
   }
@@ -139,16 +139,16 @@ bool html_append_buffer(html_workspace_t* workspace, int collection_index, int n
 
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      append_buffer(node, new_buffer);
+      html_append_buffer_to_node(node, new_buffer);
     }
     // if(collection->length == 1) {
     //   myhtml_tree_node_t *node = collection->list[0];
-    //   append_buffer(node, new_buffer);
+    //   html_append_buffer_to_node(node, new_buffer);
     // }
     // else {
     //   for(size_t i = 0; i < collection->length; i++) {
     //     myhtml_tree_node_t *node = collection->list[i];
-    //     append_buffer(node, new_buffer);
+    //     html_append_buffer_to_node(node, new_buffer);
     //   }
     // }
   }

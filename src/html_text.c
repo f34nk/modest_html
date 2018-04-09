@@ -1,6 +1,6 @@
 #include "html_text.h"
 
-char* get_text(myhtml_tree_node_t* node)
+char* html_get_text_from_node(myhtml_tree_node_t* node)
 {
   if(node == NULL) {
     return NULL;
@@ -25,7 +25,7 @@ char* get_text(myhtml_tree_node_t* node)
   return data;
 }
 
-bool set_text(myhtml_tree_node_t* node, const char* text)
+bool html_set_text_for_node(myhtml_tree_node_t* node, const char* text)
 {
   if(node == NULL) {
     return false;
@@ -33,18 +33,18 @@ bool set_text(myhtml_tree_node_t* node, const char* text)
 
   myhtml_tree_node_t* text_node = myhtml_node_child(node);
 
-  // TODO: inplace set_text
+  // TODO: inplace html_set_text_for_node
 
 #if 1
   if(text_node) {
 #ifdef MODEST_HTML_DEBUG
-    printf("set_text() - Remove old text node.\n");
+    printf("html_set_text_for_node() - Remove old text node.\n");
 #endif
     myhtml_node_delete(text_node);
   }
 
 #ifdef MODEST_HTML_DEBUG
-  printf("set_text() - Insert new text node.\n");
+  printf("html_set_text_for_node() - Insert new text node.\n");
 #endif
   myhtml_tree_node_t* new_text_node = myhtml_node_create(node->tree, MyHTML_TAG__TEXT, MyHTML_NAMESPACE_HTML);
   /*mycore_string_t *string =*/ myhtml_node_text_set(new_text_node, text, strlen(text), MyENCODING_UTF_8);
@@ -53,7 +53,7 @@ bool set_text(myhtml_tree_node_t* node, const char* text)
 #else
   if(text_node == NULL) {
 #ifdef MODEST_HTML_DEBUG
-    printf("set_text() - Insert new text node.\n");
+    printf("html_set_text_for_node() - Insert new text node.\n");
 #endif
     myhtml_tree_node_t* new_text_node = myhtml_node_create(node->tree, MyHTML_TAG__TEXT, MyHTML_NAMESPACE_HTML);
     /*mycore_string_t *string =*/ myhtml_node_text_set(new_text_node, text, strlen(text), MyENCODING_UTF_8);
@@ -72,7 +72,7 @@ bool set_text(myhtml_tree_node_t* node, const char* text)
       return false;
     }
 #ifdef MODEST_HTML_DEBUG
-    printf("set_text() - Copy new text (%d %d %d)\n", strlen(string->data), strlen(data), strlen(text));
+    printf("html_set_text_for_node() - Copy new text (%d %d %d)\n", strlen(string->data), strlen(data), strlen(text));
 #endif
     strcpy(data, text);
   }
@@ -100,7 +100,7 @@ int html_get_text(html_workspace_t* workspace, int collection_index)
   if(collection && collection->list && collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      char* text = get_text(node);
+      char* text = html_get_text_from_node(node);
       if(text == NULL) {
         continue;
       }
@@ -132,7 +132,7 @@ bool html_set_text(html_workspace_t* workspace, int collection_index, const char
   if(collection && collection->list && collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      set_text(node, text);
+      html_set_text_for_node(node, text);
     }
   }
 

@@ -1,6 +1,6 @@
 #include "html_attribute.h"
 
-char* get_attribute(myhtml_tree_node_t* node, const char* key)
+char* html_get_attribute_from_node_with_key(myhtml_tree_node_t* node, const char* key)
 {
   if(node == NULL) {
     return NULL;
@@ -23,7 +23,7 @@ char* get_attribute(myhtml_tree_node_t* node, const char* key)
   return data;
 }
 
-bool set_attribute(myhtml_tree_node_t* node, const char* key, const char* value)
+bool html_set_attribute_for_node_with_key(myhtml_tree_node_t* node, const char* key, const char* value)
 {
   if(node == NULL) {
     return false;
@@ -32,19 +32,19 @@ bool set_attribute(myhtml_tree_node_t* node, const char* key, const char* value)
   myhtml_tree_attr_t* attr = myhtml_attribute_by_key(node, key, strlen(key));
   if(attr == NULL) {
 #ifdef MODEST_HTML_DEBUG
-    printf("set_attribute() - Insert new attribute %s=\"%s\"\n", key, value);
+    printf("html_set_attribute_for_node_with_key() - Insert new attribute %s=\"%s\"\n", key, value);
 #endif
     myhtml_attribute_add(node, key, strlen(key), value, strlen(value), MyENCODING_UTF_8);
     return true;
   }
   else {
 #ifdef MODEST_HTML_DEBUG
-    printf("set_attribute() - Remove old attribute with key %s\n", key);
+    printf("html_set_attribute_for_node_with_key() - Remove old attribute with key %s\n", key);
 #endif
     // remove old attribute
     myhtml_attribute_remove(node, attr);
 #ifdef MODEST_HTML_DEBUG
-    printf("set_attribute() - Insert new attribute %s=\"%s\"\n", key, value);
+    printf("html_set_attribute_for_node_with_key() - Insert new attribute %s=\"%s\"\n", key, value);
 #endif
     // insert new attribute
     myhtml_attribute_add(node, key, strlen(key), value, strlen(value), MyENCODING_UTF_8);
@@ -71,7 +71,7 @@ int html_get_attribute(html_workspace_t* workspace, int collection_index, const 
   if(collection && collection->list && collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      char* value = get_attribute(node, key);
+      char* value = html_get_attribute_from_node_with_key(node, key);
       if(value == NULL) {
         continue;
       }
@@ -103,7 +103,7 @@ bool html_set_attribute(html_workspace_t* workspace, int collection_index, const
   if(collection && collection->list && collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      set_attribute(node, key, value);
+      html_set_attribute_for_node_with_key(node, key, value);
     }
   }
 

@@ -1,7 +1,7 @@
 #include "html_compare.h"
 #include "html_compare_node.h"
 
-void compare_trees(html_workspace_t* workspace, myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int indent, html_vec_int_t* buffer_indices)
+void html_compare_node_trees(html_workspace_t* workspace, myhtml_tree_node_t* node1, myhtml_tree_node_t* node2, int indent, html_vec_int_t* buffer_indices)
 {
   myhtml_tree_node_t* child_node1 = NULL;
   myhtml_tree_node_t* child_node2 = NULL;
@@ -21,11 +21,11 @@ void compare_trees(html_workspace_t* workspace, myhtml_tree_node_t* node1, myhtm
 
   if(child_node1 && child_node2) {
     // if(child_node1 || child_node2) {
-    compare_trees(workspace, child_node1, child_node2, indent + 1, buffer_indices);
+    html_compare_node_trees(workspace, child_node1, child_node2, indent + 1, buffer_indices);
   }
 
   if(next_node1 || next_node2) {
-    compare_trees(workspace, next_node1, next_node2, indent, buffer_indices);
+    html_compare_node_trees(workspace, next_node1, next_node2, indent, buffer_indices);
   }
 }
 
@@ -54,7 +54,7 @@ bool html_compare(html_workspace_t* workspace, int collection1_index, int collec
     myhtml_tree_node_t* node1 = collection1->list[0];
     myhtml_tree_node_t* node2 = collection2->list[0];
 
-    compare_trees(workspace, node1, node2, 0, buffer_indices);
+    html_compare_node_trees(workspace, node1, node2, 0, buffer_indices);
 
     return (buffer_indices->length > 0) ? true : false;
   }

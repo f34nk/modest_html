@@ -1,6 +1,6 @@
 #include "html_position.h"
 
-bool equal_position(myhtml_tree_node_t* node, myhtml_tree_node_t* another_node)
+bool html_equal_position(myhtml_tree_node_t* node, myhtml_tree_node_t* another_node)
 {
   // myhtml_position_t myhtml_node_raw_position();
   myhtml_position_t a = myhtml_node_element_position(node);
@@ -11,13 +11,13 @@ bool equal_position(myhtml_tree_node_t* node, myhtml_tree_node_t* another_node)
   return false;
 }
 
-int get_position(myhtml_tree_node_t* node)
+int html_get_position_for_node(myhtml_tree_node_t* node)
 {
   myhtml_tree_node_t* parent = myhtml_node_parent(node);
   if(parent) {
     // check first child
     myhtml_tree_node_t* next = myhtml_node_child(parent);
-    if(equal_position(node, next)) {
+    if(html_equal_position(node, next)) {
       return 1;
     }
     else {
@@ -25,7 +25,7 @@ int get_position(myhtml_tree_node_t* node)
       while(next) {
         next = myhtml_node_next(next);
         position += 1;
-        if(equal_position(node, next)) {
+        if(html_equal_position(node, next)) {
           return position;
         }
       }
@@ -55,7 +55,7 @@ int html_position(html_workspace_t* workspace, int collection_index)
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
       if(node) {
-        int pos = get_position(node);
+        int pos = html_get_position_for_node(node);
         if(pos != -1) {
           char* data = (char*)html_malloc(1 + sizeof(pos));
           sprintf(data, "%d", pos);
