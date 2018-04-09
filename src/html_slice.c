@@ -1,6 +1,6 @@
 #include "html_slice.h"
 
-myhtml_collection_t* slice_collection(myhtml_collection_t* collection, int start, int end)
+myhtml_collection_t* html_slice_collection(myhtml_collection_t* collection, int start, int end)
 {
   if(end == -1) {
     end = collection->length;
@@ -9,7 +9,7 @@ myhtml_collection_t* slice_collection(myhtml_collection_t* collection, int start
   if(start >= 0 && end >= 0) {
 
 #ifdef MODEST_HTML_DEBUG
-    printf("slice_collection()\n");
+    printf("html_slice_collection()\n");
 #endif
 
     int new_collection_size = end - start;
@@ -19,7 +19,7 @@ myhtml_collection_t* slice_collection(myhtml_collection_t* collection, int start
     mystatus_t status;
     myhtml_collection_t* new_collection = myhtml_collection_create(new_collection_size, &status);
     if(status != MyCORE_STATUS_OK) {
-      fprintf(stderr, "slice_collection() - Failed to create new collection.\n");
+      fprintf(stderr, "html_slice_collection() - Failed to create new collection.\n");
       return NULL;
     }
 
@@ -83,7 +83,7 @@ int html_slice(html_workspace_t* workspace, int collection_index, int start, int
   }
 
   if(collection && collection->list && collection->length) {
-    myhtml_collection_t* new_collection = slice_collection(collection, start, end);
+    myhtml_collection_t* new_collection = html_slice_collection(collection, start, end);
     if(new_collection && new_collection->list && new_collection->length) {
       html_vec_push(&workspace->collections, new_collection);
       return workspace->collections.length - 1;

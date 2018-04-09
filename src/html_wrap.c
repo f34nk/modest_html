@@ -1,6 +1,6 @@
 #include "html_replace.h"
 
-bool wrap_node(myhtml_tree_node_t* node, myhtml_tree_node_t* new_node)
+bool html_wrap_node(myhtml_tree_node_t* node, myhtml_tree_node_t* new_node)
 {
   if(node == NULL) {
     return false;
@@ -41,7 +41,7 @@ bool html_wrap(html_workspace_t* workspace, int collection_index, int new_collec
       myhtml_tree_node_t* new_node = new_collection->list[0];
       for(size_t i = 0; i < collection->length; i++) {
         myhtml_tree_node_t* node = collection->list[i];
-        wrap_node(node, new_node);
+        html_wrap_node(node, new_node);
       }
     }
   }

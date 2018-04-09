@@ -29,6 +29,7 @@
 #include "html_remove.h"
 #include "html_replace.h"
 #include "html_wrap.h"
+#include "html_insert_after.h"
 #include "html_insert_before.h"
 #include "html_slice.h"
 #include "html_prepend.h"

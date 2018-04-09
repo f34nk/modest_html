@@ -1,6 +1,6 @@
 #include "html_replace.h"
 
-bool replace_node(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
+bool html_replace_node_with_collection(myhtml_tree_node_t* node, myhtml_collection_t* new_collection)
 {
   if(node == NULL) {
     return false;
@@ -38,7 +38,7 @@ bool html_replace(html_workspace_t* workspace, int collection_index, int new_col
       new_collection && new_collection->list && new_collection->length) {
     for(size_t i = 0; i < collection->length; i++) {
       myhtml_tree_node_t* node = collection->list[i];
-      replace_node(node, new_collection);
+      html_replace_node_with_collection(node, new_collection);
     }
   }
 

@@ -1,6 +1,6 @@
 #include "html_serialize.h"
 
-bool serialize_selector(myhtml_tree_node_t* node, html_vec_str_t* result)
+bool html_do_serialize_selector(myhtml_tree_node_t* node, html_vec_str_t* result)
 {
   if(node == NULL) {
     return false;
@@ -19,7 +19,7 @@ bool serialize_selector(myhtml_tree_node_t* node, html_vec_str_t* result)
 
   myhtml_tree_node_t* parent_node = myhtml_node_parent(node);
   if(parent_node) {
-    return serialize_selector(parent_node, result);
+    return html_do_serialize_selector(parent_node, result);
   }
 
   return false;
@@ -34,7 +34,7 @@ char* html_serialize_selector(myhtml_tree_node_t* node)
   html_vec_str_t vec;
   html_vec_init(&vec);
 
-  serialize_selector(node, &vec);
+  html_do_serialize_selector(node, &vec);
 
   html_vec_reverse(&vec);
   char* data = html_vec_join(&vec, " ");

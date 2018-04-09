@@ -3,7 +3,7 @@
 #include "html_node.h"
 #include "html_compare_instructions.h"
 
-bool compare_tag_names(html_node_t* node1, html_node_t* node2)
+bool html_compare_tag_names(html_node_t* node1, html_node_t* node2)
 {
   if(node1->tag_name == NULL || node2->tag_name == NULL) {
     return false;
@@ -11,7 +11,7 @@ bool compare_tag_names(html_node_t* node1, html_node_t* node2)
   return (strcmp(node1->tag_name, node2->tag_name) == 0) ? true : false;
 }
 
-bool compare_text(html_node_t* node1, html_node_t* node2)
+bool html_compare_text(html_node_t* node1, html_node_t* node2)
 {
   if(node1->text == NULL && node2->text == NULL) {
     return true;
@@ -22,7 +22,7 @@ bool compare_text(html_node_t* node1, html_node_t* node2)
   return (strcmp(node1->text, node2->text) == 0) ? true : false;
 }
 
-void compare_attribute_with_index(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, int index,  html_vec_int_t* buffer_indices)
+void html_compare_attribute_with_index(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, int index,  html_vec_int_t* buffer_indices)
 {
   char* key1 = html_node_key_for_index(node1, index);
   char* value1 = html_node_value_for_key(node1, key1);
@@ -36,17 +36,17 @@ void compare_attribute_with_index(html_workspace_t* workspace, html_node_t* node
   }
 }
 
-void compare_attributes(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, html_vec_int_t* buffer_indices)
+void html_compare_node_attributes(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, html_vec_int_t* buffer_indices)
 {
   if(html_node_attributes_count(node1) == html_node_attributes_count(node2)) {
     for(int i = 0; i < html_node_attributes_count(node1); i++) {
-      compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
+      html_compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
     }
   }
   else if(html_node_attributes_count(node1) > html_node_attributes_count(node2)) {
     for(int i = 0; i < html_node_attributes_count(node1); i++) {
       if(i < html_node_attributes_count(node2)) {
-        compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
+        html_compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
       }
       else {
         // this attr is missing in node2, remove it
@@ -58,7 +58,7 @@ void compare_attributes(html_workspace_t* workspace, html_node_t* node1, html_no
   else if(html_node_attributes_count(node1) < html_node_attributes_count(node2)) {
     for(int i = 0; i < html_node_attributes_count(node2); i++) {
       if(i < html_node_attributes_count(node1)) {
-        compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
+        html_compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
       }
       else {
         // this attr is missing in node1, add it
@@ -70,21 +70,21 @@ void compare_attributes(html_workspace_t* workspace, html_node_t* node1, html_no
   }
 }
 
-void compare_node_params(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, html_vec_int_t* buffer_indices)
+void html_compare_node_params(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, html_vec_int_t* buffer_indices)
 {
-  if(compare_tag_names(node1, node2) == false) {
+  if(html_compare_tag_names(node1, node2) == false) {
     add_set_tag_instruction(workspace, node1->selector, node2->tag_name, buffer_indices);
   }
 
   if(html_node_is_text(node1) && html_node_is_text(node2)) {
     // this is a text node
-    if(compare_text(node1, node2) == false) {
+    if(html_compare_text(node1, node2) == false) {
       // different text
       add_set_text_instruction(workspace, node2->parent_selector, node2->text, buffer_indices);
     }
   }
   else if(html_node_has_attributes(node1) && html_node_has_attributes(node2)) {
-    compare_attributes(workspace, node1, node2, buffer_indices);
+    html_compare_node_attributes(workspace, node1, node2, buffer_indices);
   }
 
 }
@@ -117,7 +117,7 @@ void html_compare_nodes(html_workspace_t* workspace, myhtml_tree_node_t* node1, 
     html_node_get(node1, &params1);
     html_node_get(node2, &params2);
 
-    compare_node_params(workspace, &params1, &params2, buffer_indices);
+    html_compare_node_params(workspace, &params1, &params2, buffer_indices);
 
     html_node_destroy(&params1);
     html_node_destroy(&params2);
