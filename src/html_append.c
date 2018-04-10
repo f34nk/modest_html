@@ -81,7 +81,7 @@ bool html_append_collection(html_workspace_t* workspace, int collection_index, i
       new_collection && new_collection->list && new_collection->length) {
 
     if(collection->length > 1) {
-      fprintf(stderr, "html_append_collection() - Not supported.\n");
+      fprintf(stderr, "html_append_collection() - Only single selected node allowed.\n");
 
       // TODO: implement append to multiple selected nodes
 

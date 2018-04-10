@@ -15,6 +15,10 @@ int html_parse_tree(html_workspace_t* workspace, const char* data, size_t data_s
     return -1;
   }
 
+  if(strlen(data) == 0) {
+    data = "<html><head></head><body></body></html>";
+  }
+
   status = myhtml_parse(tree, MyENCODING_UTF_8, data, data_size);
   if(status != MyCORE_STATUS_OK) {
     fprintf(stderr, "html_parse_tree() - Failed to parse data\n");

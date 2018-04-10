@@ -37,13 +37,13 @@ int html_get_position_for_node(myhtml_tree_node_t* node)
 int html_position(html_workspace_t* workspace, int collection_index)
 {
   if(workspace == NULL) {
-    fprintf(stderr, "html_wrap() - Empty workspace.\n");
+    fprintf(stderr, "html_position() - Empty workspace.\n");
     return -1;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
-    fprintf(stderr, "html_wrap() - Empty collection\n");
+    fprintf(stderr, "html_position() - Empty collection\n");
     return -1;
   }
 

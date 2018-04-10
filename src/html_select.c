@@ -56,11 +56,12 @@ int html_select(html_workspace_t* workspace, int tree_index, const char* scope_n
   }
 
 #ifdef MODEST_HTML_DEBUG
-  printf("html_select()\n");
-  printf("\tscope_name = %s\n", scope_name);
-  if(myhtml_node_next(scope_node)) {
-    printf("\texecute selector on each node in the scope...\n");
-  }
+  // printf("html_select()\n");
+  // printf("\tscope_name = %s\n", scope_name);
+  // if(myhtml_node_next(scope_node)) {
+  //   printf("\texecute selector on each node in the scope...\n");
+  // }
+  printf("html_select() }\n\t");
 #endif
 
   myhtml_collection_t* collection = NULL;
@@ -88,11 +89,17 @@ int html_select(html_workspace_t* workspace, int tree_index, const char* scope_n
       mycss_selectors_list_t* list = workspace->selectors.data[selector_index];
       modest_finder_by_selectors_list(finder, node, list, &collection);
 #ifdef MODEST_HTML_DEBUG
-      printf("\ttag '%s': list size = %d\n", tag_name, (int)collection->length);
+      // printf("\ttag '%s': list size = %d\n", tag_name, (int)collection->length);
+      printf("%s ", tag_name);
 #endif
     }
     node = myhtml_node_next(node);
   }
+
+#ifdef MODEST_HTML_DEBUG
+  // printf("\n\tcollection has %d nodes\n", (int)collection->length);
+  printf("\n");
+#endif
 
   if(collection && collection->list && collection->length) {
     html_vec_push(&workspace->collections, collection);
@@ -116,11 +123,12 @@ int html_select_scope(html_workspace_t* workspace, int tree_index, const char* s
   }
 
 #ifdef MODEST_HTML_DEBUG
-  printf("html_select_scope()\n");
-  printf("\tscope_name = %s\n", scope_name);
-  if(myhtml_node_next(scope_node)) {
-    printf("\tcollect each node in the scope...\n");
-  }
+  // printf("html_select_scope()\n");
+  // printf("\tscope_name = %s\n", scope_name);
+  // if(myhtml_node_next(scope_node)) {
+  //   printf("\tcollect each node in the scope...\n");
+  // }
+  printf("html_select_scope()\n\t");
 #endif
 
   myhtml_collection_t* collection = NULL;
@@ -135,12 +143,18 @@ int html_select_scope(html_workspace_t* workspace, int tree_index, const char* s
       collection->length++;
 #ifdef MODEST_HTML_DEBUG
       const char* tag_name = myhtml_tag_name_by_id(node->tree, myhtml_node_tag_id(node), NULL);
-      printf("\ttag '%s': list size = %d\n", tag_name, (int)collection->length);
+      // printf("\ttag '%s': list size = %d\n", tag_name, (int)collection->length);
+      printf("%s ", tag_name);
 #endif
     }
     // try text
     node = myhtml_node_next(node);
   }
+
+#ifdef MODEST_HTML_DEBUG
+  // printf("\n\tcollection has %d nodes\n", (int)collection->length);
+  printf("\n");
+#endif
 
   if(collection && collection->list && collection->length) {
     html_vec_push(&workspace->collections, collection);

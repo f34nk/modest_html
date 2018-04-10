@@ -164,6 +164,6 @@ int main(int argc, char const* argv[])
   }
 
   html_destroy(w);
-  printf("ok\n");
-  return 0;
+  printf("done\n");
+  return result;
 }

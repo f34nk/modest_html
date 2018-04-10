@@ -36,10 +36,18 @@ bool html_replace(html_workspace_t* workspace, int collection_index, int new_col
 
   if(collection && collection->list && collection->length &&
       new_collection && new_collection->list && new_collection->length) {
-    for(size_t i = 0; i < collection->length; i++) {
-      myhtml_tree_node_t* node = collection->list[i];
+    if(collection->length > 1) {
+      fprintf(stderr, "html_replace() - Only single selected node allowed.\n");
+      return false;
+    }
+    else {
+      myhtml_tree_node_t* node = collection->list[0];
       html_replace_node_with_collection(node, new_collection);
     }
+    // for(size_t i = 0; i < collection->length; i++) {
+    //   myhtml_tree_node_t* node = collection->list[i];
+    //   html_replace_node_with_collection(node, new_collection);
+    // }
   }
 
   return true;

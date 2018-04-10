@@ -31,6 +31,6 @@ int main(int argc, char const* argv[])
   dmt_dump(stdout);
 #endif
 
-  printf("ok\n");
+  printf("done\n");
   return 0;
 }

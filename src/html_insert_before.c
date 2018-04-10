@@ -35,10 +35,18 @@ bool html_insert_before(html_workspace_t* workspace, int collection_index, int n
 
   if(collection && collection->list && collection->length &&
       new_collection && new_collection->list && new_collection->length) {
-    for(size_t i = 0; i < collection->length; i++) {
-      myhtml_tree_node_t* node = collection->list[i];
+    if(collection->length > 1){
+      fprintf(stderr, "html_insert_before() - Only single selected node allowed.\n");
+      return false;
+    }
+    else {
+      myhtml_tree_node_t* node = collection->list[0];
       html_insert_collection_before_node(node, new_collection);
     }
+    // for(size_t i = 0; i < collection->length; i++) {
+    //   myhtml_tree_node_t* node = collection->list[i];
+    //   html_insert_collection_before_node(node, new_collection);
+    // }
   }
 
   return true;
