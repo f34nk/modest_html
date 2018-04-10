@@ -151,7 +151,8 @@ bool html_append_buffer(html_workspace_t* workspace, int collection_index, int n
     //     html_append_buffer_to_node(node, new_buffer);
     //   }
     // }
+    return true;
   }
 
-  return true;
+  return false;
 }

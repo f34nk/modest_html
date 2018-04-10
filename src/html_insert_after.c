@@ -42,6 +42,7 @@ bool html_insert_after(html_workspace_t* workspace, int collection_index, int ne
     else {
       myhtml_tree_node_t* node = collection->list[0];
       html_insert_collection_after_node(node, new_collection);
+      return true;
     }
     // for(size_t i = 0; i < collection->length; i++) {
     //   myhtml_tree_node_t* node = collection->list[i];
@@ -57,5 +58,5 @@ bool html_insert_after(html_workspace_t* workspace, int collection_index, int ne
   //   }
   // }
 
-  return true;
+  return false;
 }
