@@ -51,7 +51,6 @@ int html_select(html_workspace_t* workspace, int tree_index, const char* scope_n
 
   myhtml_tree_node_t* scope_node = html_get_scope_node(workspace, tree_index, scope_name);
   if(scope_node == NULL) {
-    fprintf(stderr, "html_select() - No node for scope '%s'.\n", scope_name);
     return -1;
   }
 
@@ -118,7 +117,6 @@ int html_select_scope(html_workspace_t* workspace, int tree_index, const char* s
 
   myhtml_tree_node_t* scope_node = html_get_scope_node(workspace, tree_index, scope_name);
   if(scope_node == NULL) {
-    fprintf(stderr, "html_select_scope() - No node for scope '%s'.\n", scope_name);
     return -1;
   }
 
