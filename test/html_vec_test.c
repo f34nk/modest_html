@@ -21,7 +21,6 @@ int main(int argc, char const* argv[])
   char* result = html_vec_join(&v, delimiter);
   printf("-> %s\n", result);
   if(strcmp(result, "H|e|l|l|o") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
     html_vec_deinit(&v);
     return 1;
@@ -32,7 +31,6 @@ int main(int argc, char const* argv[])
   result = html_vec_join(&v, delimiter);
   printf("-> %s\n", result);
   if(strcmp(result, "Hello") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
     html_vec_deinit(&v);
     return 1;

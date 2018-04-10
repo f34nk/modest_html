@@ -23,9 +23,8 @@ int insert_single_node_before_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div><span>Hello</span><p class=\"hello\">Hello</p>World</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -56,9 +55,8 @@ int insert_multiple_nodes_before_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "");
   printf("-> %s\n", result);
   if(strcmp(result, "<span>Insert</span><span>Me</span><p>Hello World</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -84,7 +82,7 @@ int insert_single_node_before_multiple_nodes_test(html_workspace_t* w)
 
   bool result = html_insert_before(w, collection_index, new_collection_index);
   if(result == true) {
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   // int buffer_index = html_serialize_tree(w, tree_index, "body_children");
@@ -92,9 +90,9 @@ int insert_single_node_before_multiple_nodes_test(html_workspace_t* w)
   // char* result = html_vec_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<span>Insert</span><p>Hello</p><span>Insert</span><p>World</p>") != 0) {
-  //   fprintf(stderr, "Failed\n");
+  //   
   //   html_free(result);
-  //   MODEST_HTML_ERROR
+  //   MODEST_HTML_LOG_ERROR
   //   return 1;
   // }
   // html_free(result);
@@ -120,7 +118,7 @@ int insert_multiple_nodes_before_multiple_nodes_test(html_workspace_t* w)
 
   bool result = html_insert_before(w, collection_index, new_collection_index);
   if(result == true) {
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
 
@@ -129,9 +127,9 @@ int insert_multiple_nodes_before_multiple_nodes_test(html_workspace_t* w)
   // char* result = html_vec_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<span>Insert</span><span>Me</span><p>Hello</p><span>Insert</span><span>Me</span><p>World</p>") != 0) {
-  //   fprintf(stderr, "Failed\n");
+  //   
   //   html_free(result);
-  //   MODEST_HTML_ERROR
+  //   MODEST_HTML_LOG_ERROR
   //   return 1;
   // }
   // html_free(result);
@@ -162,9 +160,8 @@ int insert_text_before_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div>Lorem ipsum<p class=\"hello\">Hello</p>World</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

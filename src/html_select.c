@@ -10,7 +10,9 @@ mystatus_t html_serialization_bad_selectors(const char* data, size_t len, void* 
 int html_prepare_selector(html_workspace_t* workspace, const char* selector, size_t selector_size)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_prepare_selector() - Empty workspace.\n");
+#endif
     return -1;
   }
 
@@ -45,7 +47,9 @@ int html_prepare_selector(html_workspace_t* workspace, const char* selector, siz
 int html_select(html_workspace_t* workspace, int tree_index, const char* scope_name, int selector_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_select() - Empty workspace.\n");
+#endif
     return -1;
   }
 
@@ -111,7 +115,9 @@ int html_select(html_workspace_t* workspace, int tree_index, const char* scope_n
 int html_select_scope(html_workspace_t* workspace, int tree_index, const char* scope_name)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_select_scope() - Empty workspace.\n");
+#endif
     return -1;
   }
 

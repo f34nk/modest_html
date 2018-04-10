@@ -24,9 +24,8 @@ int append_multiple_nodes_to_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -52,18 +51,18 @@ int append_multiple_nodes_to_multiple_nodes_test(html_workspace_t* w)
 
   bool result = html_append_collection(w, collection_index, new_collection_index);
   if(result == true) {
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
-  
+
   // int buffer_index = html_serialize_collection(w, collection_index);
   // html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
   // char* result = html_vec_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<p>Hello<span>Append</span><span>Me</span></p><p>World<span>Append</span><span>Me</span></p>") != 0) {
-  //   fprintf(stderr, "Failed\n");
+  //
   //   html_free(result);
-  //   MODEST_HTML_ERROR
+  //   MODEST_HTML_LOG_ERROR
   //   return 1;
   // }
   // html_free(result);
@@ -94,9 +93,8 @@ int append_text_node_to_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello WorldAppend Me</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

@@ -19,10 +19,9 @@ int main(int argc, char const* argv[])
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "1|2") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

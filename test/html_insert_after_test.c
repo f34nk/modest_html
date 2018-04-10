@@ -24,9 +24,8 @@ int insert_single_node_after_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div><p class=\"hello\">Hello</p><span>Hello</span>World</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -57,9 +56,8 @@ int insert_multiple_nodes_after_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello World</p>|<span>Insert</span>|<span>Me</span>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -85,7 +83,7 @@ int insert_multiple_nodes_after_multiple_nodes_test(html_workspace_t* w)
 
   bool result = html_insert_after(w, collection_index, new_collection_index);
   if(result == true) {
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   
@@ -94,9 +92,9 @@ int insert_multiple_nodes_after_multiple_nodes_test(html_workspace_t* w)
   // char* result = html_vec_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<p>Hello</p><span>Insert</span><span>Me</span><p>World</p><span>Insert</span><span>Me</span>") != 0) {
-  //   fprintf(stderr, "Failed\n");
+  //   
   //   html_free(result);
-  //   MODEST_HTML_ERROR
+  //   MODEST_HTML_LOG_ERROR
   //   return 1;
   // }
   // html_free(result);
@@ -127,9 +125,8 @@ int insert_text_after_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div><p class=\"hello\">Hello</p>Lorem ipsumWorld</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

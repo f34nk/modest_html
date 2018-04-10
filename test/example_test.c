@@ -20,7 +20,7 @@ int main(int argc, char const* argv[])
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<html><head></head><body><div><p class=\"hello\">Hello</p>World</div></body></html>") != 0) {
-    fprintf(stderr, "Failed\n");
+
     html_free(result);
     html_destroy(w);
     return 1;

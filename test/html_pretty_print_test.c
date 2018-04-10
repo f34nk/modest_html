@@ -20,10 +20,9 @@ int main(int argc, char const* argv[])
 
   printf("%d: %s", ++i, result);
   if(strcmp(result, "<p>\n\tHello\n</p>\n<p>\n\tWorld\n</p>\n") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

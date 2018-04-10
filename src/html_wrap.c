@@ -39,19 +39,25 @@ bool html_wrap_collection(myhtml_collection_t* collection, myhtml_tree_node_t* n
 bool html_wrap(html_workspace_t* workspace, int collection_index, int new_collection_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_wrap() - Empty workspace.\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_wrap() - Empty collection\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* new_collection = html_get_collection(workspace, new_collection_index);
   if(new_collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_wrap() - Empty new collection\n");
+#endif
     return false;
   }
 

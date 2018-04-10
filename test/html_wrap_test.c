@@ -25,9 +25,8 @@ int wrap_single_node_with_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<span class=\"wrapper\"><p>Hello World</p></span>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -59,9 +58,8 @@ int wrap_multiple_nodes_with_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<span class=\"wrapper\"><p>Hello</p><p>World</p></span>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

@@ -61,19 +61,25 @@ bool html_append_buffer_to_node(myhtml_tree_node_t* node, html_vec_str_t* new_bu
 bool html_append_collection(html_workspace_t* workspace, int collection_index, int new_collection_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_append_collection() - Empty workspace.\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_append_collection() - Empty collection\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* new_collection = html_get_collection(workspace, new_collection_index);
   if(new_collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_append_collection() - Empty new collection\n");
+#endif
     return false;
   }
 
@@ -118,19 +124,25 @@ bool html_append_collection(html_workspace_t* workspace, int collection_index, i
 bool html_append_buffer(html_workspace_t* workspace, int collection_index, int new_buffer_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_append_buffer() - Empty workspace.\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_append_buffer() - Empty collection\n");
+#endif
     return false;
   }
 
   html_vec_str_t* new_buffer = html_get_buffer(workspace, new_buffer_index);
   if(new_buffer == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_append_buffer() - Empty new buffer\n");
+#endif
     return false;
   }
 

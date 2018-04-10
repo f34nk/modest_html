@@ -35,10 +35,9 @@ int set_tag_and_set_text_test(html_workspace_t* w)
     char* result = html_vec_join(buffer, "|");
     printf("%d: %s\n", i, result);
     if(strcmp(result, instructions[i]) != 0) {
-      fprintf(stderr, "Failed\n");
       html_free(result);
       html_vec_deinit(&buffer_indices);
-      MODEST_HTML_ERROR
+      MODEST_HTML_LOG_ERROR
       return 1;
     }
     html_free(result);
@@ -82,10 +81,9 @@ int remove_and_append_test(html_workspace_t* w)
     char* result = html_vec_join(buffer, "|");
     printf("%d: %s\n", i, result);
     if(strcmp(result, instructions[i]) != 0) {
-      fprintf(stderr, "Failed\n");
       html_free(result);
       html_vec_deinit(&buffer_indices);
-      MODEST_HTML_ERROR
+      MODEST_HTML_LOG_ERROR
       return 1;
     }
     html_free(result);
@@ -128,10 +126,9 @@ int change_and_add_attribute_test(html_workspace_t* w)
     char* result = html_vec_join(buffer, "|");
     printf("%d: %s\n", i, result);
     if(strcmp(result, instructions[i]) != 0) {
-      fprintf(stderr, "Failed\n");
       html_free(result);
       html_vec_deinit(&buffer_indices);
-      MODEST_HTML_ERROR
+      MODEST_HTML_LOG_ERROR
       return 1;
     }
     html_free(result);
@@ -174,10 +171,9 @@ int change_and_remove_attribute_test(html_workspace_t* w)
     char* result = html_vec_join(buffer, "|");
     printf("%d: %s\n", i, result);
     if(strcmp(result, instructions[i]) != 0) {
-      fprintf(stderr, "Failed\n");
       html_free(result);
       html_vec_deinit(&buffer_indices);
-      MODEST_HTML_ERROR
+      MODEST_HTML_LOG_ERROR
       return 1;
     }
     html_free(result);

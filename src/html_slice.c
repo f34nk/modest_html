@@ -72,13 +72,17 @@ myhtml_collection_t* html_slice_collection(myhtml_collection_t* collection, int 
 int html_slice(html_workspace_t* workspace, int collection_index, int start, int end)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_slice() - Empty workspace.\n");
+#endif
     return -1;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_slice() - Empty collection\n");
+#endif
     return -1;
   }
 

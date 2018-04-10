@@ -58,7 +58,9 @@ html_workspace_t* html_init()
 void html_destroy(html_workspace_t* workspace)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_destroy() - Empty workspace.\n");
+#endif
     return;
   }
 
@@ -132,14 +134,18 @@ void html_destroy(html_workspace_t* workspace)
 void* html_get_scope_node(html_workspace_t* workspace, int tree_index, const char* scope_name)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_scope_node() - Empty workspace.\n");
+#endif
     return NULL;
   }
 
   // myhtml_tree_t *tree = workspace->trees.data[tree_index];
   myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
   if(tree == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_get_scope_node() - Empty tree\n");
+#endif
     return NULL;
   }
 
@@ -173,7 +179,9 @@ void* html_get_scope_node(html_workspace_t* workspace, int tree_index, const cha
 void* html_get_tree(html_workspace_t* workspace, int tree_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_get_tree() - Empty workspace.\n");
+#endif
     return NULL;
   }
 
@@ -192,7 +200,9 @@ void* html_get_tree(html_workspace_t* workspace, int tree_index)
 void* html_get_collection(html_workspace_t* workspace, int collection_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_get_collection() - Empty workspace.\n");
+#endif
     return NULL;
   }
 
@@ -220,7 +230,9 @@ void* html_get_node(html_workspace_t* workspace, int collection_index, int index
 void* html_get_buffer(html_workspace_t* workspace, int buffer_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_get_buffer() - Empty workspace.\n");
+#endif
     return NULL;
   }
 

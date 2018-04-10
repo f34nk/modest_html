@@ -55,13 +55,17 @@ bool html_set_attribute_for_node_with_key(myhtml_tree_node_t* node, const char* 
 int html_get_attribute(html_workspace_t* workspace, int collection_index, const char* key)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_get_attributes() - Empty workspace.\n");
+#endif
     return -1;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_get_attributes() - Empty collection\n");
+#endif
     return -1;
   }
 
@@ -90,13 +94,17 @@ int html_get_attribute(html_workspace_t* workspace, int collection_index, const 
 bool html_set_attribute(html_workspace_t* workspace, int collection_index, const char* key, const char* value)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_set_attribute() - Empty workspace.\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_set_attribute() - Empty collection\n");
+#endif
     return false;
   }
 

@@ -3,7 +3,9 @@
 int html_parse_tree(html_workspace_t* workspace, const char* data, size_t data_size)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_parse_tree() - Empty workspace.\n");
+#endif
     return -1;
   }
 

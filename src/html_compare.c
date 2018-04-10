@@ -32,19 +32,25 @@ void html_compare_node_trees(html_workspace_t* workspace, myhtml_tree_node_t* no
 bool html_compare(html_workspace_t* workspace, int collection1_index, int collection2_index, html_vec_int_t* buffer_indices)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_compare() - Empty workspace.\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* collection1 = html_get_collection(workspace, collection1_index);
   if(collection1 == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_compare() - Empty collection1\n");
+#endif
     return false;
   }
 
   myhtml_collection_t* collection2 = html_get_collection(workspace, collection2_index);
   if(collection2 == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_compare() - Empty collection2\n");
+#endif
     return false;
   }
 
