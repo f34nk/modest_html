@@ -22,6 +22,6 @@ int main(int argc, char const* argv[])
   html_node_destroy(&params);
 
   html_destroy(w);
-  printf("ok\n");
+  printf("done\n");
   return 0;
 }

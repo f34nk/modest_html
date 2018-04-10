@@ -30,6 +30,6 @@ int main(int argc, char const* argv[])
   html_map_deinit(&m);
   dmt_dump(stdout);
 
-  printf("ok\n");
+  printf("done\n");
   return 0;
 }

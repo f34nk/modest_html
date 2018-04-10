@@ -55,10 +55,25 @@ bool html_prepend_collection(html_workspace_t* workspace, int collection_index, 
 
   if(collection && collection->list && collection->length &&
       new_collection && new_collection->list && new_collection->length) {
-    for(size_t i = 0; i < collection->length; i++) {
-      myhtml_tree_node_t* node = collection->list[i];
+    if(collection->length > 1) {
+      fprintf(stderr, "html_prepend_collection() - Only single selected node allowed.\n");
+
+      // TODO: implement append to multiple selected nodes
+
+      // for(size_t i = 0; i < collection->length; i++) {
+      //   myhtml_tree_node_t *node = collection->list[i];
+      //   html_prepend_collection_to_node(node, new_collection);
+      // }
+      return false;
+    }
+    else {
+      myhtml_tree_node_t* node = collection->list[0];
       html_prepend_collection_to_node(node, new_collection);
     }
+    // for(size_t i = 0; i < collection->length; i++) {
+    //   myhtml_tree_node_t* node = collection->list[i];
+    //   html_prepend_collection_to_node(node, new_collection);
+    // }
   }
 
   return true;

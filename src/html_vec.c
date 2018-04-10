@@ -17,7 +17,7 @@ char* html_vec_join(html_vec_str_t* vec, const char* delimiter)
 
 #if 0
   char* data = NULL;
-  data = (char*)vec_malloc(1 * sizeof(char));
+  data = (char*)html_malloc(1 * sizeof(char));
   if(data == NULL) {
     return NULL;
   }

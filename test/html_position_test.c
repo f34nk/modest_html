@@ -28,6 +28,6 @@ int main(int argc, char const* argv[])
   html_free(result);
 
   html_destroy(w);
-  printf("ok\n");
+  printf("done\n");
   return 0;
 }

@@ -43,6 +43,6 @@ int main(int argc, char const* argv[])
 
   dmt_dump(stdout);
 
-  printf("ok\n");
+  printf("done\n");
   return 0;
 }

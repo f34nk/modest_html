@@ -40,6 +40,51 @@ int serialize_tree_and_collection_test(html_workspace_t* w)
   return 0;
 }
 
+int serialize_tree_with_body_children_test(html_workspace_t* w)
+{
+  MODEST_HTML_LOG
+
+  const char* html = "<p>Hello</p><p>World</p>";
+
+  int tree_index = html_parse_tree(w, html, strlen(html));
+
+  int buffer_index = html_serialize_tree(w, tree_index, "body_children");
+  html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
+  char* result = html_vec_join(buffer, "");
+  printf("-> %s\n", result);
+  if(strcmp(result, "<p>Hello</p><p>World</p>") != 0) {
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    MODEST_HTML_ERROR
+    return 1;
+  }
+  html_free(result);
+}
+
+int serialize_empty_tree_test(html_workspace_t* w)
+{
+  MODEST_HTML_LOG
+
+  const char* html = "";
+  const char* scope_name = "html";
+
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  
+  int buffer_index = html_serialize_tree(w, tree_index, scope_name);
+  html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
+  char* result = html_vec_join(buffer, "|");
+  printf("-> %s\n", result);
+  if(strcmp(result, "<html><head></head><body></body></html>") != 0) {
+    fprintf(stderr, "Failed\n");
+    html_free(result);
+    MODEST_HTML_ERROR
+    return 1;
+  }
+  html_free(result);
+
+  return 0;
+}
+
 int serialize_body_children_text_only_test(html_workspace_t* w)
 {
   MODEST_HTML_LOG
@@ -121,8 +166,8 @@ int serialize_selector_test(html_workspace_t* w)
   return 0;
 }
 
-#define max_tests 4
-int (*test[max_tests])() = {serialize_tree_and_collection_test, serialize_body_children_text_only_test, serialize_node_test, serialize_selector_test};
+#define max_tests 6
+int (*test[max_tests])() = {serialize_tree_and_collection_test, serialize_tree_with_body_children_test, serialize_empty_tree_test, serialize_body_children_text_only_test, serialize_node_test, serialize_selector_test};
 
 int main(int argc, char const* argv[])
 {
@@ -136,6 +181,6 @@ int main(int argc, char const* argv[])
   }
 
   html_destroy(w);
-  printf("ok\n");
-  return 0;
+  printf("done\n");
+  return result;
 }

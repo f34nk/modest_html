@@ -187,15 +187,16 @@ int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char*
     return -1;
   }
 
-  char* data = html_serialize_node(scope_node);
-  size_t length = strlen(data);
-  if(length > 0) {
-    html_vec_push(&buffer, data);
+  myhtml_tree_node_t* node = scope_node;
+  while(node) {
+    char* data = html_serialize_node(node);
+    size_t length = strlen(data);
+    if(length > 0) {
+      html_vec_push(&buffer, data);
+    }
+    node = myhtml_node_next(node);
   }
-  // else {
-  //   html_free(data);
-  // }
-
+  
   html_vec_push(&workspace->buffers, buffer);
 
   return workspace->buffers.length - 1;
