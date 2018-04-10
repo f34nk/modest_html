@@ -151,13 +151,17 @@ void html_print_node(myhtml_tree_node_t* node, size_t indent, bool colorize, htm
 char* html_pretty_print(html_workspace_t* workspace, int collection_index, bool colorize)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_pretty_print() - Empty workspace.\n");
+#endif
     return NULL;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_pretty_print() - Empty collection\n");
+#endif
     return NULL;
   }
 

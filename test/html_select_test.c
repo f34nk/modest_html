@@ -19,9 +19,8 @@ int select_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"hello\">Hello</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -46,9 +45,8 @@ int different_selector_same_result_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>ipsum</p>|<span>dolor</span>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -69,9 +67,8 @@ int different_selector_same_result_test(html_workspace_t* w)
   result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>ipsum</p>|<span>dolor</span>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -89,13 +86,13 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
   int tree_index = html_parse_tree(w, html, strlen(html));
   if(tree_index == -1) {
     fprintf(stderr, "Failed: tree_index = %d\n", tree_index);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   int selector_index = html_prepare_selector(w, selector, strlen(selector));
   if(selector_index == -1) {
     fprintf(stderr, "Failed: selector_index = %d\n", selector_index);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
 
@@ -103,8 +100,7 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
   int collection_index  = html_select(w, tree_index, scope_name, selector_index);
   printf("-> collection_index = %d\n", collection_index);
   if(collection_index == -1) {
-    fprintf(stderr, "Failed\n");
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
 
@@ -116,8 +112,7 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
   collection_index  = html_select(w, tree_index, scope_name, selector_index);
   printf("-> collection_index = %d\n", collection_index);
   if(collection_index != -1) {
-    fprintf(stderr, "Failed\n");
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
 
@@ -129,8 +124,7 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
   collection_index  = html_select_scope(w, tree_index, scope_name);
   printf("-> collection_index = %d\n", collection_index);
   if(collection_index == -1) {
-    fprintf(stderr, "Failed\n");
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
 
@@ -139,9 +133,8 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Hello World") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

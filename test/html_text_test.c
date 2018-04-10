@@ -19,9 +19,8 @@ int get_and_set_text_test(html_workspace_t* w)
   char* result = html_vec_join(text, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Hello") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -33,9 +32,8 @@ int get_and_set_text_test(html_workspace_t* w)
   result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"hello\">Changed</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -61,9 +59,8 @@ int get_text_from_multiple_nodes_test(html_workspace_t* w)
   char* result = html_vec_join(text, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Lorem|ipsum|dolor sit") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -90,9 +87,8 @@ int set_text_all_test(html_workspace_t* w)
   char* result = html_vec_join(text, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>hello</p>|<p><a href=\"http://google.de\">hello</a>hello</p>|<a href=\"http://google.de\">hello</a>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

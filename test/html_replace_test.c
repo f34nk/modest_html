@@ -23,9 +23,8 @@ int replace_single_node_with_multiple_nodes_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div><span>Lorem</span><span>ipsum</span>World</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -51,7 +50,7 @@ int replace_multiple_nodes_with_multiple_nodes_test(html_workspace_t* w)
 
   bool result = html_replace(w, collection_index, new_collection_index);
   if(result == true) {
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   
@@ -60,9 +59,9 @@ int replace_multiple_nodes_with_multiple_nodes_test(html_workspace_t* w)
   // char* result = html_vec_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<div><span>Lorem</span><span>ipsum</span><span>Lorem</span><span>ipsum</span>World</div>") != 0) {
-  //   fprintf(stderr, "Failed\n");
+  //   
   //   html_free(result);
-  //   MODEST_HTML_ERROR
+  //   MODEST_HTML_LOG_ERROR
   //   return 1;
   // }
   // html_free(result);

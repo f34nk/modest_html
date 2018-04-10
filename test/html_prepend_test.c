@@ -24,9 +24,8 @@ int prepend_multiple_nodes_to_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p><span>Prepend</span><span>Me</span>Hello World</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -52,7 +51,7 @@ int prepend_multiple_nodes_to_multiple_nodes_test(html_workspace_t* w)
 
   bool result = html_prepend_collection(w, collection_index, new_collection_index);
   if(result == true) {
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
 
@@ -61,9 +60,9 @@ int prepend_multiple_nodes_to_multiple_nodes_test(html_workspace_t* w)
   // char* result = html_vec_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<p><span>Prepend</span><span>Me</span>Hello</p><p><span>Prepend</span><span>Me</span>World</p>") != 0) {
-  //   fprintf(stderr, "Failed\n");
+  //   
   //   html_free(result);
-  //   MODEST_HTML_ERROR
+  //   MODEST_HTML_LOG_ERROR
   //   return 1;
   // }
   // html_free(result);
@@ -94,9 +93,8 @@ int prepend_text_node_to_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Prepend MeHello World</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

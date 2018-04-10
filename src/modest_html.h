@@ -8,11 +8,11 @@
 
 #ifdef MODEST_HTML_DEBUG
 #define MODEST_HTML_LOG fprintf(stdout, "[LOG]\t%s()\n", __func__);
-#define MODEST_HTML_ERROR fprintf(stderr, "[ERROR]\t%s()\n\t%s:%d\n", __func__, __FILE__, __LINE__);
+#define MODEST_HTML_LOG_ERROR fprintf(stderr, "[ERROR]\t%s()\n\t%s:%d\n", __func__, __FILE__, __LINE__);
 #else
 // nothing
 #define MODEST_HTML_LOG
-#define MODEST_HTML_ERROR
+#define MODEST_HTML_LOG_ERROR
 #endif
 
 #include "html_memory.h"

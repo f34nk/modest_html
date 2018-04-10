@@ -9,9 +9,8 @@ int main(int argc, char const* argv[])
   html_string_copy(data, result);
   printf("-> %s\n", result);
   if(strcmp(result, "Hello World") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -20,9 +19,8 @@ int main(int argc, char const* argv[])
   html_string_asprintf(&result, "Mama %s is equal %d.", "John", 58);
   printf("-> %s\n", result);
   if(strcmp(result, "Mama John is equal 58.") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

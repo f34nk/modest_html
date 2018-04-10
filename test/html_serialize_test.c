@@ -18,9 +18,8 @@ int serialize_tree_and_collection_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<html><head></head><body><div><p class=\"hello\">Hello</p>World</div></body></html>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -30,9 +29,8 @@ int serialize_tree_and_collection_test(html_workspace_t* w)
   result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"hello\">Hello</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -53,9 +51,8 @@ int serialize_tree_with_body_children_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello</p><p>World</p>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -75,9 +72,8 @@ int serialize_empty_tree_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<html><head></head><body></body></html>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -102,9 +98,8 @@ int serialize_body_children_text_only_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Hello World") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -128,9 +123,8 @@ int serialize_node_test(html_workspace_t* w)
   char* result = html_serialize_node(node);
   printf("-> %s\n", result);
   if(strcmp(result, "<a>World</a>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -156,9 +150,8 @@ int serialize_selector_test(html_workspace_t* w)
   char* result = html_serialize_selector(node);
   printf("-> %s\n", result);
   if(strcmp(result, "html body div span p a") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

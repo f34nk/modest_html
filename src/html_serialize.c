@@ -57,7 +57,9 @@ mystatus_t html_serialize_dump_callback(const char* data, size_t data_length, vo
 void html_serialize_dump(FILE* file, myhtml_tree_node_t* node)
 {
   if(node == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_serialize_dump() - Empty node\n");
+#endif
     return;
   }
 
@@ -138,13 +140,17 @@ char* html_serialize_node(myhtml_tree_node_t* node)
 int html_serialize_collection(html_workspace_t* workspace, int collection_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_serialize_collection() - Empty workspace.\n");
+#endif
     return -1;
   }
 
   myhtml_collection_t* collection = (myhtml_collection_t*)html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_serialize_collection() - Empty collection\n");
+#endif
     return -1;
   }
 
@@ -177,7 +183,9 @@ int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char*
 
   myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
   if(tree == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_serialize_tree() - Empty tree\n");
+#endif
     return -1;
   }
 

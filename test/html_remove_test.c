@@ -19,10 +19,9 @@ int remove_single_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div>World</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);
@@ -48,10 +47,9 @@ int remove_nested_node_test(html_workspace_t* w)
   char* result = html_vec_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div>World</div>") != 0) {
-    fprintf(stderr, "Failed\n");
     html_free(result);
     html_destroy(w);
-    MODEST_HTML_ERROR
+    MODEST_HTML_LOG_ERROR
     return 1;
   }
   html_free(result);

@@ -37,13 +37,17 @@ int html_get_position_for_node(myhtml_tree_node_t* node)
 int html_position(html_workspace_t* workspace, int collection_index)
 {
   if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_position() - Empty workspace.\n");
+#endif
     return -1;
   }
 
   myhtml_collection_t* collection = html_get_collection(workspace, collection_index);
   if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
     fprintf(stderr, "html_position() - Empty collection\n");
+#endif
     return -1;
   }
 
