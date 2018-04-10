@@ -16,6 +16,26 @@ bool html_wrap_node(myhtml_tree_node_t* node, myhtml_tree_node_t* new_node)
   return true;
 }
 
+bool html_wrap_collection(myhtml_collection_t* collection, myhtml_tree_node_t* new_node)
+{
+  if(collection == NULL) {
+    return false;
+  }
+  if(new_node == NULL) {
+    return false;
+  }
+
+  myhtml_tree_node_t* first_node = collection->list[0];
+  myhtml_node_insert_before(first_node, new_node);
+  for(size_t i = 0; i < collection->length; i++) {
+    myhtml_tree_node_t* node = collection->list[i];
+    myhtml_tree_node_t* detached = myhtml_node_remove(node);
+    myhtml_node_append_child(new_node, detached);
+  }
+
+  return true;
+}
+
 bool html_wrap(html_workspace_t* workspace, int collection_index, int new_collection_index)
 {
   if(workspace == NULL) {
@@ -36,21 +56,17 @@ bool html_wrap(html_workspace_t* workspace, int collection_index, int new_collec
   }
 
   if(collection && collection->list && collection->length &&
-      new_collection && new_collection->list && new_collection->length) {
+     new_collection && new_collection->list && new_collection->length) {
 
-    if(collection->length > 1) {
-      fprintf(stderr, "html_wrap() - Only single selected node allowed.\n");
-      return false;
-    }
-    else if(new_collection->length != 1) {
-      fprintf(stderr, "html_wrap() - Only single wrapping node allowed.\n");
-      return false;
-    }
-    else { 
+    if(collection->length == 1) {
       myhtml_tree_node_t* node = collection->list[0];
       myhtml_tree_node_t* new_node = new_collection->list[0];
       html_wrap_node(node, new_node);
       return true;
+    }
+    else {
+      myhtml_tree_node_t* new_node = new_collection->list[0];
+      html_wrap_collection(collection, new_node);
     }
   }
 
