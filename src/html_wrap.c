@@ -37,14 +37,22 @@ bool html_wrap(html_workspace_t* workspace, int collection_index, int new_collec
 
   if(collection && collection->list && collection->length &&
       new_collection && new_collection->list && new_collection->length) {
-    if(new_collection->length > 0) {
+
+    if(collection->length > 1) {
+      fprintf(stderr, "html_wrap() - Only single selected node allowed.\n");
+      return false;
+    }
+    else if(new_collection->length != 1) {
+      fprintf(stderr, "html_wrap() - Only single wrapping node allowed.\n");
+      return false;
+    }
+    else { 
+      myhtml_tree_node_t* node = collection->list[0];
       myhtml_tree_node_t* new_node = new_collection->list[0];
-      for(size_t i = 0; i < collection->length; i++) {
-        myhtml_tree_node_t* node = collection->list[i];
-        html_wrap_node(node, new_node);
-      }
+      html_wrap_node(node, new_node);
+      return true;
     }
   }
 
-  return true;
+  return false;
 }

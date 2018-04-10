@@ -60,7 +60,7 @@ int html_select(html_workspace_t* workspace, int tree_index, const char* scope_n
   // if(myhtml_node_next(scope_node)) {
   //   printf("\texecute selector on each node in the scope...\n");
   // }
-  printf("html_select() }\n\t");
+  printf("html_select()\n\t");
 #endif
 
   myhtml_collection_t* collection = NULL;
