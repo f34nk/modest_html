@@ -5,6 +5,12 @@
 
 bool html_compare_tag_names(html_node_t* node1, html_node_t* node2)
 {
+#ifdef MODEST_HTML_DEBUG
+  printf("html_compare_tag_names()\n");
+  printf("\t%s\n", node1->tag_name);
+  printf("\t%s\n", node2->tag_name);
+#endif
+
   if(node1->tag_name == NULL || node2->tag_name == NULL) {
     return false;
   }
@@ -13,6 +19,12 @@ bool html_compare_tag_names(html_node_t* node1, html_node_t* node2)
 
 bool html_compare_text(html_node_t* node1, html_node_t* node2)
 {
+#ifdef MODEST_HTML_DEBUG
+  printf("html_compare_text()\n");
+  printf("\t%s\n", node1->text);
+  printf("\t%s\n", node2->text);
+#endif
+
   if(node1->text == NULL && node2->text == NULL) {
     return true;
   }
@@ -28,6 +40,11 @@ void html_compare_attribute_with_index(html_workspace_t* workspace, html_node_t*
   char* value1 = html_node_value_for_key(node1, key1);
   char* key2 = html_node_key_for_index(node2, index);
   char* value2 = html_node_value_for_key(node2, key2);
+#ifdef MODEST_HTML_DEBUG
+  printf("html_compare_attribute_with_index()\n");
+  printf("\t%s = %s\n", key1, value1);
+  printf("\t%s = %s\n", key2, value2);
+#endif
   if(strcmp(key1, key2) != 0) {
     add_set_attribute_instruction(workspace, node2->selector, key2, value2, buffer_indices);
   }
@@ -38,6 +55,12 @@ void html_compare_attribute_with_index(html_workspace_t* workspace, html_node_t*
 
 void html_compare_node_attributes(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, html_vec_int_t* buffer_indices)
 {
+#ifdef MODEST_HTML_DEBUG
+  printf("html_compare_node_attributes()\n");
+  printf("\tnode1 has %d attributes\n", html_node_attributes_count(node1));
+  printf("\tnode2 has %d attributes\n", html_node_attributes_count(node2));
+#endif
+
   if(html_node_attributes_count(node1) == html_node_attributes_count(node2)) {
     for(int i = 0; i < html_node_attributes_count(node1); i++) {
       html_compare_attribute_with_index(workspace, node1, node2, i, buffer_indices);
@@ -72,6 +95,13 @@ void html_compare_node_attributes(html_workspace_t* workspace, html_node_t* node
 
 void html_compare_node_params(html_workspace_t* workspace, html_node_t* node1, html_node_t* node2, html_vec_int_t* buffer_indices)
 {
+#ifdef MODEST_HTML_DEBUG
+  printf("html_compare_node_params()\n");
+  html_node_dump(stdout, node1);
+  html_node_dump(stdout, node2);
+  printf("\n");
+#endif
+
   if(html_compare_tag_names(node1, node2) == false) {
     add_set_tag_instruction(workspace, node1->selector, node2->tag_name, buffer_indices);
   }
@@ -83,7 +113,7 @@ void html_compare_node_params(html_workspace_t* workspace, html_node_t* node1, h
       add_set_text_instruction(workspace, node2->parent_selector, node2->text, buffer_indices);
     }
   }
-  else if(html_node_has_attributes(node1) && html_node_has_attributes(node2)) {
+  else if(html_node_has_attributes(node1) || html_node_has_attributes(node2)) {
     html_compare_node_attributes(workspace, node1, node2, buffer_indices);
   }
 
