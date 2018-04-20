@@ -21,7 +21,7 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
 
 ## Current Version
 
-`1.0.0`
+`2.0.0`
 
 ## Example
 For more examples please checkout [tests](https://github.com/f34nk/modest_html/tree/master/test).
@@ -116,6 +116,6 @@ See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
   - [x] Get position of node in relation to its parent
   - [x] Wrap node with another node
   - [x] Pretty print html
-  - [x] Compare two html strings
+  - [ ] Compare two html strings
 - [ ] Documentation
 

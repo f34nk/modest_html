@@ -1,7 +1,7 @@
 #ifndef MODEST_HTML_H
 #define MODEST_HTML_H
 
-#define MODEST_HTML_VERSION "1.0.0"
+#define MODEST_HTML_VERSION "2.0.0"
 
 // #define MODEST_HTML_DEBUG
 // #define MODEST_HTML_USE_DMT
@@ -35,7 +35,6 @@
 #include "html_prepend.h"
 #include "html_append.h"
 #include "html_position.h"
-#include "html_compare.h"
 #include "html_pretty_print.h"
 
 #endif
