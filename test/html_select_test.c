@@ -16,7 +16,7 @@ int select_single_node_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"hello\">Hello</p>") != 0) {
     html_free(result);
@@ -42,7 +42,7 @@ int different_selector_same_result_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>ipsum</p>|<span>dolor</span>") != 0) {
     html_free(result);
@@ -64,7 +64,7 @@ int different_selector_same_result_test(html_workspace_t* w)
 
   buffer_index = html_serialize_collection(w, collection_index);
   buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
+  result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>ipsum</p>|<span>dolor</span>") != 0) {
     html_free(result);
@@ -130,7 +130,7 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Hello World") != 0) {
     html_free(result);

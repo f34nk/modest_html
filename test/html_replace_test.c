@@ -20,7 +20,7 @@ int replace_single_node_with_multiple_nodes_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_tree(w, tree_index, "body_children");
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<div><span>Lorem</span><span>ipsum</span>World</div>") != 0) {
     html_free(result);
@@ -56,7 +56,7 @@ int replace_multiple_nodes_with_multiple_nodes_test(html_workspace_t* w)
   
   // int buffer_index = html_serialize_tree(w, tree_index, "body_children");
   // html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  // char* result = html_vec_join(buffer, "|");
+  // char* result = html_vec_str_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<div><span>Lorem</span><span>ipsum</span><span>Lorem</span><span>ipsum</span>World</div>") != 0) {
   //   

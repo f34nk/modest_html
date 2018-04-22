@@ -15,7 +15,7 @@ int get_and_set_attribute_for_single_node_test(html_workspace_t* w)
   int attributes_index = html_get_attribute(w, collection_index, "class");
 
   html_vec_str_t* attributes = html_get_buffer(w, attributes_index);
-  char* result = html_vec_join(attributes, "|");
+  char* result = html_vec_str_join(attributes, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "hello") != 0) {
     html_free(result);
@@ -28,7 +28,7 @@ int get_and_set_attribute_for_single_node_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
+  result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"changed\">Hello</p>") != 0) {
     html_free(result);
@@ -55,7 +55,7 @@ int set_new_attribute_for_single_node_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"new-class\">Hello</p>") != 0) {
     html_free(result);

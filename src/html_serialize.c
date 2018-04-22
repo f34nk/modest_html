@@ -37,7 +37,7 @@ char* html_serialize_selector(myhtml_tree_node_t* node)
   html_do_serialize_selector(node, &vec);
 
   html_vec_reverse(&vec);
-  char* data = html_vec_join(&vec, " ");
+  char* data = html_vec_str_join(&vec, " ");
 
   while(vec.length > 0) {
     char* buffer = html_vec_pop(&vec);
@@ -124,7 +124,7 @@ char* html_serialize_node(myhtml_tree_node_t* node)
   html_vec_init(&vec);
   myhtml_serialization_tree_callback(node, html_serialization_callback, (void*)&vec);
 
-  char* data = html_vec_join(&vec, "");
+  char* data = html_vec_str_join(&vec, "");
 
   while(vec.length > 0) {
     char* buffer = html_vec_pop(&vec);

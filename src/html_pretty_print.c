@@ -175,7 +175,7 @@ char* html_pretty_print(html_workspace_t* workspace, int collection_index, bool 
       html_print_node(node, 0, colorize, &vec);
     }
 
-    char* result = html_vec_join(&vec, "");
+    char* result = html_vec_str_join(&vec, "");
 
     while(vec.length > 0) {
       char* buffer = html_vec_pop(&vec);

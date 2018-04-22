@@ -16,7 +16,7 @@ int main(int argc, char const* argv[])
 
   int buffer_index = html_position(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "1|2") != 0) {
     html_free(result);

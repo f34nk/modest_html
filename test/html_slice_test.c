@@ -17,7 +17,7 @@ int slice_first_to_end_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello</p>|<div>World</div>") != 0) {
     html_free(result);
@@ -45,7 +45,7 @@ int slice_first_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Lorem</p>") != 0) {
     html_free(result);

@@ -16,7 +16,7 @@ int get_and_set_text_test(html_workspace_t* w)
   int text_index = html_get_text(w, collection_index);
 
   html_vec_str_t* text = html_get_buffer(w, text_index);
-  char* result = html_vec_join(text, "|");
+  char* result = html_vec_str_join(text, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Hello") != 0) {
     html_free(result);
@@ -29,7 +29,7 @@ int get_and_set_text_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  result = html_vec_join(buffer, "|");
+  result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p class=\"hello\">Changed</p>") != 0) {
     html_free(result);
@@ -56,7 +56,7 @@ int get_text_from_multiple_nodes_test(html_workspace_t* w)
   int text_index = html_get_text(w, collection_index);
 
   html_vec_str_t* text = html_get_buffer(w, text_index);
-  char* result = html_vec_join(text, "|");
+  char* result = html_vec_str_join(text, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "Lorem|ipsum|dolor sit") != 0) {
     html_free(result);
@@ -84,7 +84,7 @@ int set_text_all_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* text = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(text, "|");
+  char* result = html_vec_str_join(text, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>hello</p>|<p><a href=\"http://google.de\">hello</a>hello</p>|<a href=\"http://google.de\">hello</a>") != 0) {
     html_free(result);

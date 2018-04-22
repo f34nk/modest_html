@@ -1,7 +1,7 @@
 #include "html_vec.h"
 #include "html_memory.h"
 
-char* html_vec_join(html_vec_str_t* vec, const char* delimiter)
+char* html_vec_str_join(html_vec_str_t* vec, const char* delimiter)
 {
   if(vec == NULL) {
     return NULL;

@@ -21,7 +21,7 @@ int append_multiple_nodes_to_single_node_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello World<span>Append</span><span>Me</span></p>") != 0) {
     html_free(result);
@@ -57,7 +57,7 @@ int append_multiple_nodes_to_multiple_nodes_test(html_workspace_t* w)
 
   // int buffer_index = html_serialize_collection(w, collection_index);
   // html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  // char* result = html_vec_join(buffer, "|");
+  // char* result = html_vec_str_join(buffer, "|");
   // printf("-> %s\n", result);
   // if(strcmp(result, "<p>Hello<span>Append</span><span>Me</span></p><p>World<span>Append</span><span>Me</span></p>") != 0) {
   //
@@ -90,7 +90,7 @@ int append_text_node_to_single_node_test(html_workspace_t* w)
 
   int buffer_index = html_serialize_collection(w, collection_index);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<p>Hello WorldAppend Me</p>") != 0) {
     html_free(result);

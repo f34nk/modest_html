@@ -17,7 +17,7 @@ int main(int argc, char const* argv[])
   const char* scope_name = "html";
   int buffer_index = html_serialize_tree(w, tree_index, scope_name);
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-  char* result = html_vec_join(buffer, "|");
+  char* result = html_vec_str_join(buffer, "|");
   printf("-> %s\n", result);
   if(strcmp(result, "<html><head></head><body><div><p class=\"hello\">Hello</p>World</div></body></html>") != 0) {
 
