@@ -107,15 +107,22 @@ char* html_serialize_node(myhtml_tree_node_t* node)
 
 mystatus_t html_serialization_callback(const char* data, size_t data_length, void* result)
 {
-  html_vec_str_t* vec = (html_vec_str_t*)result;
+  // if(data_length == 0) {
+  //   return MyCORE_STATUS_OK;
+  // }
 
-  char* copy = (char*)html_malloc(data_length + 1 * sizeof(char));
-  if(copy) {
-    strcpy(copy, data);
-    html_vec_push(vec, copy);
-    return MyCORE_STATUS_OK;
+  html_vec_str_t* vec = (html_vec_str_t*)result;
+  // char* copy = (char*)html_malloc(data_length + 1 * sizeof(char));
+  // char* copy = (char*)html_malloc(data_length + 1);
+  char* copy = (char*)html_malloc(strlen(data) + 1);
+  if(copy == NULL) {
+    return MyCORE_STATUS_ERROR;
   }
-  return MyCORE_STATUS_ERROR;
+  *copy = '\0';
+  strcpy(copy, data);
+  // strncpy(copy, data, data_length);
+  html_vec_push(vec, copy);
+  return MyCORE_STATUS_OK;
 }
 
 char* html_serialize_node(myhtml_tree_node_t* node)
