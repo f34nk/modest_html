@@ -27,7 +27,9 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
 For more examples please checkout [tests](https://github.com/f34nk/modest_html/tree/master/test).
 ```C
 #include "modest_html.h"
+```
 
+```C
 /*
 modest_html is build around a workspace struct.
 The workspace holds all allocated memory and frees it in html_destroy().
@@ -51,7 +53,7 @@ if(result != NULL && strcmp(result, "<body><p>Hello</p><p>World</p></body>") != 
   fprintf(stderr, "Failed\n");
   html_free(result);
   html_destroy(w);
-  return 1;
+  return false;
 }
 
 // free result
@@ -59,6 +61,8 @@ html_free(result);
 
 // destroy our workspace
 html_destroy(w);
+
+return true;
 ```
 
 ## Dependencies
