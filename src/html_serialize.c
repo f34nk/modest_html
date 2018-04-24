@@ -331,47 +331,6 @@ int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char*
 }
 #endif
 
-#if 0
-int html_serialize_tree1(html_workspace_t* workspace, int tree_index, const char* scope_name)
-{
-  raw_string_vec_t buffer;
-  html_vec_init(&buffer);
-
-  myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
-  if(tree == NULL) {
-#ifdef MODEST_HTML_DEBUG
-    fprintf(stderr, "html_serialize_tree() - Empty tree\n");
-#endif
-    return -1;
-  }
-
-  myhtml_tree_node_t* scope_node = html_get_scope_node(workspace, tree_index, scope_name);
-  if(scope_node == NULL) {
-    fprintf(stderr, "html_serialize_tree() - No node for scope '%s'.\n", scope_name);
-    return -1;
-  }
-
-  myhtml_tree_node_t* node = scope_node;
-  while(node) {
-    mycore_string_raw_t str_raw;
-    mycore_string_raw_clean_all(&str_raw);
-    if(myhtml_serialization_tree_buffer(node, &str_raw)) {
-      break;
-    }
-    char* data = str_raw.data;
-    size_t length = strlen(data);
-    if(length > 0) {
-      html_vec_push(&buffer, &str_raw);
-    }
-    node = myhtml_node_next(node);
-  }
-
-  html_vec_push(&workspace->raw_strings, buffer);
-
-  return workspace->raw_strings.length - 1;
-}
-#endif
-
 #if 1
 int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char* scope_name)
 {

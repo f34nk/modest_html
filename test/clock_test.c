@@ -59,7 +59,7 @@ int parse_tree_bench(int c, const char* html)
     CLOCK_LOG
   }
   html_workspace_t* w = html_init();
-  
+
   int tree_index = html_parse_tree(w, html, strlen(html));
 
   html_destroy(w);
@@ -178,7 +178,7 @@ int parse_select_and_serialize_tree_buffer_bench(int c, const char* html)
   // printf("%s", str_raw.data);
   mycore_string_raw_destroy(&str_raw, false);
 
-  
+
   html_destroy(w);
   return 0;
 }
