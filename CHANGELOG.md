@@ -1,5 +1,12 @@
 # modest_html Changelog
 
+## 2.0.1
+
+April 24, 2018
+
+- `Modest` now builds with `MyCORE_BUILD_WITHOUT_THREADS=YES` option enabled
+- Refactored html_serialize_collection, html_serialize_tree and html_serialize_node to use myhtml_serialization_tree_buffer for better performance.
+
 ## 2.0.0
 
 April 20, 2018

@@ -21,7 +21,7 @@ This library wraps functionality of lexborisovs **Modest**. It is written in in 
 
 ## Current Version
 
-`2.0.0`
+`2.0.1`
 
 ## Example
 For more examples please checkout [tests](https://github.com/f34nk/modest_html/tree/master/test).

@@ -1,7 +1,7 @@
 #ifndef MODEST_HTML_H
 #define MODEST_HTML_H
 
-#define MODEST_HTML_VERSION "2.0.0"
+#define MODEST_HTML_VERSION "2.0.1"
 
 // #define MODEST_HTML_DEBUG
 // #define MODEST_HTML_USE_DMT
