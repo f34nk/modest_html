@@ -1,0 +1,20 @@
+#!/bin/bash
+
+current=`pwd`
+
+check=`find libs/Modest \( -name libmodest_static.a \)`
+if [ ! -z "$check" ]
+then
+  echo "Cleanup Modest..."
+  cd libs/Modest
+  make clean
+  cd $current
+  echo "done"
+fi
+
+# setup
+
+mkdir -p build
+cd build
+
+make clean

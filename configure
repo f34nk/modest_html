@@ -2,14 +2,20 @@
 
 current=`pwd`
 
-check=`find libs/Modest \( -name libmodest_static.a -o -name libmodest.so \)`
+check=`find libs/Modest \( -name libmodest_static.a \)`
 if [ -z "$check" ]
 then
   echo "Compiling Modest..."
   # Modest
   # https://github.com/lexborisov/Modest/blob/master/INSTALL.md
   cd libs/Modest
-  make library
+
+  # NO threads
+  make library MyCORE_BUILD_WITHOUT_THREADS=YES
+
+  # WITH threads
+  # make library
+
   cd $current
   echo "done"
 fi
