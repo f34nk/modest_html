@@ -1,5 +1,9 @@
 #include "modest_html.h"
+/*
+To check for memory leaks execute test with valgrind.
 
+  valgrind --leak-check=yes test/html_string_test
+*/
 int main(int argc, char const* argv[])
 {
   int i = 0;

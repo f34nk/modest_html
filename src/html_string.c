@@ -113,8 +113,9 @@ int html_string_asprintf(char* strp[], const char* fmt, ...)
 //   return result;
 // }
 
-// char* html_string_copy(const char* string)
+// char* html_string_copy(const char* string, char* copy)
 // {
+// #if 1
 //   if(string == NULL) {
 //     return NULL;
 //   }
@@ -126,5 +127,16 @@ int html_string_asprintf(char* strp[], const char* fmt, ...)
 //   *data = '\0';
 //   strcpy(data, string);
 
+//   copy = data;
+  
 //   return data;
+// #endif
+
+// #if 0
+//   while(size) {
+//     size--;
+//     str1[size] = str2[size];
+//   }
+// #endif
+
 // }

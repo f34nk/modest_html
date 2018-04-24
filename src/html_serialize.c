@@ -103,8 +103,9 @@ char* html_serialize_node(myhtml_tree_node_t* node)
 
   return data;
 }
-#else
+#endif
 
+#if 0
 mystatus_t html_serialization_callback(const char* data, size_t data_length, void* result)
 {
   // if(data_length == 0) {
@@ -141,9 +142,54 @@ char* html_serialize_node(myhtml_tree_node_t* node)
 
   return data;
 }
-
 #endif
 
+#if 1
+mystatus_t html_serialization_callback(const char* data, size_t data_length, void* result)
+{
+  html_vec_str_t* vec = (html_vec_str_t*)result;
+  html_vec_push(vec, (char*)data);
+  return MyCORE_STATUS_OK;
+}
+
+char* html_serialize_node(myhtml_tree_node_t* node)
+{
+  html_vec_str_t vec;
+  html_vec_init(&vec);
+  myhtml_serialization_tree_callback(node, html_serialization_callback, (void*)&vec);
+
+  char* data = html_vec_str_join(&vec, "");
+
+  // while(vec.length > 0) {
+  //   char* buffer = html_vec_pop(&vec);
+  //   html_free(buffer);
+  // }
+  html_vec_deinit(&vec);
+
+  return data;
+}
+#endif
+
+#if 0
+mystatus_t html_serialization_callback(const char* data, size_t data_length, void* result)
+{
+  fprintf((FILE*)result, "%.*s", (int)data_length, data);
+  return MyCORE_STATUS_OK;
+}
+
+char* html_serialize_node(myhtml_tree_node_t* node)
+{
+  size_t len;
+  char* buf = NULL;
+  FILE* stream;
+  stream = open_memstream(&buf, &len);
+  myhtml_serialization_tree_callback(node, html_serialization_callback, (void*)stream);
+  fclose(stream);
+  return buf;
+}
+#endif
+
+#if 0
 int html_serialize_collection(html_workspace_t* workspace, int collection_index)
 {
   if(workspace == NULL) {
@@ -182,10 +228,93 @@ int html_serialize_collection(html_workspace_t* workspace, int collection_index)
 
   return workspace->buffers.length - 1;
 }
+#endif
 
+#if 1
+int html_serialize_collection(html_workspace_t* workspace, int collection_index)
+{
+  if(workspace == NULL) {
+#ifdef MODEST_HTML_DEBUG
+    fprintf(stderr, "html_serialize_collection() - Empty workspace.\n");
+#endif
+    return -1;
+  }
+
+  myhtml_collection_t* collection = (myhtml_collection_t*)html_get_collection(workspace, collection_index);
+  if(collection == NULL) {
+#ifdef MODEST_HTML_DEBUG
+    fprintf(stderr, "html_serialize_collection() - Empty collection\n");
+#endif
+    return -1;
+  }
+
+  html_vec_str_t buffer;
+  html_vec_init(&buffer);
+
+  for(size_t i = 0; i < collection->length; i++) {
+    myhtml_tree_node_t* node = collection->list[i];
+
+    mycore_string_raw_t str_raw;
+    mycore_string_raw_clean_all(&str_raw);
+    if(myhtml_serialization_tree_buffer(node, &str_raw)) {
+      break;
+    }
+    char* data = str_raw.data;
+    size_t length = strlen(data);
+    if(length > 0) {
+      char *copy;
+      html_string_copy(data, copy);
+      html_vec_push(&buffer, copy);
+    }
+    mycore_string_raw_destroy(&str_raw, false);
+  }
+
+  html_vec_push(&workspace->buffers, buffer);
+
+  return workspace->buffers.length - 1;
+}
+#endif
+
+#if 0
 int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char* scope_name)
 {
+  myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
+  if(tree == NULL) {
+#ifdef MODEST_HTML_DEBUG
+    fprintf(stderr, "html_serialize_tree() - Empty tree\n");
+#endif
+    return -1;
+  }
+
+  myhtml_tree_node_t* scope_node = html_get_scope_node(workspace, tree_index, scope_name);
+  if(scope_node == NULL) {
+    fprintf(stderr, "html_serialize_tree() - No node for scope '%s'.\n", scope_name);
+    return -1;
+  }
+
   html_vec_str_t buffer;
+  html_vec_init(&buffer);
+
+  myhtml_tree_node_t* node = scope_node;
+  while(node) {
+    char* data = html_serialize_node(node);
+    size_t length = strlen(data);
+    if(length > 0) {
+      html_vec_push(&buffer, data);
+    }
+    node = myhtml_node_next(node);
+  }
+  
+  html_vec_push(&workspace->buffers, buffer);
+
+  return workspace->buffers.length - 1;
+}
+#endif
+
+#if 0
+int html_serialize_tree1(html_workspace_t* workspace, int tree_index, const char* scope_name)
+{
+  raw_string_vec_t buffer;
   html_vec_init(&buffer);
 
   myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
@@ -204,15 +333,66 @@ int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char*
 
   myhtml_tree_node_t* node = scope_node;
   while(node) {
-    char* data = html_serialize_node(node);
+    mycore_string_raw_t str_raw;
+    mycore_string_raw_clean_all(&str_raw);
+    if(myhtml_serialization_tree_buffer(node, &str_raw)) {
+      break;
+    }
+    char* data = str_raw.data;
     size_t length = strlen(data);
     if(length > 0) {
-      html_vec_push(&buffer, data);
+      html_vec_push(&buffer, &str_raw);
     }
     node = myhtml_node_next(node);
   }
-  
+
+  html_vec_push(&workspace->raw_strings, buffer);
+
+  return workspace->raw_strings.length - 1;
+}
+#endif
+
+#if 1
+int html_serialize_tree(html_workspace_t* workspace, int tree_index, const char* scope_name)
+{
+  myhtml_tree_t* tree = (myhtml_tree_t*)html_get_tree(workspace, tree_index);
+  if(tree == NULL) {
+#ifdef MODEST_HTML_DEBUG
+    fprintf(stderr, "html_serialize_tree() - Empty tree\n");
+#endif
+    return -1;
+  }
+
+  myhtml_tree_node_t* scope_node = html_get_scope_node(workspace, tree_index, scope_name);
+  if(scope_node == NULL) {
+    fprintf(stderr, "html_serialize_tree() - No node for scope '%s'.\n", scope_name);
+    return -1;
+  }
+
+  html_vec_str_t buffer;
+  html_vec_init(&buffer);
+
+  myhtml_tree_node_t* node = scope_node;
+  while(node) {
+    mycore_string_raw_t str_raw;
+    mycore_string_raw_clean_all(&str_raw);
+    if(myhtml_serialization_tree_buffer(node, &str_raw)) {
+      break;
+    }
+    char* data = str_raw.data;
+    size_t length = strlen(data);
+    if(length > 0) {
+      char *copy;
+      html_string_copy(data, copy);
+      html_vec_push(&buffer, copy);
+    }
+    mycore_string_raw_destroy(&str_raw, false);
+
+    node = myhtml_node_next(node);
+  }
+
   html_vec_push(&workspace->buffers, buffer);
 
   return workspace->buffers.length - 1;
 }
+#endif

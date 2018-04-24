@@ -31,8 +31,38 @@
  * @param string [source string]
  * @param copy   [destination string]
  */
-#define html_string_copy(string, copy) if(string != NULL) { copy = html_malloc(strlen(string) + 1 * sizeof(char*)); if(copy != NULL) {*copy = '\0'; strcpy(copy, string); }} else { copy = NULL; }
+#define html_string_copy(string, copy) \
+  if(string != NULL) { \
+    copy = html_malloc(strlen(string) + 1 * sizeof(char*)); \
+    if(copy != NULL) { \
+      *copy = '\0'; \
+      strcpy(copy, string); \
+    } \
+  } \
+  else { \
+    copy = NULL; \
+  }
 
+// char* html_string_copy(const char* string, char* copy);
+
+/*
+#define html_string_copy(string, copy) \
+  if(string != NULL) { \
+    size_t size = strlen(string) + 1; \
+    copy = html_malloc(size * sizeof(char*)); \
+    if(copy != NULL) { \
+      *copy = '\0'; \
+      while(size) { \
+        size--; \
+        copy[size] = string[size]; \
+      } \
+    } \
+  } \
+  else { \
+    copy = NULL; \
+  }
+*/
+  
 int html_string_asprintf(char* strp[], const char* fmt, ...);
 
 #endif

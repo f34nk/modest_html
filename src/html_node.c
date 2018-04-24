@@ -62,7 +62,7 @@ bool html_node_get(myhtml_tree_node_t* node, html_node_t* params)
     mycore_string_t* string = myhtml_node_string(node);
     const char* data = mycore_string_data(string);
     char* data_copy;
-    html_string_copy(data, data_copy)
+    html_string_copy(data, data_copy);
     params->text = data_copy;
 
     myhtml_tree_node_t* parent_node = myhtml_node_parent(node);

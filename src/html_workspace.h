@@ -38,6 +38,14 @@ typedef vec_t(mycss_selectors_list_t*) selectors_list_vec_t;
  */
 typedef vec_t(myhtml_collection_t*) collection_vec_t;
 /**
+ * Vector of myhtml collection pointers.
+ */
+typedef vec_t(mycore_string_raw_t*) raw_string_vec_t;
+/**
+ * Vector of string vectors.
+ */
+typedef vec_t(raw_string_vec_t) raw_string_vec_2d_t;
+/**
  * The space we work in.
  */
 struct html_workspace {
@@ -49,6 +57,7 @@ struct html_workspace {
   selectors_list_vec_t selectors;
   collection_vec_t collections;
   html_vec_str_2d_t buffers;
+  raw_string_vec_2d_t raw_strings;
 }
 typedef html_workspace_t;
 /**

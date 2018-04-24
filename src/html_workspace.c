@@ -47,6 +47,13 @@ html_workspace_t* html_init()
   html_vec_init(&workspace->selectors);
   html_vec_init(&workspace->collections);
   html_vec_init(&workspace->buffers);
+  html_vec_init(&workspace->raw_strings);
+
+  html_vec_reserve(&workspace->trees, 2);
+  html_vec_reserve(&workspace->entries, 2);
+  html_vec_reserve(&workspace->selectors, 4);
+  html_vec_reserve(&workspace->collections, 4);
+  html_vec_reserve(&workspace->buffers, 20);
 
 #ifdef MODEST_HTML_USE_DMT
   printf("html_init() - Current memory usage: %u bytes\n", (unsigned int)dmt_usage());
@@ -75,6 +82,7 @@ void html_destroy(html_workspace_t* workspace)
   printf("\tfree %d selectors...\n", workspace->selectors.length);
   printf("\tfree %d trees...\n", workspace->trees.length);
   printf("\tfree %d buffers...\n", workspace->buffers.length);
+  printf("\tfree %d raw strings...\n", workspace->raw_strings.length);
 #endif
 
   for (int i = 0; i < workspace->collections.length; ++i) {
@@ -103,6 +111,20 @@ void html_destroy(html_workspace_t* workspace)
     html_vec_deinit(&vec);
   }
   html_vec_deinit(&workspace->buffers);
+
+  // for (int i = 0; i < workspace->raw_strings.length; ++i) {
+  //   mycore_string_raw_t* str_raw = workspace->raw_strings.data[i];
+  //   mycore_string_raw_destroy(str_raw, false);
+  // }
+  for (int i = 0; i < workspace->raw_strings.length; ++i) {
+    raw_string_vec_t vec = workspace->raw_strings.data[i];
+    while(vec.length > 0) {
+      mycore_string_raw_t* str_raw = html_vec_pop(&vec);
+      mycore_string_raw_destroy(str_raw, false);
+    }
+    html_vec_deinit(&vec);
+  }
+  html_vec_deinit(&workspace->raw_strings);
 
   // destroy Modest Finder
   modest_finder_destroy(workspace->finder, true);
