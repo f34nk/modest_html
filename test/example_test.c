@@ -9,10 +9,10 @@ int serialize_large_file_test(html_workspace_t* w)
 {
   MODEST_HTML_LOG
 
-  const char* filename = "../test/fixtures/wikipedia_hyperlink.html";
-  // const char* filename = "../test/fixtures/w3c_html5.html";
-  // const char* filename = "../test/fixtures/github_trending_js.html";
-  // const char* filename = "../test/fixtures/small.html";
+  // const char* filename = "../test/fixtures/0_2k.html";
+  // const char* filename = "../test/fixtures/0_5k.html";
+  // const char* filename = "../test/fixtures/1k.html";
+  const char* filename = "../test/fixtures/2k.html";
 
   char* html = read_file(filename);
   if(html == NULL) {

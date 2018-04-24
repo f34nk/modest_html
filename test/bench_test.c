@@ -12,10 +12,10 @@ To check for memory leaks execute test with valgrind.
 #define CLOCK_LOG fprintf(stdout, "[LOG]\t%s()\n", __func__);
 #define CLOCK_LOG_ERROR fprintf(stderr, "[ERROR]\t%s()\n\t%s:%d\n", __func__, __FILE__, __LINE__);
 
-const char* filename = "../test/fixtures/wikipedia_hyperlink.html";
-// const char* filename = "../test/fixtures/w3c_html5.html";
-// const char* filename = "../test/fixtures/github_trending_js.html";
-// const char* filename = "../test/fixtures/small.html";
+// const char* filename = "../test/fixtures/0_2k.html";
+// const char* filename = "../test/fixtures/0_5k.html";
+// const char* filename = "../test/fixtures/1k.html";
+const char* filename = "../test/fixtures/2k.html";
 
 int myhtml_serialization_tree_buffer_bench(int c, const char* html)
 {
@@ -184,7 +184,8 @@ int parse_select_and_serialize_tree_buffer_bench(int c, const char* html)
 }
 
 #define clock_to_sec(t) ((double)t)/CLOCKS_PER_SEC
-#define clock_to_millisec(t) (((double)t)/CLOCKS_PER_SEC) * 1000.0
+#define clock_to_milisec(t) (((double)t)/CLOCKS_PER_SEC) * 1000.0
+#define clock_to_microsec(t) (((double)t)/CLOCKS_PER_SEC) * 1000.0 * 1000
 
 #define max_benchmarks 6
 int (*bench[max_benchmarks])() = {myhtml_serialization_tree_buffer_bench, parse_tree_bench, parse_and_select_bench, parse_select_and_serialize_collection_bench, parse_select_and_serialize_tree_bench, parse_select_and_serialize_tree_buffer_bench};
@@ -211,10 +212,14 @@ int main(int argc, char* argv[])
       c += 1;
     }
     clock_t end = clock() - start;
-    double average = clock_to_millisec(end) / c;
-    printf("\trun %d times\ttotal %2.4f sec\taverage = %2.4f millisec\n", c, (float)clock_to_sec(end), average);
+    double average = clock_to_sec(end) / c;
+    // average = average * 1000.0; // millisec
+    average = average * 1000.0 * 1000.0; // microsec
+    printf("\trun %d times\ttotal %2.4f sec\taverage = %f µs\n", c, (float)clock_to_sec(end), average);
     i += 1;
   }
+
+  // µ
 
   free(html);
   return 0;

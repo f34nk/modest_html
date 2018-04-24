@@ -134,7 +134,7 @@ int serialize_node_test(html_workspace_t* w)
   }
   html_free(result);
   // free(result);
-  
+
   return 0;
 }
 
@@ -165,14 +165,15 @@ int serialize_selector_test(html_workspace_t* w)
   return 0;
 }
 
-int serialize_files_test(html_workspace_t* w)
+int load_file_and_serialize(html_workspace_t* w)
 {
   MODEST_HTML_LOG
 
-  // const char* filename = "../test/fixtures/wikipedia_hyperlink.html";
-  // const char* filename = "../test/fixtures/w3c_html5.html";
-  const char* filename = "../test/fixtures/github_trending_js.html";
-  
+  // const char* filename = "../test/fixtures/0_2k.html";
+  // const char* filename = "../test/fixtures/0_5k.html";
+  // const char* filename = "../test/fixtures/1k.html";
+  const char* filename = "../test/fixtures/2k.html";
+
   char* html = read_file(filename);
   if(html == NULL) {
     MODEST_HTML_LOG_ERROR
@@ -185,7 +186,7 @@ int serialize_files_test(html_workspace_t* w)
   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
   char* result = html_vec_str_join(buffer, "|");
   printf("-> read size = %d, serialized size = %d\n", strlen(html), strlen(result));
-  
+
   // write_file("result.html", result);
   // write_file("input.html", html);
 
@@ -196,13 +197,14 @@ int serialize_files_test(html_workspace_t* w)
     return 1;
   }
   html_free(result);
+  
   free(html);
 
   return 0;
 }
 
 #define max_tests 7
-int (*test[max_tests])() = {serialize_tree_and_collection_test, serialize_tree_with_body_children_test, serialize_empty_tree_test, serialize_body_children_text_only_test, serialize_node_test, serialize_selector_test, serialize_files_test};
+int (*test[max_tests])() = {serialize_tree_and_collection_test, serialize_tree_with_body_children_test, serialize_empty_tree_test, serialize_body_children_text_only_test, serialize_node_test, serialize_selector_test, load_file_and_serialize};
 
 int main(int argc, char const* argv[])
 {

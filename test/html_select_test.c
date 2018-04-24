@@ -1,5 +1,6 @@
 
 #include "modest_html.h"
+#include "test_utils.h"
 
 int select_single_node_test(html_workspace_t* w)
 {
@@ -142,8 +143,47 @@ int asterix_selector_edge_cases_test(html_workspace_t* w)
   return 0;
 }
 
-#define max_tests 3
-int (*test[max_tests])() = {select_single_node_test, different_selector_same_result_test, asterix_selector_edge_cases_test};
+int load_file_and_select_test(html_workspace_t* w)
+{
+  MODEST_HTML_LOG
+
+  // const char* filename = "../test/fixtures/0_2k.html";
+  // const char* filename = "../test/fixtures/0_5k.html";
+  // const char* filename = "../test/fixtures/1k.html";
+  const char* filename = "../test/fixtures/2k.html";
+
+  char* html = read_file(filename);
+  if(html == NULL) {
+    MODEST_HTML_LOG_ERROR
+    return 1;
+  }
+
+  const char* selector = ":contains(Lorem ipsum)";
+
+  int tree_index = html_parse_tree(w, html, strlen(html));
+  int selector_index = html_prepare_selector(w, selector, strlen(selector));
+
+  const char* scope_name = "html";
+  int collection_index  = html_select(w, tree_index, scope_name, selector_index);
+
+  int buffer_index = html_serialize_collection(w, collection_index);
+  html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
+  char* result = html_vec_str_join(buffer, "|");
+  printf("-> %s\n", result);
+  if(strcmp(result, "<h1>Lorem ipsum</h1>|<h2>Lorem ipsum</h2>|<h2>Lorem ipsum</h2>") != 0) {
+    html_free(result);
+    free(html);
+    MODEST_HTML_LOG_ERROR
+    return 1;
+  }
+  html_free(result);
+
+  free(html);
+  return 0;
+}
+
+#define max_tests 4
+int (*test[max_tests])() = {select_single_node_test, different_selector_same_result_test, asterix_selector_edge_cases_test, load_file_and_select_test};
 
 int main(int argc, char const* argv[])
 {
