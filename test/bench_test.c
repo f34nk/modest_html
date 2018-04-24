@@ -6,7 +6,7 @@
 /*
 To check for memory leaks execute test with valgrind.
 
-  valgrind --leak-check=yes test/clock_test
+  valgrind --leak-check=yes test/bench_test
 */
 
 #define CLOCK_LOG fprintf(stdout, "[LOG]\t%s()\n", __func__);

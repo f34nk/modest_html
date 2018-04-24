@@ -62,7 +62,7 @@ foreach(TEST ${TESTS})
   )
 endforeach()
 
-file(GLOB_RECURSE TESTS "clock*_test.c")
+file(GLOB_RECURSE TESTS "bench*_test.c")
 foreach(TEST ${TESTS})
   message("TEST = ${TEST}")
   get_filename_component(TEST_NAME ${TEST} NAME_WE)
