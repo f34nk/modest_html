@@ -9,8 +9,13 @@ then
   # Modest
   # https://github.com/lexborisov/Modest/blob/master/INSTALL.md
   cd libs/Modest
+
+  # NO threads
   make library MyCORE_BUILD_WITHOUT_THREADS=YES
+
+  # WITH threads
   # make library
+
   cd $current
   echo "done"
 fi
