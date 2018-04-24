@@ -149,33 +149,6 @@ int parse_select_and_serialize_tree_bench(int c, const char* html)
   return 0;
 }
 
-// int parse_select_and_serialize_tree1_bench(int c, const char* html)
-// {
-//   if(c == 0) {
-//     CLOCK_LOG
-//   }
-//   html_workspace_t* w = html_init();
-
-//   int tree_index = html_parse_tree(w, html, strlen(html));
-//   const char* selector = "*";
-//   int selector_index = html_prepare_selector(w, selector, strlen(selector));
-//   const char* scope_name = "html";
-//   int collection_index = html_select(w, tree_index, scope_name, selector_index);
-//   int buffer_index = html_serialize_tree1(w, tree_index, scope_name);
-
-//   html_vec_str_t* buffer = html_get_buffer(w, buffer_index);
-//   char* result = html_vec_str_join(buffer, "");
-//   // printf("%s\n", result);
-//   html_free(result);
-
-//   html_destroy(w);
-//   if(buffer_index == -1) {
-//     CLOCK_LOG_ERROR
-//     return 1;
-//   }
-//   return 0;
-// }
-
 int parse_select_and_serialize_tree_buffer_bench(int c, const char* html)
 {
   if(c == 0) {
@@ -188,7 +161,6 @@ int parse_select_and_serialize_tree_buffer_bench(int c, const char* html)
   int selector_index = html_prepare_selector(w, selector, strlen(selector));
   const char* scope_name = "html";
   int collection_index = html_select(w, tree_index, scope_name, selector_index);
-
 
   // myhtml
 
@@ -214,14 +186,8 @@ int parse_select_and_serialize_tree_buffer_bench(int c, const char* html)
 #define clock_to_sec(t) ((double)t)/CLOCKS_PER_SEC
 #define clock_to_millisec(t) (((double)t)/CLOCKS_PER_SEC) * 1000.0
 
-// #define max_benchmarks 7
-// int (*bench[max_benchmarks])() = {myhtml_serialization_tree_buffer_bench, parse_tree_bench, parse_and_select_bench, parse_select_and_serialize_collection_bench, parse_select_and_serialize_tree_bench, parse_select_and_serialize_tree1_bench, parse_select_and_serialize_tree_buffer_bench};
-
 #define max_benchmarks 6
 int (*bench[max_benchmarks])() = {myhtml_serialization_tree_buffer_bench, parse_tree_bench, parse_and_select_bench, parse_select_and_serialize_collection_bench, parse_select_and_serialize_tree_bench, parse_select_and_serialize_tree_buffer_bench};
-
-// #define max_benchmarks 1
-// int (*bench[max_benchmarks])() = {parse_select_and_serialize_tree1_bench};
 
 int main(int argc, char* argv[])
 {
