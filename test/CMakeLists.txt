@@ -62,36 +62,36 @@ foreach(TEST ${TESTS})
   )
 endforeach()
 
-file(GLOB_RECURSE TESTS "cbench*_test.c")
-foreach(TEST ${TESTS})
-  message("TEST = ${TEST}")
-  get_filename_component(TEST_NAME ${TEST} NAME_WE)
-  add_executable(${TEST_NAME} ${TEST})
-  target_link_libraries(
-    ${TEST_NAME}
-    libmodest_static.a
-    libmodest_html.a
-  )
-  target_sources(
-    ${TEST_NAME}
-    PUBLIC
-    ../libs/cbench/src/cbench.c
-  )
-endforeach()
+# file(GLOB_RECURSE TESTS "cbench*_test.c")
+# foreach(TEST ${TESTS})
+#   message("TEST = ${TEST}")
+#   get_filename_component(TEST_NAME ${TEST} NAME_WE)
+#   add_executable(${TEST_NAME} ${TEST})
+#   target_link_libraries(
+#     ${TEST_NAME}
+#     libmodest_static.a
+#     libmodest_html.a
+#   )
+#   target_sources(
+#     ${TEST_NAME}
+#     PUBLIC
+#     ../libs/cbench/src/cbench.c
+#   )
+# endforeach()
 
-file(GLOB_RECURSE TESTS "clock*_test.c")
-foreach(TEST ${TESTS})
-  message("TEST = ${TEST}")
-  get_filename_component(TEST_NAME ${TEST} NAME_WE)
-  add_executable(${TEST_NAME} ${TEST})
-  target_link_libraries(
-    ${TEST_NAME}
-    libmodest_static.a
-    libmodest_html.a
-  )
-  # target_sources(
-  #   ${TEST_NAME}
-  #   PUBLIC
-  #   ../libs/cbench/src/cbench.c
-  # )
-endforeach()
+# file(GLOB_RECURSE TESTS "clock*_test.c")
+# foreach(TEST ${TESTS})
+#   message("TEST = ${TEST}")
+#   get_filename_component(TEST_NAME ${TEST} NAME_WE)
+#   add_executable(${TEST_NAME} ${TEST})
+#   target_link_libraries(
+#     ${TEST_NAME}
+#     libmodest_static.a
+#     libmodest_html.a
+#   )
+#   # target_sources(
+#   #   ${TEST_NAME}
+#   #   PUBLIC
+#   #   ../libs/cbench/src/cbench.c
+#   # )
+# endforeach()

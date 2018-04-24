@@ -10,6 +10,7 @@ then
   # https://github.com/lexborisov/Modest/blob/master/INSTALL.md
   cd libs/Modest
   make library MyCORE_BUILD_WITHOUT_THREADS=YES
+  # make library
   cd $current
   echo "done"
 fi

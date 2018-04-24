@@ -144,7 +144,7 @@ char* html_serialize_node(myhtml_tree_node_t* node)
 }
 #endif
 
-#if 1
+#if 0
 mystatus_t html_serialization_callback(const char* data, size_t data_length, void* result)
 {
   html_vec_str_t* vec = (html_vec_str_t*)result;
@@ -186,6 +186,26 @@ char* html_serialize_node(myhtml_tree_node_t* node)
   myhtml_serialization_tree_callback(node, html_serialization_callback, (void*)stream);
   fclose(stream);
   return buf;
+}
+#endif
+
+#if 1
+char* html_serialize_node(myhtml_tree_node_t* node)
+{
+  mycore_string_raw_t str_raw;
+  mycore_string_raw_clean_all(&str_raw);
+  if(myhtml_serialization_tree_buffer(node, &str_raw)) {
+    return NULL;
+  }
+  char* data = str_raw.data;
+  char* copy = NULL;
+  size_t length = strlen(data);
+  if(length > 0) {
+    html_string_copy(data, copy);
+  }
+  mycore_string_raw_destroy(&str_raw, false);
+
+  return copy;
 }
 #endif
 

@@ -49,11 +49,11 @@ html_workspace_t* html_init()
   html_vec_init(&workspace->buffers);
   html_vec_init(&workspace->raw_strings);
 
-  html_vec_reserve(&workspace->trees, 2);
-  html_vec_reserve(&workspace->entries, 2);
-  html_vec_reserve(&workspace->selectors, 4);
-  html_vec_reserve(&workspace->collections, 4);
-  html_vec_reserve(&workspace->buffers, 20);
+  // html_vec_reserve(&workspace->trees, 2);
+  // html_vec_reserve(&workspace->entries, 2);
+  // html_vec_reserve(&workspace->selectors, 4);
+  // html_vec_reserve(&workspace->collections, 4);
+  // html_vec_reserve(&workspace->buffers, 20);
 
 #ifdef MODEST_HTML_USE_DMT
   printf("html_init() - Current memory usage: %u bytes\n", (unsigned int)dmt_usage());
