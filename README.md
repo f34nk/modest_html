@@ -123,3 +123,6 @@ See [CHANGELOG](https://github.com/f34nk/modest_html/blob/master/CHANGELOG.md).
   - [ ] Compare two html strings
 - [ ] Documentation
 
+## License
+
+modest_html is under LGPL license. Check the [LICENSE](https://github.com/f34nk/modest_html/blob/master/LICENSE) file for more details.
