@@ -1,3 +1,5 @@
+# This project is not maintained anymore.
+
 [![Build status](https://travis-ci.org/f34nk/modest_html.svg?branch=master)](https://travis-ci.org/f34nk/modest_html)
 
 # modest_html
